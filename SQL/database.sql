@@ -3,7 +3,6 @@ CREATE TABLE tbl_klanten(
     voornaam varchar(255) NOT NULL,
     achternaam varchar(255) NOT NULL,
     bedrijf varchar(255),
-    gebruikersnaam varchar(255) NOT NULL,
     wachtwoord varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     telefoonnummer int(10) NOT NULL
