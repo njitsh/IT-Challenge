@@ -29,6 +29,14 @@
               <input type="password" name="wachtwoord_2_registreren" placeholder="Bevestig uw wachtwoord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet hetzelfde zijn als uw eerste wachtwoord">
               <input id="submit" type="submit" name="submit" value="submit">
           </form>
+
+          <br><br><br>
+
+          <form class="inloggen" action="includes/login.inc.php" method="POST">
+              <input type="email" name="email_login" placeholder="Voer hier uw e-mailadres in*" required autofocus pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Voer een geldig e-mailadres in">
+              <input type="password" name="wachtwoord_login" placeholder="Voer hier uw wachtwoord in" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet minimaal een nummer, een hoofdletter en kleine letter bevatten en uit minimaal 8 tekens bestaan">
+              <input id="submit" type="submit" name="submit" value="submit">
+          </form>
 </body>
 
 </html>
