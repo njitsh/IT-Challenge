@@ -51,7 +51,8 @@ if (isset($_POST['submit'])) {
 				} else {				//Kijk of het account niet al bestaat
 					$sql = "SELECT * FROM tbl_klanten WHERE email='$email' OR telefoonnummer='$tel'";//max 1 email en 1 tel in database
 					$result = mysqli_query($conn, $sql);
-					$resultCheck = mysqli_num_rows($result);					if ($resultCheck > 0) {
+					$resultCheck = mysqli_num_rows($result);
+					if ($resultCheck > 0) {
 					//header("Location: ../signup.php?signup=alreadyexists");
 						echo '<script language="javascript">';
 						echo 'alert("user already exists")';
@@ -60,7 +61,12 @@ if (isset($_POST['submit'])) {
 						exit();
 					} else {
 						//Wachtwoord hashen
-						$hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+
+						// !!!!!!!!!!!!!!!
+						//$hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+						$hashedPwd = $pwd;
+						// !!!!!!!!!!!!!!!
+
 						//Gebruiker aanmaken
 						$sql = "INSERT INTO tbl_klanten (voornaam, achternaam, email, telefoonnummer, wachtwoord, bedrijf) VALUES ('$first', '$last', '$email', '$tel', '$hashedPwd', '$company');";
 						mysqli_query($conn, $sql);
