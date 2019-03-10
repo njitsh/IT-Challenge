@@ -27,7 +27,7 @@
               <input type="text" name="bedrijf_registreren" placeholder="Voer hier de naam van uw bedrijf in" required minlength="3" title="Voer hier de naam van uw bedrijf in">
               <input type="password" name="wachtwoord_registreren" placeholder="Voer hier uw wachtwoord in" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet minimaal een nummer, een hoofdletter en kleine letter bevatten en uit minimaal 8 tekens bestaan">
               <input type="password" name="wachtwoord_2_registreren" placeholder="Bevestig uw wachtwoord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet hetzelfde zijn als uw eerste wachtwoord">
-              <input id="submit" type="submit" value="submit">
+              <input id="submit" type="submit" name="submit" value="submit">
           </form>
 </body>
 
