@@ -1,6 +1,6 @@
 <?php
 $dbServername = "localhost";
 $dbUsername = "root";
-$dbPassword = "";
+$dbPassword = "usbw";
 $dbName = "it-challenge";
 $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
