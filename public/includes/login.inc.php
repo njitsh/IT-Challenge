@@ -2,6 +2,7 @@
 if (isset($_POST['submit'])) {
 
 	include 'dbh.inc.php';
+	include_once 'password.php';
 	$name = mysqli_real_escape_string($conn, $_POST['email_login']); // email
 	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_login']);
  // wachtwoord
@@ -29,12 +30,7 @@ if (isset($_POST['submit'])) {
 			if ($row = mysqli_fetch_assoc($result)) {
 				//Wachtwoord checken met database
 
-
-				// !!!!!!!!!!!!!!!
-				//$hashedPwdCheck = password_verify($pwd, $row['wachtwoord']);
-				if ($pwd == $row['wachtwoord']) { $hashedPwdCheck = true; }
-				// !!!!!!!!!!!!!!!
-
+				$hashedPwdCheck = password_verify($pwd, $row['wachtwoord']);
 
 				if ($hashedPwdCheck == false) {
 					header("");
