@@ -19,9 +19,6 @@
 </head>
 
 <body>
-<<<<<<< Updated upstream
-  
-=======
 
     <?php if (isset($_SESSION['u_id'])) { ?>
 
@@ -36,7 +33,6 @@
         <a href="signup.php">Inloggen/Registreren</a>
 
     <?php } ?>
->>>>>>> Stashed changes
 </body>
 
 </html>
