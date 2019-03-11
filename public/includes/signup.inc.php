@@ -1,13 +1,5 @@
 <?php
 
-$first = "";
-$last = "";
-$email = "";
-$tel = "";
-$pwd = "";
-$pwd2 = "";
-$company = "";
-
 if (isset($_POST['submit'])) {
 	include_once 'dbh.inc.php';
 	$first = mysqli_real_escape_string($conn, $_POST['voornaam_registreren']);
@@ -70,29 +62,37 @@ if (isset($_POST['submit'])) {
 						//Gebruiker aanmaken
 						$sql = "INSERT INTO tbl_klanten (voornaam, achternaam, email, telefoonnummer, wachtwoord, bedrijf) VALUES ('$first', '$last', '$email', '$tel', '$hashedPwd', '$company');";
 						mysqli_query($conn, $sql);
-						//header("Location: ../signup.php?signup=success");
-						echo '<script language="javascript">';
-						echo 'alert("success")';
-						echo '</script>';
 
-						exit();
+						// Login
+						$sql = "SELECT * FROM tbl_klanten WHERE email='$email'";
+						$result = mysqli_query($conn, $sql);
+						$row = mysqli_fetch_assoc($result);
+						if ($result >= 1) {
+    					session_start();
+							$_SESSION['u_id'] = $row['klantnummer'];//user ID
+							$_SESSION['u_first'] = $first;
+							$_SESSION['u_last'] = $last;
+							$_SESSION['u_email'] = $email;
+							$_SESSION['u_tel'] = $tel;
+							$_SESSION['u_com'] = $company;
+							header("Location: ../index.php");
+							exit();
+						} else {
+
+							echo '<script language="javascript">';
+							echo 'alert("id not found")';
+							echo '</script>';
+						}
 					}
 				}
 			}
 		}
-	}}else {
+	}
+}else {
 	//header("Location: ../signup.php");
 
 	echo '<script language="javascript">';
 	echo 'alert("fail")';
 	echo '</script>';
-	echo $first;
-	echo $last;
-	echo $email;
-	echo $tel;
-	echo $pwd;
-	echo $pwd2;
-	echo $company;
-
 	exit();
 }
