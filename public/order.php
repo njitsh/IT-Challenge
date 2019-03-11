@@ -19,6 +19,18 @@
 </head>
 
 <body>
+ <a href="index.php">Home</a>
+
+  <?php if (isset($_SESSION['u_id']))
+  {
+    if ($_SESSION['u_id'] == "1")
+    {
+      echo "hey admin<br>";
+      $sql = "SELECT * FROM tbl_orders";
+  		$result = mysqli_query($conn, $sql);
+    }
+  } else { ?>
+
           <form class="order" action="includes/createorder.inc.php" method="POST">
               <input type="email" name="email_registreren" placeholder="Voer hier uw e-mailadres in*" required autofocus pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Voer een geldig e-mailadres in">
               <input type="text" name="voornaam_registreren" placeholder="Voer hier uw voornaam in*" required minlength="3" title="Voer hier uw voornaam in">
@@ -29,6 +41,8 @@
               <input type="password" name="wachtwoord_2_registreren" placeholder="Bevestig uw wachtwoord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet hetzelfde zijn als uw eerste wachtwoord">
               <input id="submit" type="submit" value="submit">
           </form>
+
+        <?php } ?>
 </body>
 
 </html>
