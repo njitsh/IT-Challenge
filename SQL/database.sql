@@ -21,6 +21,6 @@ CREATE TABLE tbl_orders(
     afwerking varchar(11) NOT NULL,
     wikkeling varchar(1) NOT NULL,
     oplage int(11) NOT NULL,
-    datum_aanvraag datetime NOT NULL,
+    datum_aangemaakt datetime NOT NULL,
     datum_laatst_bewerkt datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
