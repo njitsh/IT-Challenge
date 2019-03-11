@@ -1,13 +1,16 @@
 <?php
 
+
 if (isset($_POST['submit'])) {
-	include_once 'dbh.inc.php';	include_once 'password.php';
+	include_once 'dbh.inc.php';
 	$first = mysqli_real_escape_string($conn, $_POST['voornaam_registreren']);
 	$last = mysqli_real_escape_string($conn, $_POST['achternaam_registreren']);
 	$email = mysqli_real_escape_string($conn, $_POST['email_registreren']);
 	$tel = mysqli_real_escape_string($conn, $_POST['telefoon_registreren']);
-	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_registreren']);
-	$pwd2 = mysqli_real_escape_string($conn, $_POST['wachtwoord_2_registreren']);
+	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_registreren']);
+
+	$pwd2 = mysqli_real_escape_string($conn, $_POST['wachtwoord_2_registreren']);
+
 	$company = mysqli_real_escape_string($conn, $_POST['bedrijf_registreren']);
 
 	//Kijk of iets leeg is
@@ -19,14 +22,20 @@ if (isset($_POST['submit'])) {
 		echo '</script>';
 
 		exit();
-	} else {		//Kijk of wachtwoorden hetzelfde zijn
-		if($pwd != $pwd2) {			header("Location: ../signup.php?signup=passwordsdontmatch");			exit();
+	} else {
+		//Kijk of wachtwoorden hetzelfde zijn
+
+		if($pwd != $pwd2) {
+			header("Location: ../signup.php?signup=passwordsdontmatch");
+			exit();
+
 		}
 		else {
 			//Kijk of alle karakters zijn toegestaan
 			if (!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-z A-Z]*$/", $last) || !preg_match("/^[a-z A-Z]*$/", $company)) {
 				//header("Location: ../signup.php?signup=invalid");
-				echo '<script language="javascript">';				echo 'alert("character fail")';
+				echo '<script language="javascript">';
+				echo 'alert("character fail")';
 				echo '</script>';
 
 				exit();
@@ -40,13 +49,16 @@ if (isset($_POST['submit'])) {
 					echo '</script>';
 
 					exit();
-				} else {				//Kijk of het account niet al bestaat
+				} else {
+				//Kijk of het account niet al bestaat
 					$sql = "SELECT * FROM tbl_klanten WHERE email='$email' OR telefoonnummer='$tel'";//max 1 email en 1 tel in database
 					$result = mysqli_query($conn, $sql);
-					$resultCheck = mysqli_num_rows($result);
+					$resultCheck = mysqli_num_rows($result);
+
 					if ($resultCheck > 0) {
 					//header("Location: ../signup.php?signup=alreadyexists");
-						echo '<script language="javascript">';
+
+						echo '<script language="javascript">';
 						echo 'alert("user already exists")';
 						echo '</script>';
 
@@ -62,29 +74,39 @@ if (isset($_POST['submit'])) {
 						//Gebruiker aanmaken
 						$sql = "INSERT INTO tbl_klanten (voornaam, achternaam, email, telefoonnummer, wachtwoord, bedrijf) VALUES ('$first', '$last', '$email', '$tel', '$hashedPwd', '$company');";
 						mysqli_query($conn, $sql);
-						//header("Location: ../signup.php?signup=success");
-						echo '<script language="javascript">';
-						echo 'alert("success")';
-						echo '</script>';
 
-						exit();
+						// Login
+						$sql = "SELECT * FROM tbl_klanten WHERE email='$email'";
+						$result = mysqli_query($conn, $sql);
+						$row = mysqli_fetch_assoc($result);
+						if ($result >= 1) {
+    					session_start();
+							$_SESSION['u_id'] = $row['klantnummer'];//user ID
+							$_SESSION['u_first'] = $first;
+							$_SESSION['u_last'] = $last;
+							$_SESSION['u_email'] = $email;
+							$_SESSION['u_tel'] = $tel;
+							$_SESSION['u_com'] = $company;
+							header("Location: ../index.php");
+							exit();
+						} else {
+
+							echo '<script language="javascript">';
+							echo 'alert("id not found")';
+							echo '</script>';
+						}
 					}
 				}
 			}
 		}
-	}}else {
+	}
+
+}
+else {
 	//header("Location: ../signup.php");
 
 	echo '<script language="javascript">';
 	echo 'alert("fail")';
 	echo '</script>';
-	echo $first;
-	echo $last;
-	echo $email;
-	echo $tel;
-	echo $pwd;
-	echo $pwd2;
-	echo $company;
-
 	exit();
 }
