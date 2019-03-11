@@ -3,6 +3,7 @@
 
 if (isset($_POST['submit'])) {
 	include_once 'dbh.inc.php';
+	include_once 'password.php';
 	$first = mysqli_real_escape_string($conn, $_POST['voornaam_registreren']);
 	$last = mysqli_real_escape_string($conn, $_POST['achternaam_registreren']);
 	$email = mysqli_real_escape_string($conn, $_POST['email_registreren']);
