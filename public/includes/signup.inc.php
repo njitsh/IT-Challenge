@@ -67,10 +67,7 @@ if (isset($_POST['submit'])) {
 					} else {
 						//Wachtwoord hashen
 
-						// !!!!!!!!!!!!!!!
-						//$hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
-						$hashedPwd = $pwd;
-						// !!!!!!!!!!!!!!!
+						$hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
 						//Gebruiker aanmaken
 						$sql = "INSERT INTO tbl_klanten (voornaam, achternaam, email, telefoonnummer, wachtwoord, bedrijf) VALUES ('$first', '$last', '$email', '$tel', '$hashedPwd', '$company');";
