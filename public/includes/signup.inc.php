@@ -1,4 +1,5 @@
-<?php
+<?php
+
 
 if (isset($_POST['submit'])) {
 	include_once 'dbh.inc.php';
@@ -6,8 +7,10 @@ if (isset($_POST['submit'])) {
 	$last = mysqli_real_escape_string($conn, $_POST['achternaam_registreren']);
 	$email = mysqli_real_escape_string($conn, $_POST['email_registreren']);
 	$tel = mysqli_real_escape_string($conn, $_POST['telefoon_registreren']);
-	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_registreren']);
-	$pwd2 = mysqli_real_escape_string($conn, $_POST['wachtwoord_2_registreren']);
+	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_registreren']);
+
+	$pwd2 = mysqli_real_escape_string($conn, $_POST['wachtwoord_2_registreren']);
+
 	$company = mysqli_real_escape_string($conn, $_POST['bedrijf_registreren']);
 
 	//Kijk of iets leeg is
@@ -19,14 +22,20 @@ if (isset($_POST['submit'])) {
 		echo '</script>';
 
 		exit();
-	} else {		//Kijk of wachtwoorden hetzelfde zijn
-		if($pwd != $pwd2) {			header("Location: ../signup.php?signup=passwordsdontmatch");			exit();
+	} else {
+		//Kijk of wachtwoorden hetzelfde zijn
+
+		if($pwd != $pwd2) {
+			header("Location: ../signup.php?signup=passwordsdontmatch");
+			exit();
+
 		}
 		else {
 			//Kijk of alle karakters zijn toegestaan
 			if (!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-z A-Z]*$/", $last) || !preg_match("/^[a-z A-Z]*$/", $company)) {
 				//header("Location: ../signup.php?signup=invalid");
-				echo '<script language="javascript">';				echo 'alert("character fail")';
+				echo '<script language="javascript">';
+				echo 'alert("character fail")';
 				echo '</script>';
 
 				exit();
@@ -40,13 +49,16 @@ if (isset($_POST['submit'])) {
 					echo '</script>';
 
 					exit();
-				} else {				//Kijk of het account niet al bestaat
+				} else {
+				//Kijk of het account niet al bestaat
 					$sql = "SELECT * FROM tbl_klanten WHERE email='$email' OR telefoonnummer='$tel'";//max 1 email en 1 tel in database
 					$result = mysqli_query($conn, $sql);
-					$resultCheck = mysqli_num_rows($result);
+					$resultCheck = mysqli_num_rows($result);
+
 					if ($resultCheck > 0) {
 					//header("Location: ../signup.php?signup=alreadyexists");
-						echo '<script language="javascript">';
+
+						echo '<script language="javascript">';
 						echo 'alert("user already exists")';
 						echo '</script>';
 
@@ -88,7 +100,9 @@ if (isset($_POST['submit'])) {
 			}
 		}
 	}
-}else {
+
+}
+else {
 	//header("Location: ../signup.php");
 
 	echo '<script language="javascript">';

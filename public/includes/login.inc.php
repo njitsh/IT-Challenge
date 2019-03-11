@@ -1,8 +1,10 @@
 <?php
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
+
 	include 'dbh.inc.php';
 	$name = mysqli_real_escape_string($conn, $_POST['email_login']); // email
-	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_login']); // wachtwoord
+	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_login']);
+ // wachtwoord
 	if (empty($name) || empty($pwd)) {
 		header("../signup.php?Error=Emtpy");
 		echo 'Please fill in both fields.';
@@ -10,10 +12,12 @@ if (isset($_POST['submit'])) {
 			echo 'alert("not all fields were filled in")';
 			echo '</script>';
 		exit();
-	} else {		//Lees database
+	} else {
+		//Lees database
 		$sql = "SELECT * FROM tbl_klanten WHERE email='$name'";
 		$result = mysqli_query($conn, $sql);
-		$resultCheck = mysqli_num_rows($result);		//Check of het account bestaat
+		$resultCheck = mysqli_num_rows($result);
+		//Check of het account bestaat
 		if ($resultCheck < 1) {
 			header("../signup.php?Error");
 			echo 'Error';
@@ -22,7 +26,8 @@ if (isset($_POST['submit'])) {
 				echo '</script>';
 			exit();
 		} else {
-			if ($row = mysqli_fetch_assoc($result)) {				//Wachtwoord checken met database
+			if ($row = mysqli_fetch_assoc($result)) {
+				//Wachtwoord checken met database
 
 
 				// !!!!!!!!!!!!!!!
@@ -39,7 +44,8 @@ if (isset($_POST['submit'])) {
 						echo '</script>';
 					exit();
 				} elseif ($hashedPwdCheck == true) {
-					//Inloggen
+					//Inloggen
+
 
 					session_start();
 					$_SESSION['u_id'] = $row['klantnummer'];//user ID
