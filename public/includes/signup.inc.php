@@ -9,13 +9,11 @@ if (isset($_POST['submit'])) {
 	$email = mysqli_real_escape_string($conn, $_POST['email_registreren']);
 	$tel = mysqli_real_escape_string($conn, $_POST['telefoon_registreren']);
 	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_registreren']);
-
 	$pwd2 = mysqli_real_escape_string($conn, $_POST['wachtwoord_2_registreren']);
-
 	$company = mysqli_real_escape_string($conn, $_POST['bedrijf_registreren']);
 
 	//Kijk of iets leeg is
-	if (empty($first) || empty($last) || empty($email) || empty($tel) || empty($pwd) || empty($company)) {
+	if (empty($first) || empty($last) || empty($email) || empty($tel) || empty($pwd) || empty($pwd2) || empty($company)) {
 		//header("Location: ../signup.php?signup=empty");
 
 		echo '<script language="javascript">';
