@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
 	$company = mysqli_real_escape_string($conn, $_POST['bedrijf_registreren']);
 
 	//Kijk of iets leeg is
-	if (empty($first) || empty($last) || empty($email) || empty($tel) || empty($pwd) || empty($pwd2) || empty($company)) {
+	if (empty($first) || empty($last) || empty($email) || empty($tel) || empty($pwd) || empty($pwd2)) {
 		//header("Location: ../signup.php?signup=empty");
 
 		echo '<script language="javascript">';
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 		}
 		else {
 			//Kijk of alle karakters zijn toegestaan
-			if (!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-z A-Z]*$/", $last) || !preg_match("/^[a-z A-Z]*$/", $company)) {
+			if (!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-z A-Z]*$/", $last)) {
 				//header("Location: ../signup.php?signup=invalid");
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
