@@ -19,7 +19,18 @@
 </head>
 
 <body>
-  
+
+    <?php if (isset($_SESSION['u_id'])) { ?>
+
+      <?php echo "Naam: " . $_SESSION['u_first'] . " " . $_SESSION['u_last'] . "<br>ID: " . $_SESSION['u_id']; ?> <br><br>
+
+      Je bent ingelogd! Log hier uit: <a href="includes/logout.inc.php">Uitloggen</a>
+
+      <?php } else { ?>
+
+        <a href="signup.php">Inloggen/Registreren</a>
+
+    <?php } ?>
 </body>
 
 </html>
