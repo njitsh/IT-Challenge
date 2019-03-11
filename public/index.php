@@ -19,6 +19,9 @@
 </head>
 
 <body>
+<<<<<<< Updated upstream
+  
+=======
 
     <?php if (isset($_SESSION['u_id'])) { ?>
 
@@ -26,11 +29,14 @@
 
       Je bent ingelogd! Log hier uit: <a href="includes/logout.inc.php">Uitloggen</a>
 
+      <a href="order.php">Orders</a>
+
       <?php } else { ?>
 
         <a href="signup.php">Inloggen/Registreren</a>
 
     <?php } ?>
+>>>>>>> Stashed changes
 </body>
 
 </html>
