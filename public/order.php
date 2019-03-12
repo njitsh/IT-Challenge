@@ -34,13 +34,16 @@
   } else { ?>
 
           <form class="order" action="includes/createorder.inc.php" method="POST">
-              <input type="email" name="email_registreren" placeholder="Voer hier uw e-mailadres in*" required autofocus pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Voer een geldig e-mailadres in">
-              <input type="text" name="voornaam_registreren" placeholder="Voer hier uw voornaam in*" required minlength="3" title="Voer hier uw voornaam in">
-              <input type="text" name="achternaam_registreren" placeholder="Voer hier uw achternaam in*" required minlength="3" title="Voer hier uw achternaam in">
-              <input type="tel"  name="telefoon_registreren" placeholder="Voer hier uw telefoonnummer in*" required pattern="(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)" title="Voer hier uw telefoonnummer in">
-              <input type="text" name="bedrijf_registreren" placeholder="Voer hier de naam van uw bedrijf in" required minlength="3" title="Voer hier de naam van uw bedrijf in">
-              <input type="password" name="wachtwoord_registreren" placeholder="Voer hier uw wachtwoord in" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet minimaal een nummer, een hoofdletter en kleine letter bevatten en uit minimaal 8 tekens bestaan">
-              <input type="password" name="wachtwoord_2_registreren" placeholder="Bevestig uw wachtwoord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet hetzelfde zijn als uw eerste wachtwoord">
+              <input type="breedte" name="breedte" placeholder="Voer hier de breedte van het label in mm in*" required autofocus pattern="[0-9]" title="Voer een getal in">
+              <input type="hoogte" name="hoogte" placeholder="Voer hier de hoogte van het label in mm in*" required pattern="[0-9]" title="Voer een getal in">
+              <input type="radius" name="radius" placeholder="Voer hier de radius van de hoek in mm in*" required patern="[0-9]" title="Voer een getal in">
+              <input type="tussenafstand"  name="tussenafstand" placeholder="Voer hier de afstand tussen de labels in mm in*" required pattern="[0-9]" title="Voer een getal in">
+              <input type="rolbreedte" name="rolbreedte" placeholder="Voer hier de rolbreedte van uw printer in" required pattern="[0-9]" title="Voer een getal in">
+              <input type="materiaal" name="materiaal" placeholder="Voer hier het labelmateriaal in" required pattern="(?=.*[a-z])(?=.*[A-Z])" title="Voer het materiaal in">
+              <input type="bedrukking" name="bedrukking" placeholder="Kies een bedrukking" /* input voor een afbeelding */ title="Kies een bedrukking">
+              <input type="afwerking" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required pattern="(?=.*[a-z])(?=.*[A-Z])" title="Voer hier de afwerkingsmethode in">
+              <input type="wikkeling" name="wikkeling" placeholder="Kies uw type wikkeling als in de afbeelding" required maxlength="1" title="Zie de afbeelding">
+              <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required pattern="[0-9]" title="Voer een getal in">
               <input id="submit" type="submit" value="submit">
           </form>
 
