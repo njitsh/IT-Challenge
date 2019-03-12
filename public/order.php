@@ -19,8 +19,6 @@
 </head>
 
 <body>
-<<<<<<< Updated upstream
-=======
  <a href="index.php">Home</a>
 
   <?php if (isset($_SESSION['u_id']))
@@ -34,6 +32,7 @@
   } else { ?>
 
           <form class="order" action="includes/createorder.inc.php" method="POST">
+              <input type="hidden">
               <input type="breedte" name="breedte" placeholder="Voer hier de breedte van het label in mm in*" required autofocus pattern="[0-9]" title="Voer een getal in">
               <input type="hoogte" name="hoogte" placeholder="Voer hier de hoogte van het label in mm in*" required pattern="[0-9]" title="Voer een getal in">
               <input type="radius" name="radius" placeholder="Voer hier de radius van de hoek in mm in*" required patern="[0-9]" title="Voer een getal in">
@@ -48,7 +47,6 @@
           </form>
 
         <?php } ?>
->>>>>>> Stashed changes
 </body>
 
 </html>

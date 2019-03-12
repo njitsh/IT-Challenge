@@ -2,16 +2,19 @@
 
 if (isset($_POST['submit'])) {
 	include_once 'dbh.inc.php';
-	$$$$$ = mysqli_real_escape_string($conn, $_POST['!!!']);
-	$$$$$ = mysqli_real_escape_string($conn, $_POST['!!!']);
-	$$$$$ = mysqli_real_escape_string($conn, $_POST['!!!']);
-	$$$$$ = mysqli_real_escape_string($conn, $_POST['!!!']);
-	$$$$$ = mysqli_real_escape_string($conn, $_POST['!!!']);
-	$$$$$ = mysqli_real_escape_string($conn, $_POST['!!!']);
-	$$$$$ = mysqli_real_escape_string($conn, $_POST['!!!']);
+	$breedte = mysqli_real_escape_string($conn, $_POST['breedte']);
+	$hoogte = mysqli_real_escape_string($conn, $_POST['hoogte']);
+	$radius = mysqli_real_escape_string($conn, $_POST['radius']);
+	$tussenafstand = mysqli_real_escape_string($conn, $_POST['tussenafstand']);
+	$rolbreedte = mysqli_real_escape_string($conn, $_POST['rolbreedte']);
+	$materiaal = mysqli_real_escape_string($conn, $_POST['materiaal']);
+	$bedrukking = mysqli_real_escape_string($conn, $_POST['bedrukking']);
+	$afwerking = mysqli_real_escape_string($conn, $_POST['afwerking']);
+	$wikkeling = mysqli_real_escape_string($conn, $_POST['wikkeling']);
+	$oplage = mysqli_real_escape_string($conn, $_POST['oplage']);
 
 	//Kijk of iets leeg is
-	if (empty($$$$$) || empty($$$$$) || empty($$$$$) || empty($$$$$) || empty($$$$$) || empty($$$$$)) {
+	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($bedrukking) || empty($afwerking) || empty($wikkeling) || empty($oplage)) {
 		//header("Location: ../signup.php?signup=empty");
 
 		echo '<script language="javascript">';
@@ -20,16 +23,9 @@ if (isset($_POST['submit'])) {
 
 		exit();
 	} else {
-		//Kijk of wachtwoorden hetzelfde zijn
 
-		if($pwd != $pwd2) {
-			header("Location: ../signup.php?signup=passwordsdontmatch");
-			exit();
-
-		}
-		else {
 			//Kijk of alle karakters zijn toegestaan
-			if (!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-z A-Z]*$/", $last) || !preg_match("/^[a-z A-Z]*$/", $company)) {
+			if ((!preg_match("/^[1-9][0-9]*$/", $breedte)) || (!preg_match("/^[1-9][0-9]*$/", $hoogte)) || (!preg_match("/^[1-9][0-9]*$/", $radius)) || (!preg_match("/^[1-9][0-9]*$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]*$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $bedrukking)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-8][0-9]*$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]*$/", $oplage))) {
 				//header("Location: ../signup.php?signup=invalid");
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
@@ -37,36 +33,9 @@ if (isset($_POST['submit'])) {
 
 				exit();
 			} else {
-				//Kijk of email bestaat
-				if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-					//header("Location: ../signup.php?signup=email");
-
-					echo '<script language="javascript">';
-					echo 'alert("email fail")';
-					echo '</script>';
-
-					exit();
-				} else {
-				//Kijk of het account niet al bestaat
-					$sql = "SELECT * FROM tbl_klanten WHERE email='$email' OR telefoonnummer='$tel'";//max 1 email en 1 tel in database
-					$result = mysqli_query($conn, $sql);
-					$resultCheck = mysqli_num_rows($result);
-
-					if ($resultCheck > 0) {
-					//header("Location: ../signup.php?signup=alreadyexists");
-
-						echo '<script language="javascript">';
-						echo 'alert("user already exists")';
-						echo '</script>';
-
-						exit();
-					} else {
-						//Wachtwoord hashen
-
-						$hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
 						//Gebruiker aanmaken
-						$sql = "INSERT INTO tbl_klanten (voornaam, achternaam, email, telefoonnummer, wachtwoord, bedrijf) VALUES ('$first', '$last', '$email', '$tel', '$hashedPwd', '$company');";
+						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage) VALUES ('$first', '$last', '$email', '$tel', '$hashedPwd', '$company');";
 						mysqli_query($conn, $sql);
 
 						// Login
@@ -90,9 +59,9 @@ if (isset($_POST['submit'])) {
 							echo '</script>';
 						}
 					}
-				}
-			}
-		}
+
+
+
 	}
 
 }
