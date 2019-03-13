@@ -2,6 +2,7 @@
 
 if (isset($_POST['submit'])) {
 	include_once 'dbh.inc.php';
+	$user_id = mysqli_real_escape_string($conn, $_POST['user_id']);
 	$breedte = mysqli_real_escape_string($conn, $_POST['breedte']);
 	$hoogte = mysqli_real_escape_string($conn, $_POST['hoogte']);
 	$radius = mysqli_real_escape_string($conn, $_POST['radius']);
@@ -35,7 +36,7 @@ if (isset($_POST['submit'])) {
 			} else {
 
 						//Order aanmaken
-						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage) VALUES ('$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$bedrukking', '$afwerking', '$wikkeling', '$oplage');";
+						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage) VALUES ('$user_id', '$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$bedrukking', '$afwerking', '$wikkeling', '$oplage');";
 						mysqli_query($conn, $sql);
 						header("Location: ../index.php");
 						exit();
