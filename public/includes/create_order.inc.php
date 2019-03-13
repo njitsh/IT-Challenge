@@ -34,31 +34,12 @@ if (isset($_POST['submit'])) {
 				exit();
 			} else {
 
-						//Gebruiker aanmaken
-						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage) VALUES ('$first', '$last', '$email', '$tel', '$hashedPwd', '$company');";
+						//Order aanmaken
+						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage) VALUES ('$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$bedrukking', '$afwerking', '$wikkeling', '$oplage');";
 						mysqli_query($conn, $sql);
-
-						// Login
-						$sql = "SELECT * FROM tbl_klanten WHERE email='$email'";
-						$result = mysqli_query($conn, $sql);
-						$row = mysqli_fetch_assoc($result);
-						if ($result >= 1) {
-    					session_start();
-							$_SESSION['u_id'] = $row['klantnummer'];//user ID
-							$_SESSION['u_first'] = $first;
-							$_SESSION['u_last'] = $last;
-							$_SESSION['u_email'] = $email;
-							$_SESSION['u_tel'] = $tel;
-							$_SESSION['u_com'] = $company;
-							header("Location: ../index.php");
-							exit();
-						} else {
-
-							echo '<script language="javascript">';
-							echo 'alert("id not found")';
-							echo '</script>';
+						header("Location: ../index.php");
+						exit();
 						}
-					}
 
 
 
