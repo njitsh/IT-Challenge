@@ -19,8 +19,10 @@ CREATE TABLE tbl_orders(
     materiaal varchar(255) NOT NULL,
     bedrukking bit(1) NOT NULL,
     afwerking varchar(11) NOT NULL,
-    wikkeling varchar(1) NOT NULL,
+    wikkeling int(1) NOT NULL,
     oplage int(11) NOT NULL,
     datum_aangemaakt datetime NOT NULL,
-    datum_laatst_bewerkt datetime NOT NULL
+    datum_laatst_bewerkt datetime NOT NULL,
+    status varchar(255) DEFAULT 'Aangevraagd' NOT NULL,
+    opmerking varchar(255) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

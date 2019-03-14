@@ -1,15 +1,19 @@
 <?php
-
+session_start();
 if (isset($_POST['submit'])) {
 	include_once 'dbh.inc.php';
-	$user_id = mysqli_real_escape_string($conn, $_POST['user_id']);
+	$user_id = $_SESSION['u_id'];
 	$breedte = mysqli_real_escape_string($conn, $_POST['breedte']);
 	$hoogte = mysqli_real_escape_string($conn, $_POST['hoogte']);
 	$radius = mysqli_real_escape_string($conn, $_POST['radius']);
 	$tussenafstand = mysqli_real_escape_string($conn, $_POST['tussenafstand']);
 	$rolbreedte = mysqli_real_escape_string($conn, $_POST['rolbreedte']);
 	$materiaal = mysqli_real_escape_string($conn, $_POST['materiaal']);
-	$bedrukking = mysqli_real_escape_string($conn, $_POST['bedrukking']);
+	if (isset($_POST['bedrukking']) && $_POST['bedrukking'] == 'Ja') {
+		$bedrukking = 1;
+	} else {
+		$bedrukking = 2;
+	}
 	$afwerking = mysqli_real_escape_string($conn, $_POST['afwerking']);
 	$wikkeling = mysqli_real_escape_string($conn, $_POST['wikkeling']);
 	$oplage = mysqli_real_escape_string($conn, $_POST['oplage']);
@@ -25,8 +29,17 @@ if (isset($_POST['submit'])) {
 		exit();
 	} else {
 
+			if ($bedrukking == 1) $bedrukking = true;
+			else if ($bedrukking == 2) $bedrukking = false;
+			else {
+				echo '<script language="javascript">';
+				echo 'alert("not true/false bedrukking")';
+				echo '</script>';
+				exit();
+			}
+
 			//Kijk of alle karakters zijn toegestaan
-			if ((!preg_match("/^[1-9][0-9]*$/", $breedte)) || (!preg_match("/^[1-9][0-9]*$/", $hoogte)) || (!preg_match("/^[1-9][0-9]*$/", $radius)) || (!preg_match("/^[1-9][0-9]*$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]*$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $bedrukking)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-8][0-9]*$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]*$/", $oplage))) {
+			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $oplage))) {
 				//header("Location: ../signup.php?signup=invalid");
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
@@ -36,7 +49,7 @@ if (isset($_POST['submit'])) {
 			} else {
 
 						//Order aanmaken
-						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage) VALUES ('$user_id', '$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$bedrukking', '$afwerking', '$wikkeling', '$oplage');";
+						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage, datum_aangemaakt, datum_laatst_bewerkt) VALUES ('$user_id', '$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$bedrukking', '$afwerking', '$wikkeling', '$oplage', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 						mysqli_query($conn, $sql);
 						header("Location: ../index.php");
 						exit();
