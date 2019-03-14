@@ -23,26 +23,75 @@
 
   <?php if (isset($_SESSION['u_id']))
   {
+  include_once 'includes/dbh.inc.php';
     if ($_SESSION['u_id'] == "1")
     {
-      echo "hey admin<br>";
+      echo "<br><br>Alle orders:<br><br>";
       $sql = "SELECT * FROM tbl_orders";
-  		$result = mysqli_query($conn, $sql);
-    }
-  } else { ?>
+  		$result_orders = mysqli_query($conn, $sql);
 
-          <form class="order" action="includes/createorder.inc.php" method="POST">
-              <input type="email" name="email_registreren" placeholder="Voer hier uw e-mailadres in*" required autofocus pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Voer een geldig e-mailadres in">
-              <input type="text" name="voornaam_registreren" placeholder="Voer hier uw voornaam in*" required minlength="3" title="Voer hier uw voornaam in">
-              <input type="text" name="achternaam_registreren" placeholder="Voer hier uw achternaam in*" required minlength="3" title="Voer hier uw achternaam in">
-              <input type="tel"  name="telefoon_registreren" placeholder="Voer hier uw telefoonnummer in*" required pattern="(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)" title="Voer hier uw telefoonnummer in">
-              <input type="text" name="bedrijf_registreren" placeholder="Voer hier de naam van uw bedrijf in" required minlength="3" title="Voer hier de naam van uw bedrijf in">
-              <input type="password" name="wachtwoord_registreren" placeholder="Voer hier uw wachtwoord in" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet minimaal een nummer, een hoofdletter en kleine letter bevatten en uit minimaal 8 tekens bestaan">
-              <input type="password" name="wachtwoord_2_registreren" placeholder="Bevestig uw wachtwoord" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet hetzelfde zijn als uw eerste wachtwoord">
-              <input id="submit" type="submit" value="submit">
+      foreach ($result_orders as $order) {
+        $klantnummer = $order['klantnummer'];
+        $sql = "SELECT * FROM tbl_klanten WHERE klantnummer=$klantnummer";
+    		$result_klanten = mysqli_query($conn, $sql);
+    		$resultCheck_klanten = mysqli_num_rows($result_klanten);
+    		if ($resultCheck_klanten == 1) {
+          foreach ($result_klanten as $klant) {
+            $voornaam = $klant["voornaam"];
+            $achternaam = $klant["achternaam"];
+          }
+          ?>
+          <div class="order"><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam." | Laatst bewerkt: ".$order["datum_laatst_bewerkt"]." | Status: ".$order["status"]; ?></div>
+          <?php
+        }
+      }
+      ?>
+
+      <?php
+    } else { ?>
+
+          <form class="order" action="includes/create_order.inc.php" method="POST" autocomplete="off">
+              <input type="number" name="breedte" placeholder="Voer hier de breedte van het label in mm in*" required autofocus pattern="[0-9]" title="Voer een getal in">
+              <input type="number" name="hoogte" placeholder="Voer hier de hoogte van het label in mm in*" required pattern="[0-9]" title="Voer een getal in">
+              <input type="number" name="radius" placeholder="Voer hier de radius van de hoek in mm in*" required patern="[0-9]" title="Voer een getal in">
+              <input type="number"  name="tussenafstand" placeholder="Voer hier de afstand tussen de labels in mm in*" required pattern="[0-9]" title="Voer een getal in">
+              <input type="number" name="rolbreedte" placeholder="Voer hier de rolbreedte van uw printer in" required pattern="[0-9]" title="Voer een getal in">
+              <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in">
+              <input type="checkbox" name="bedrukking" placeholder="Kies een bedrukking" title="Kies een bedrukking" value="Ja"> <!-- input voor een afbeelding -->
+              <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in">
+              <select name="wikkeling" placeholder="Kies uw type wikkeling als in de afbeelding" required title="Zie de afbeelding">
+                <option value="" hidden disabled selected>Kies een wikkeling</option>
+                <option value="1" required>1</option>
+                <option value="2" required>2</option>
+                <option value="3" required>3</option>
+                <option value="4" required>4</option>
+                <option value="5" required>5</option>
+                <option value="6" required>6</option>
+                <option value="7" required>7</option>
+                <option value="8" required>8</option>
+              </select>
+              <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in">
+              <input id="submit" type="submit" name="submit" value="submit">
           </form>
 
-        <?php } ?>
+          <?php
+          $klantnummer = $_SESSION['u_id'];
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer";
+      		$result_orders = mysqli_query($conn, $sql);
+      		$resultCheck_orders = mysqli_num_rows($result_orders);
+      		if ($resultCheck_orders >= 1) {
+            foreach ($result_orders as $order) {
+            ?>
+              <br>
+              Jouw orders:
+              <div class="order"><?php echo "#".$order["ordernummer"]." | Laatst bewerkt: ".$order["datum_laatst_bewerkt"]." | Status: ".$order["status"]; ?></div>
+
+
+            <?php
+            }
+          } else echo "No orders yet!";
+        }
+      } else header("Location: signup.php?order=notloggedin");?>
 </body>
 
 </html>
