@@ -24,16 +24,16 @@
   {
     header("Location: index.php");
   } else { ?>
-
-    <form class="inloggen" action="includes/login.inc.php" method="POST">
+Inloggen
+    <form class="inloggen" action="includes/login.inc.php" method="POST" autocomplete="on">
         <input type="email" name="email_login" placeholder="Voer hier uw e-mailadres in*" required autofocus pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Voer een geldig e-mailadres in">
         <input type="password" name="wachtwoord_login" placeholder="Voer hier uw wachtwoord in" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet minimaal een nummer, een hoofdletter en kleine letter bevatten en uit minimaal 8 tekens bestaan">
         <input id="submit" type="submit" name="submit" value="submit">
     </form>
 
     <br><br><br>
-
-    <form class="registreren" action="includes/signup.inc.php" method="POST">
+Registreren
+    <form class="registreren" action="includes/signup.inc.php" method="POST" autocomplete="off">
         <input type="email" name="email_registreren" placeholder="Voer hier uw e-mailadres in*" required autofocus pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Voer een geldig e-mailadres in">
         <input type="text" name="voornaam_registreren" placeholder="Voer hier uw voornaam in*" required minlength="3" title="Voer hier uw voornaam in">
         <input type="text" name="achternaam_registreren" placeholder="Voer hier uw achternaam in*" required minlength="3" title="Voer hier uw achternaam in">
