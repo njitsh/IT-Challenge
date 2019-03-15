@@ -96,8 +96,19 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-  
+   /* Start Order.php */
 
+   .order {
+     background-color: #cccccc;
+     margin: 10px;
+     padding: 5px;
+   }
+
+   .informatie {
+     display: none;
+   }
+
+   /* End Order.php */
 
 /* ==========================================================================
    Helper classes

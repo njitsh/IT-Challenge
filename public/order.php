@@ -14,8 +14,8 @@
     <link rel="apple-touch-icon" href="icon.png">
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
 
   <?php if (isset($_SESSION['u_id']))
   {
-  include_once 'includes/dbh.inc.php';
+    include_once 'includes/dbh.inc.php';
     if ($_SESSION['u_id'] == "1")
     {
       echo "<br><br>Alle orders:<br><br>";
@@ -41,7 +41,10 @@
             $achternaam = $klant["achternaam"];
           }
           ?>
-          <div class="order"><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam." | Laatst bewerkt: ".$order["datum_laatst_bewerkt"]." | Status: ".$order["status"]; ?></div>
+          <div class="order">
+            <div class="balk" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }"><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam." | Laatst bewerkt: ".$order["datum_laatst_bewerkt"]." | Status: ".$order["status"]; ?></div>
+            <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>"><?php echo "Breedte: ".$order["breedte"]; ?></div>
+          </div>
           <?php
         }
       }
