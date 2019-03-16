@@ -1,5 +1,8 @@
 <!doctype html>
-<?php session_start(); ?>
+<?php session_start();
+
+$_SESSION['u_id'] = 1;
+?>
 
 <html class="no-js" lang="">
 
@@ -54,7 +57,8 @@
 
             <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
-              <form class="order" action="" method="POST" autocomplete="off">
+              <form class="order" action="includes/update_order.inc.php" method="POST" autocomplete="off">
+				<input name="ordernummer" style="display: none;" value="<?php echo $order['ordernummer']?>"></input>
                 Breedte<br>
                 <input type="number" name="breedte" placeholder="Voer hier de breedte van het label in mm in*" required autofocus pattern="[0-9]" title="Voer een getal in" value="<?php echo $order["breedte"]; ?>">
                 <br>Hoogte<br>
@@ -99,9 +103,6 @@
           <?php
         }
       }
-      ?>
-
-      <?php
     } else { ?>
 
           <form class="order" action="includes/create_order.inc" method="POST" autocomplete="off">
