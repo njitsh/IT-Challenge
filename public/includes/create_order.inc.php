@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
 
 	//Kijk of iets leeg is
 	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($bedrukking) || empty($afwerking) || empty($wikkeling) || empty($oplage)) {
-		//header("Location: ../signup.php?signup=empty");
+		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
 		echo 'alert("empty")';
@@ -39,8 +39,8 @@ if (isset($_POST['submit'])) {
 			}
 
 			//Kijk of alle karakters zijn toegestaan
-			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $oplage))) {
-				//header("Location: ../signup.php?signup=invalid");
+			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]{0,9}$/", $oplage))) {
+				//header("Location: ../signup?signup=invalid");
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
 				echo '</script>';
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 						//Order aanmaken
 						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage, datum_aangemaakt, datum_laatst_bewerkt) VALUES ('$user_id', '$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$bedrukking', '$afwerking', '$wikkeling', '$oplage', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 						mysqli_query($conn, $sql);
-						header("Location: ../index.php");
+						header("Location: ../index");
 						exit();
 						}
 
@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 
 }
 else {
-	//header("Location: ../signup.php");
+	//header("Location: ../signup");
 
 	echo '<script language="javascript">';
 	echo 'alert("fail")';
