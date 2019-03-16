@@ -24,13 +24,13 @@
 
       <?php echo "Naam: " . $_SESSION['u_first'] . " " . $_SESSION['u_last'] . "<br>ID: " . $_SESSION['u_id']; ?> <br><br>
 
-      Je bent ingelogd! Log hier uit: <a href="includes/logout.inc.php">Uitloggen</a>
+      Je bent ingelogd! Log hier uit: <a href="includes/logout.inc">Uitloggen</a>
 
-      <a href="order.php">Orders</a>
+      <a href="order">Orders</a>
 
       <?php } else { ?>
 
-        <a href="signup.php">Inloggen/Registreren</a>
+        <a href="signup">Inloggen/Registreren</a>
 
     <?php } ?>
 </body>
