@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_POST['submit'])) {
+if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 	include_once 'dbh.inc.php';
 	$ordernummer = mysqli_real_escape_string($conn, $_POST['ordernummer']);
 	$breedte = mysqli_real_escape_string($conn, $_POST['breedte']);
@@ -49,24 +49,36 @@ if (isset($_POST['submit'])) {
 				exit();
 			} else {
 
-						//Order aanmaken
+						//Order updaten
 						$sql = "UPDATE tbl_orders SET opmerking='$opmerking', status='$status', wikkeling='$wikkeling', oplage='$oplage', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', bedrukking='$bedrukking', afwerking='$afwerking' WHERE ordernummer='$ordernummer'";
 						mysqli_query($conn, $sql);
 						header("Location: ../order.php");
 						exit();
-						}	
-	
+						}
+
 
 
 	}
 
-}
-else {
-	//header("Location: ../signup");
+} else if ((isset($_POST['delete'])) && ($_SESSION['u_id'] == 1)) {
+	include_once 'dbh.inc.php';
 
+	//Order verwijderen
+	$ordernummer = mysqli_real_escape_string($conn, $_POST['ordernummer']);
+	if (empty($ordernummer)) {
+		echo '<script language="javascript">';
+		echo 'alert("ordernummer empty")';
+		echo '</script>';
+	} else {
+		$sql = "DELETE FROM tbl_orders WHERE ordernummer='$ordernummer';";
+		mysqli_query($conn, $sql);
+		header("Location: ../order");
+		exit();
+	}
+} else {
+	//header("Location: ../order");
 	echo '<script language="javascript">';
-	echo 'alert("fail")';
+	echo 'alert("fail 1")';
 	echo '</script>';
 	exit();
 }
-
