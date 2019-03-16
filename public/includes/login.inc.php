@@ -7,7 +7,7 @@ if (isset($_POST['submit'])) {
 	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_login']);
  // wachtwoord
 	if (empty($name) || empty($pwd)) {
-		header("../signup.php?Error=Emtpy");
+		header("../signup?Error=Emtpy");
 		echo 'Please fill in both fields.';
 			echo '<script language="javascript">';
 			echo 'alert("not all fields were filled in")';
@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
 		$resultCheck = mysqli_num_rows($result);
 		//Check of het account bestaat
 		if ($resultCheck < 1) {
-			header("../signup.php?Error");
+			header("../signup?Error");
 			echo 'Error';
 				echo '<script language="javascript">';
 				echo 'alert("account not found")';
@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 					$_SESSION['u_email'] = $row['email'];//email
 					$_SESSION['u_tel'] = $row['telefoonnummer'];//tel
 					$_SESSION['u_com'] = $row['bedrijf'];//bedrijf
-					header("Location: ../index.php");
+					header("Location: ../index");
 					echo '<script language="javascript">';
 					echo 'alert("success")';
 					echo '</script>';
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 } else {
-	header("Location: ../index.php?login=error");
+	header("Location: ../index?login=error");
 		echo '<script language="javascript">';
 		echo 'alert("not submit")';
 		echo '</script>';

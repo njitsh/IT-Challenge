@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
 
 	//Kijk of iets leeg is
 	if (empty($first) || empty($last) || empty($email) || empty($tel) || empty($pwd) || empty($pwd2)) {
-		//header("Location: ../signup.php?signup=empty");
+		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
 		echo 'alert("empty")';
@@ -25,14 +25,14 @@ if (isset($_POST['submit'])) {
 		//Kijk of wachtwoorden hetzelfde zijn
 
 		if($pwd != $pwd2) {
-			header("Location: ../signup.php?signup=passwordsdontmatch");
+			header("Location: ../signup?signup=passwordsdontmatch");
 			exit();
 
 		}
 		else {
 			//Kijk of alle karakters zijn toegestaan
 			if (!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-z A-Z]*$/", $last)) {
-				//header("Location: ../signup.php?signup=invalid");
+				//header("Location: ../signup?signup=invalid");
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
 				echo '</script>';
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 			} else {
 				//Kijk of email bestaat
 				if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-					//header("Location: ../signup.php?signup=email");
+					//header("Location: ../signup?signup=email");
 
 					echo '<script language="javascript">';
 					echo 'alert("email fail")';
@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 					$resultCheck = mysqli_num_rows($result);
 
 					if ($resultCheck > 0) {
-					//header("Location: ../signup.php?signup=alreadyexists");
+					//header("Location: ../signup?signup=alreadyexists");
 
 						echo '<script language="javascript">';
 						echo 'alert("user already exists")';
@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 							$_SESSION['u_email'] = $email;
 							$_SESSION['u_tel'] = $tel;
 							$_SESSION['u_com'] = $company;
-							header("Location: ../index.php");
+							header("Location: ../index");
 							exit();
 						} else {
 
@@ -99,7 +99,7 @@ if (isset($_POST['submit'])) {
 
 }
 else {
-	//header("Location: ../signup.php");
+	//header("Location: ../signup");
 
 	echo '<script language="javascript">';
 	echo 'alert("fail")';
