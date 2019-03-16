@@ -19,7 +19,7 @@
 </head>
 
 <body>
- <a href="index.php">Home</a>
+ <a href="index">Home</a>
 
   <?php if (isset($_SESSION['u_id']))
   {
@@ -104,7 +104,7 @@
       <?php
     } else { ?>
 
-          <form class="order" action="includes/create_order.inc.php" method="POST" autocomplete="off">
+          <form class="order" action="includes/create_order.inc" method="POST" autocomplete="off">
               <input type="number" name="breedte" placeholder="Voer hier de breedte van het label in mm in*" required autofocus pattern="[0-9]" title="Voer een getal in">
               <input type="number" name="hoogte" placeholder="Voer hier de hoogte van het label in mm in*" required pattern="[0-9]" title="Voer een getal in">
               <input type="number" name="radius" placeholder="Voer hier de radius van de hoek in mm in*" required patern="[0-9]" title="Voer een getal in">
@@ -145,7 +145,7 @@
             }
           } else echo "No orders yet!";
         }
-      } else header("Location: signup.php?order=notloggedin");?>
+      } else header("Location: signup?order=notloggedin");?>
 </body>
 
 </html>
