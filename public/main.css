@@ -96,8 +96,37 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-  
+   /* Start Order.php */
 
+   .order {
+     margin: 10px;
+   }
+
+   .balk {
+     background-color: #cccccc;
+     padding: 5px;
+     cursor: pointer;
+   }
+
+   .balk_klaar {
+     background-color: #aaaaaa;
+     padding: 5px;
+     cursor: pointer;
+   }
+
+   .balk_probleem {
+     background-color: #ff0000;
+     padding: 5px;
+     cursor: pointer;
+   }
+
+   .informatie {
+     display: none;
+     background-color: #dddddd;
+     padding: 5px;
+   }
+
+   /* End Order.php */
 
 /* ==========================================================================
    Helper classes
