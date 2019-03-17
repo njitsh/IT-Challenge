@@ -16,23 +16,33 @@
 
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="main.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
 <body>
 
-    <?php if (isset($_SESSION['u_id'])) { ?>
+  <div class="announcement"><span class="announcement_row">Pentolabel B.V., Mon Plaisir 89c, 4879 AM Etten-Leur</span></div>
 
-      <?php echo "Naam: " . $_SESSION['u_first'] . " " . $_SESSION['u_last'] . "<br>ID: " . $_SESSION['u_id']; ?> <br><br>
+    <div class="container">
 
-      Je bent ingelogd! Log hier uit: <a href="includes/logout.inc">Uitloggen</a>
+      <a class="logo" href="index"><img src="images/pentolabel.png"></a>
 
-      <a href="order">Orders</a>
+      <nav>
+        <ul>
+          <a href="index"><li>Home</li></a>
+          <?php
+            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
+            else if (isset($_SESSION['u_id'])) { echo '<a href="order"><li>Mijn orders</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>'; }
+            else { echo '<a href="signup"><li>Inloggen</li></a>'; }
+          ?>
+        </ul>
+      </nav>
 
-      <?php } else { ?>
+      <?php if (isset($_SESSION['u_id'])) echo "Naam: " . $_SESSION['u_first'] . " " . $_SESSION['u_last'] . "<br>ID: " . $_SESSION['u_id']; ?>
 
-        <a href="signup">Inloggen/Registreren</a>
+    </div>
 
-    <?php } ?>
 </body>
 
 </html>
