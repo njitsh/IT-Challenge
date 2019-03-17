@@ -154,7 +154,7 @@ textarea {
       color: white;
       text-decoration: none;
     }
-    
+
     h4 {
       color: #dc5626;
       font-size: 22px;
@@ -202,6 +202,14 @@ textarea {
    }
 
    /* End Order.php */
+
+   /* Start Klant.php */
+
+   .klant {
+     margin-bottom: 10px;
+   }
+
+   /* End Klant.php */
 
    /* Start Signup.php */
 
