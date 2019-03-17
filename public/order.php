@@ -150,7 +150,7 @@
 
           <?php
           $klantnummer = $_SESSION['u_id'];
-          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer";
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
       		$result_orders = mysqli_query($conn, $sql);
       		$resultCheck_orders = mysqli_num_rows($result_orders);
       		if ($resultCheck_orders >= 1) {
