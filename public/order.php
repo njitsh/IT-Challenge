@@ -60,7 +60,7 @@
         <ul>
           <a href="index"><li>Home</li></a>
           <?php
-            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
+            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a>'.'<a href="klant"><li>Klanten</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
             else if (isset($_SESSION['u_id'])) { echo '<a href="order"><li>Mijn orders</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>'; }
           ?>
         </ul>
@@ -75,7 +75,7 @@
     {
       echo "<h4><strong>Alle orders</strong></h4>";
       // Haalt alle orders op
-      $sql = "SELECT * FROM tbl_orders ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+      $sql = "SELECT * FROM tbl_orders ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, CASE WHEN status = 'Probleem' THEN 1 ELSE 2 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
   		$result_orders = mysqli_query($conn, $sql);
 
       foreach ($result_orders as $order) {
@@ -100,8 +100,9 @@
             <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
               <form class="order" action="includes/update_order.inc.php" method="POST" autocomplete="off">
-                <input name="ordernummer" style="display: none;" value="<?php echo $order['ordernummer']?>"></input>
-                Breedte<br>
+                <input name="ordernummer" style="display: none;" value="<?php echo $order['ordernummer']?>">
+                <span><strong><a href="klant?klant=<?php echo $klantnummer?>"><?php echo $voornaam." ".$achternaam ?></a></strong></span>
+                <br>Breedte<br>
                 <input type="number" name="breedte" placeholder="Voer hier de breedte van het label in mm in*" required autofocus pattern="[0-9]" title="Voer een getal in" value="<?php echo $order["breedte"]; ?>">
                 <br>Hoogte<br>
                 <input type="number" name="hoogte" placeholder="Voer hier de hoogte van het label in mm in*" required pattern="[0-9]" title="Voer een getal in" value="<?php echo $order["hoogte"]; ?>">
@@ -178,7 +179,7 @@
 
           <?php
           $klantnummer = $_SESSION['u_id'];
-          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, CASE WHEN status = 'Probleem' THEN 1 ELSE 2 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
       		$result_orders = mysqli_query($conn, $sql);
       		$resultCheck_orders = mysqli_num_rows($result_orders);
       		if ($resultCheck_orders >= 1) {
