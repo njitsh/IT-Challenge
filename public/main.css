@@ -154,12 +154,9 @@ textarea {
       color: white;
       text-decoration: none;
     }
-
-    strong {
-      color: #dc5626;
-    }
-
+    
     h4 {
+      color: #dc5626;
       font-size: 22px;
       margin-bottom: 10px;
     }

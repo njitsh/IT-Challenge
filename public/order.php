@@ -17,10 +17,38 @@
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="main.css">
 
+    <script>
+    function getUrlVars() {
+      var vars = {};
+      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+          vars[key] = value;
+      });
+      return vars;
+    }
+
+    function getUrlParam(parameter, defaultvalue){
+      var urlparameter = defaultvalue;
+      if(window.location.href.indexOf(parameter) > -1){
+          urlparameter = getUrlVars()[parameter];
+          }
+      return urlparameter;
+    }
+
+    function order_nummer() {
+      var order_nummer = getUrlParam('order','Empty');
+      var order_name = String("informatie" + order_nummer);
+      document.getElementById(order_name).style.display='block';
+      var elmnt = document.getElementById(order_nummer);
+      elmnt.scrollIntoView();
+    }
+
+    </script>
+
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
 </head>
 
-<body>
+<body onload="order_nummer()">
 
   <div class="announcement"><span class="announcement_row">Pentolabel B.V., Mon Plaisir 89c, 4879 AM Etten-Leur</span></div>
 
@@ -62,7 +90,7 @@
             $achternaam = $klant["achternaam"];
           }
           ?>
-          <div class="order">
+          <div class="order" id="<?php echo $order["ordernummer"] ?>">
             <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
 
               <span><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
@@ -157,7 +185,7 @@
             echo "<h4><strong>Jouw orders</strong></h4>";
             foreach ($result_orders as $order) {
             ?>
-              <div class="order">
+              <div class="order" id="<?php echo $order["ordernummer"] ?>">
                 <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
 
                   <span><?php echo "#".$order["ordernummer"] ?></span>
