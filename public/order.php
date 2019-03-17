@@ -16,10 +16,27 @@
 
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="main.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
 <body>
- <a href="index">Home</a>
+
+  <div class="announcement"><span class="announcement_row">Pentolabel B.V., Mon Plaisir 89c, 4879 AM Etten-Leur</span></div>
+
+    <div class="container">
+
+      <a class="logo" href="index"><img src="images/pentolabel.png"></a>
+
+      <nav>
+        <ul>
+          <a href="index"><li>Home</li></a>
+          <?php
+            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
+            else if (isset($_SESSION['u_id'])) { echo '<a href="order"><li>Mijn orders</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>'; }
+          ?>
+        </ul>
+      </nav>
 
   <?php if (isset($_SESSION['u_id']))
   {
@@ -28,7 +45,7 @@
     // Is het de admin (met ID 1)?
     if ($_SESSION['u_id'] == "1")
     {
-      echo "<br><br>Alle orders:<br><br>";
+      echo "<h4><strong>Alle orders</strong></h4>";
       // Haalt alle orders op
       $sql = "SELECT * FROM tbl_orders ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
   		$result_orders = mysqli_query($conn, $sql);
@@ -104,7 +121,8 @@
       }
     } else { ?>
 
-          <form class="order" action="includes/create_order.inc" method="POST" autocomplete="off">
+      <h4><strong>Een order plaatsen</strong></h4>
+          <form class="order_form" action="includes/create_order.inc" method="POST" autocomplete="off">
               <input type="number" name="breedte" placeholder="Voer hier de breedte van het label in mm in*" required autofocus pattern="[0-9]" title="Voer een getal in">
               <input type="number" name="hoogte" placeholder="Voer hier de hoogte van het label in mm in*" required pattern="[0-9]" title="Voer een getal in">
               <input type="number" name="radius" placeholder="Voer hier de radius van de hoek in mm in*" required patern="[0-9]" title="Voer een getal in">
@@ -132,14 +150,13 @@
 
           <?php
           $klantnummer = $_SESSION['u_id'];
-          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer";
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
       		$result_orders = mysqli_query($conn, $sql);
       		$resultCheck_orders = mysqli_num_rows($result_orders);
       		if ($resultCheck_orders >= 1) {
-            echo "<br><br>Jouw orders:<br><br>";
+            echo "<h4><strong>Jouw orders</strong></h4>";
             foreach ($result_orders as $order) {
             ?>
-              <br>
               <div class="order">
                 <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
 
@@ -193,6 +210,7 @@
           } else echo "No orders yet!";
         }
       } else header("Location: signup?order=notloggedin");?>
+    </div>
 </body>
 
 </html>
