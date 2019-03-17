@@ -79,7 +79,7 @@
                   <?php } ?>
                 </select>
                 <br>Oplage<br>
-                <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in" value="<?php echo $order["breedte"]; ?>">
+                <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage"]; ?>">
                 <br>Status<br>
                 <select name="status" placeholder="Status van de bestelling" required title="Status van de bestelling">
                   <option value="Aangevraagd" required <?php if ($order["status"] == "Aangevraagd") { echo "selected"; } ?>>Aangevraagd</option>
@@ -88,8 +88,10 @@
                   <option value="Klaar" required <?php if ($order["status"] == "Klaar") { echo "selected"; } ?>>Klaar</option>
                   <option value="Probleem" required <?php if ($order["status"] == "Probleem") { echo "selected"; } ?>>Probleem</option>
                 </select>
-                <br>Opmerking<br>
-                <textarea name="opmerking"><?php echo $order["opmerking"];?></textarea>
+                <br>Opmerking klant<br>
+                <?php echo $order["opmerking_klant"];?>
+                <br>Opmerking admin<br>
+                <textarea name="opmerking_admin"><?php echo $order["opmerking_admin"];?></textarea>
                 <br>
                 <input id="delete" type="submit" name="delete" value="delete">
                 <input id="submit" type="submit" name="submit" value="submit">
@@ -123,6 +125,8 @@
                 <option value="8" required>8</option>
               </select>
               <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in">
+              <br>Opmerking klant<br>
+              <textarea name="opmerking_klant" placeholder="Voeg als het nodig is een opmerking toe." title="Voeg als het nodig is een opmerking toe."></textarea>
               <input id="submit" type="submit" name="submit" value="submit">
           </form>
 
@@ -132,11 +136,56 @@
       		$result_orders = mysqli_query($conn, $sql);
       		$resultCheck_orders = mysqli_num_rows($result_orders);
       		if ($resultCheck_orders >= 1) {
+            echo "<br><br>Jouw orders:<br><br>";
             foreach ($result_orders as $order) {
             ?>
               <br>
-              Jouw orders:
-              <div class="order"><?php echo "#".$order["ordernummer"]." | Laatst bewerkt: ".$order["datum_laatst_bewerkt"]." | Status: ".$order["status"]; ?></div>
+              <div class="order">
+                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
+
+                  <span><?php echo "#".$order["ordernummer"] ?></span>
+                  <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
+                  <span style="float:right; padding-right:20px;"><?php echo "Laatst bewerkt: ".$order["datum_laatst_bewerkt"]; ?></span></div>
+
+                <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
+
+                  <form class="order" action="includes/update_order.inc.php" method="POST" autocomplete="off">
+                    <input name="ordernummer" style="display: none;" value="<?php echo $order['ordernummer']?>"></input>
+                    Breedte<br>
+                    <?php echo $order["breedte"]; ?>
+                    <br>Hoogte<br>
+                    <?php echo $order["hoogte"]; ?>
+                    <br>Radius<br>
+                    <?php echo $order["radius"]; ?>
+                    <br>Tussenafstand<br>
+                    <?php echo $order["tussenafstand"]; ?>
+                    <br>Rolbreedte<br>
+                    <?php echo $order["rolbreedte"]; ?>
+                    <br>Materiaal<br>
+                    <?php echo $order["materiaal"]; ?>
+                    <br>Bedrukking<br>
+                    <?php if ($order["bedrukking"] == 1) echo "Ja"; else echo "Nee"; ?> <!-- input voor een afbeelding -->
+                    <br>Afwerking<br>
+                    <?php echo $order["afwerking"]; ?>
+                    <br>Wikkeling<br>
+                    <?php echo $order["wikkeling"]; ?>
+                    <br>Oplage<br>
+                    <?php echo $order["oplage"]; ?>
+                    <br>Status<br>
+                    <?php echo $order["status"]; ?>
+                    <br>Opmerking klant<br>
+                    <textarea name="opmerking_klant"><?php echo $order["opmerking_klant"];?></textarea>
+                    <?php if ($order["opmerking_admin"] != "") {
+                      echo "<br>Opmerking admin<br>";
+                      echo $order["opmerking_admin"];
+                    }?>
+                    <br>
+                    <input id="delete" type="submit" name="delete" value="delete">
+                    <input id="submit" type="submit" name="submit" value="submit">
+                  </form>
+
+                </div>
+              </div>
 
 
             <?php

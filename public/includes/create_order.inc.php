@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
 	$afwerking = mysqli_real_escape_string($conn, $_POST['afwerking']);
 	$wikkeling = mysqli_real_escape_string($conn, $_POST['wikkeling']);
 	$oplage = mysqli_real_escape_string($conn, $_POST['oplage']);
+	$opmerking_klant = mysqli_real_escape_string($conn, $_POST['opmerking_klant']);
 
 	//Kijk of iets leeg is
 	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($bedrukking) || empty($afwerking) || empty($wikkeling) || empty($oplage)) {
@@ -49,7 +50,7 @@ if (isset($_POST['submit'])) {
 			} else {
 
 						//Order aanmaken
-						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage, datum_aangemaakt, datum_laatst_bewerkt) VALUES ('$user_id', '$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$bedrukking', '$afwerking', '$wikkeling', '$oplage', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage, datum_aangemaakt, datum_laatst_bewerkt, opmerking_klant) VALUES ('$user_id', '$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$bedrukking', '$afwerking', '$wikkeling', '$oplage', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$opmerking_klant');";
 						mysqli_query($conn, $sql);
 						header("Location: ../index");
 						exit();

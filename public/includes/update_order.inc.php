@@ -18,7 +18,7 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 	$wikkeling = mysqli_real_escape_string($conn, $_POST['wikkeling']);
 	$oplage = mysqli_real_escape_string($conn, $_POST['oplage']);
 	$status = mysqli_real_escape_string($conn, $_POST['status']);
-	$opmerking = mysqli_real_escape_string($conn, $_POST['opmerking']);
+	$opmerking_admin = mysqli_real_escape_string($conn, $_POST['opmerking_admin']);
 	//Kijk of iets leeg is
 	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($bedrukking) || empty($afwerking) || empty($wikkeling) || empty($oplage)) {
 		//header("Location: ../signup?signup=empty");
@@ -50,13 +50,36 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 			} else {
 
 						//Order updaten
-						$sql = "UPDATE tbl_orders SET opmerking='$opmerking', status='$status', wikkeling='$wikkeling', oplage='$oplage', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', bedrukking='$bedrukking', afwerking='$afwerking' WHERE ordernummer='$ordernummer'";
+						$sql = "UPDATE tbl_orders SET opmerking_admin='$opmerking_admin', status='$status', wikkeling='$wikkeling', oplage='$oplage', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', bedrukking='$bedrukking', afwerking='$afwerking', datum_laatst_bewerkt=CURRENT_TIMESTAMP WHERE ordernummer='$ordernummer'";
 						mysqli_query($conn, $sql);
 						header("Location: ../order.php");
 						exit();
 						}
 
 
+
+	}
+
+} else if ((isset($_POST['submit'])) && (isset($_SESSION['u_id'])) && ($_SESSION['u_id'] != 1)) {
+	include_once 'dbh.inc.php';
+	$ordernummer = mysqli_real_escape_string($conn, $_POST['ordernummer']);
+	$opmerking_klant = mysqli_real_escape_string($conn, $_POST['opmerking_klant']);
+
+	if (empty($opmerking_klant)) {
+		//header("Location: ../order");
+
+		echo '<script language="javascript">';
+		echo 'alert("empty")';
+		echo '</script>';
+
+		exit();
+	} else {
+
+				//Order updaten
+				$sql = "UPDATE tbl_orders SET opmerking_klant='$opmerking_klant', datum_laatst_bewerkt=CURRENT_TIMESTAMP WHERE ordernummer=$ordernummer";
+				mysqli_query($conn, $sql);
+				header("Location: ../order.php");
+				exit();
 
 	}
 
