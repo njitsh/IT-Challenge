@@ -31,9 +31,6 @@
     <nav>
       <ul>
         <a href="index"><li>Home</li></a>
-        <?php
-          if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a>';
-          else if (isset($_SESSION['u_id'])) { echo '<li><a href="order">Mijn orders</a></li>'; } ?>
         <a href="signup"><li>Inloggen</li></a>
       </ul>
     </nav>
