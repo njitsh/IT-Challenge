@@ -52,8 +52,8 @@ if (isset($_POST['submit'])) {
 						//Order aanmaken
 						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage, datum_aangemaakt, datum_laatst_bewerkt, opmerking_klant) VALUES ('$user_id', '$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$bedrukking', '$afwerking', '$wikkeling', '$oplage', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$opmerking_klant');";
 						mysqli_query($conn, $sql);
-						header("Location: ../index");
-						exit();
+						$_SESSION['o_id'] = $conn->insert_id;
+						header("Location: send_mail.inc.php");
 						}
 
 
