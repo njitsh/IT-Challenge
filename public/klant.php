@@ -72,7 +72,7 @@
     // Is het de admin (met ID 1)?
     if ($_SESSION['u_id'] == "1")
     {
-      echo "<h4><strong>Alle orders</strong></h4>";
+      echo "<h4><strong>Alle klanten</strong></h4>";
       // Haalt alle orders op
       $sql = "SELECT * FROM tbl_klanten";
   		$result_klanten = mysqli_query($conn, $sql);
