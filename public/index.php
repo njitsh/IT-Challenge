@@ -32,7 +32,7 @@
         <ul>
           <a href="index"><li>Home</li></a>
           <?php
-            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
+            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a>'.'<a href="klant"><li>Klanten</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
             else if (isset($_SESSION['u_id'])) { echo '<a href="order"><li>Mijn orders</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>'; }
             else { echo '<a href="signup"><li>Inloggen</li></a>'; }
           ?>
