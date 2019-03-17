@@ -24,5 +24,6 @@ CREATE TABLE tbl_orders(
     datum_aangemaakt datetime NOT NULL,
     datum_laatst_bewerkt datetime NOT NULL,
     status varchar(255) DEFAULT 'Aangevraagd' NOT NULL,
-    opmerking varchar(255) NULL
+    opmerking_klant varchar(255) NULL,
+    opmerking_admin varchar(255) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
