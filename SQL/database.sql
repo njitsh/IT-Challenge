@@ -2,7 +2,8 @@ CREATE TABLE tbl_klanten(
     klantnummer int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
     voornaam varchar(255) NOT NULL,
     achternaam varchar(255) NOT NULL,
-    bedrijf varchar(255) NULL,
+    bedrijf varchar(255),
+    adres varchar(255) NOT NULL,
     wachtwoord varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     telefoonnummer varchar(255) NOT NULL
@@ -31,10 +32,18 @@ CREATE TABLE tbl_orders(
 
 CREATE TABLE tbl_materialen(
     materiaalnummer  int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    materiaal varchar(255) NOT NULL,
+    materiaal varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE tbl_belijming(
-    belijmingnummerr  int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    belijming varchar(255) NOT NULL,
+    belijmingnummer  int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    belijming varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE tbl_fabrikanten(
+    fabrikantnummer int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    fabrikant varchar(255) NOT NULL,
+    contactpersoon varchar(255) NOT NULL,
+    telefoonnummer int(10) NOT NULL,
+    email varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
