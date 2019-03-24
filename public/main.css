@@ -161,6 +161,11 @@ textarea {
       margin-bottom: 10px;
     }
 
+    h5 {
+      color: #dc5626;
+      font-size: 18px;
+    }
+
    /* End General Styling */
 
    /* Start Order.php */
@@ -199,6 +204,92 @@ textarea {
      background-color: #666666;
      color: white;
      padding: 10px;
+   }
+
+   /* Style the form */
+
+   * {
+     box-sizing: border-box;
+   }
+
+   #regForm {
+     background-color: #f1f1f1;
+     font-family: Raleway;
+     padding: 5px 40px;
+     width: 100%;
+     height: 600px;
+     min-width: 300px;
+     border-radius: 10px;
+   }
+
+   #regForm .img_info {
+     width: 48%;
+     float: right;
+     margin-top: -40px;
+   }
+
+   #regForm input,
+   #regForm select,
+   #regForm textarea {
+     padding: 10px;
+     width: 48%;
+     font-size: 17px;
+     font-family: Raleway;
+     border: 1px solid #aaaaaa;
+   }
+
+   input[type=number]::-webkit-inner-spin-button,
+   input[type=number]::-webkit-outer-spin-button {
+     -webkit-appearance: none;
+     margin: 0;
+   }
+
+   /* Mark input boxes that gets an error on validation: */
+   #regForm input.invalid {
+     background-color: #ffdddd;
+   }
+
+   /* Hide all steps by default: */
+   #regForm .tab {
+     display: none;
+   }
+
+   #regForm button {
+     background-color: #4CAF50;
+     color: #ffffff;
+     border: none;
+     padding: 10px 20px;
+     font-size: 17px;
+     cursor: pointer;
+   }
+
+   #regForm button:hover {
+     opacity: 0.8;
+   }
+
+   #regForm #prevBtn {
+     background-color: #bbbbbb;
+   }
+
+   /* Make circles that indicate the steps of the form: */
+   #regForm .step {
+     height: 15px;
+     width: 15px;
+     margin: 0 2px;
+     background-color: #bbbbbb;
+     border: none;
+     border-radius: 50%;
+     display: inline-block;
+     opacity: 0.5;
+   }
+
+   #regForm .step.active {
+     opacity: 1;
+   }
+
+   /* Mark the steps that are finished and valid: */
+   #regForm .step.finish {
+     background-color: #4CAF50;
    }
 
    /* End Order.php */
