@@ -381,6 +381,39 @@ textarea {
 
    /* Start Signup.php */
 
+   .inloggen {
+     background-color: #f1f1f1;
+     padding: 5px 10px;
+     width: 100%;
+     min-width: 300px;
+     border-radius: 5px;
+     margin-bottom: 20px;
+   }
+
+   .inloggen input:not(#submit) {
+     width: 100%;
+     padding: 10px;
+     font-size: 17px;
+     border: 1px solid #aaaaaa;
+     border-radius: 2px;
+   }
+
+   .registreren {
+     background-color: #f1f1f1;
+     padding: 5px 10px;
+     width: 100%;
+     min-width: 300px;
+     border-radius: 5px;
+   }
+
+   .registreren input:not(#submit) {
+     width: 100%;
+     padding: 10px;
+     font-size: 17px;
+     border: 1px solid #aaaaaa;
+     border-radius: 2px;
+   }
+
    /* End Signup.php */
 
 /* ==========================================================================
