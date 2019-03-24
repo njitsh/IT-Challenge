@@ -184,9 +184,9 @@ function open_tab(info_div) {
 
               <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
-                <span><?php echo "Ordernummer: #".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
-                <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
-                <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+                <span><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
+                <span style="float:right;"><?php echo $order["status"]; ?></span>
+                <span style="float:right; padding-right:20px;"><?php echo date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
 
               <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
@@ -257,7 +257,8 @@ function open_tab(info_div) {
                     <textarea name="opmerking_admin" rows="5" cols="66"><?php echo $order["opmerking_admin"];?></textarea></div>
                   </div>
 
-                  <input id="submit" type="submit" name="submit" value="Updaten">
+                  <input id="submit" type="submit" name="delete" value="Verwijderen">
+                  <input id="submit" type="submit" name="submit" value="Order informatie updaten">
                 </form>
 
               </div>
@@ -289,9 +290,9 @@ function open_tab(info_div) {
 
               <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
-                <span><?php echo "Ordernummer: #".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
-                <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
-                <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+                <span><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
+                <span style="float:right;"><?php echo $order["status"]; ?></span>
+                <span style="float:right; padding-right:20px;"><?php echo date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
 
               <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
@@ -362,7 +363,8 @@ function open_tab(info_div) {
                     <textarea name="opmerking_admin" rows="5" cols="66"><?php echo $order["opmerking_admin"];?></textarea></div>
                   </div>
 
-                  <input id="submit" type="submit" name="submit" value="Updaten">
+                  <input id="submit" type="submit" name="delete" value="Verwijderen">
+                  <input id="submit" type="submit" name="submit" value="Order informatie updaten">
                 </form>
 
               </div>
@@ -394,9 +396,9 @@ function open_tab(info_div) {
 
               <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
-                <span><?php echo "Ordernummer: #".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
-                <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
-                <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+                <span><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
+                <span style="float:right;"><?php echo $order["status"]; ?></span>
+                <span style="float:right; padding-right:20px;"><?php echo date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
 
               <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
@@ -467,7 +469,8 @@ function open_tab(info_div) {
                     <textarea name="opmerking_admin" rows="5" cols="66"><?php echo $order["opmerking_admin"];?></textarea></div>
                   </div>
 
-                  <input id="submit" type="submit" name="submit" value="Updaten">
+                  <input id="submit" type="submit" name="delete" value="Verwijderen">
+                  <input id="submit" type="submit" name="submit" value="Order informatie updaten">
                 </form>
 
               </div>
@@ -499,9 +502,9 @@ function open_tab(info_div) {
 
               <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
-                <span><?php echo "Ordernummer: #".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
-                <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
-                <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+                <span><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
+                <span style="float:right;"><?php echo $order["status"]; ?></span>
+                <span style="float:right; padding-right:20px;"><?php echo date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
 
               <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
@@ -571,7 +574,8 @@ function open_tab(info_div) {
                     <textarea name="opmerking_admin" rows="5" cols="66"><?php echo $order["opmerking_admin"];?></textarea></div>
                   </div>
 
-                  <input id="submit" type="submit" name="submit" value="Updaten">
+                  <input id="submit" type="submit" name="delete" value="Verwijderen">
+                  <input id="submit" type="submit" name="submit" value="Order informatie updaten">
                 </form>
 
               </div>
@@ -669,9 +673,9 @@ function open_tab(info_div) {
 
                 <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
-                  <span><?php echo "Ordernummer: #".$order["ordernummer"] ?></span>
-                  <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
-                  <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+                  <span><?php echo "#".$order["ordernummer"] ?></span>
+                  <span style="float:right;"><?php echo $order["status"]; ?></span>
+                  <span style="float:right; padding-right:20px;"><?php echo date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
 
                 <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
@@ -723,7 +727,7 @@ function open_tab(info_div) {
                       }?>
                     </div>
 
-                    <input id="submit" type="submit" name="submit" value="Updaten">
+                    <input id="submit" type="submit" name="submit" value="Order informatie updaten">
                   </form>
 
                 </div>
@@ -735,7 +739,7 @@ function open_tab(info_div) {
           }
 
           $klantnummer = $_SESSION['u_id'];
-          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND is_order = 1 ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, CASE WHEN status = 'Probleem' THEN 1 ELSE 2 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND is_order = 1 AND NOT status='Klaar' AND NOT status='Probleem' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
       		$result_orders = mysqli_query($conn, $sql);
       		$resultCheck_orders = mysqli_num_rows($result_orders);
       		if ($resultCheck_orders >= 1) {
@@ -747,9 +751,9 @@ function open_tab(info_div) {
 
                 <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
-                  <span><?php echo "Ordernummer: #".$order["ordernummer"] ?></span>
-                  <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
-                  <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+                  <span><?php echo "#".$order["ordernummer"] ?></span>
+                  <span style="float:right;"><?php echo $order["status"]; ?></span>
+                  <span style="float:right; padding-right:20px;"><?php echo date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
 
                 <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
@@ -825,9 +829,9 @@ function open_tab(info_div) {
 
                 <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
-                  <span><?php echo "Nummer: #".$order["ordernummer"] ?></span>
-                  <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
-                  <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+                  <span><?php echo "#".$order["ordernummer"] ?></span>
+                  <span style="float:right;"><?php echo $order["status"]; ?></span>
+                  <span style="float:right; padding-right:20px;"><?php echo date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
 
                 <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
@@ -879,7 +883,7 @@ function open_tab(info_div) {
                       }?>
                     </div>
 
-                    <input id="submit" type="submit" name="submit" value="Updaten">
+                    <input id="submit" type="submit" name="submit" value="Order informatie updaten">
                   </form>
 
                 </div>
@@ -903,9 +907,9 @@ function open_tab(info_div) {
 
 
                 <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
-                  <span><?php echo "Ordernummer: #".$order["ordernummer"] ?></span>
-                  <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
-                  <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+                  <span><?php echo "#".$order["ordernummer"] ?></span>
+                  <span style="float:right;"><?php echo $order["status"]; ?></span>
+                  <span style="float:right; padding-right:20px;"><?php echo date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
 
                 <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
@@ -957,7 +961,7 @@ function open_tab(info_div) {
                       }?>
                     </div>
 
-                    <input id="submit" type="submit" name="submit" value="Updaten">
+                    <input id="submit" type="submit" name="submit" value="Order informatie updaten">
                   </form>
 
                 </div>
