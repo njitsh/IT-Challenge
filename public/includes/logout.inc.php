@@ -11,6 +11,6 @@ $_SESSION['u_com'] = NULL;
 session_unset();
 session_destroy();
 
-header("Location: ../index");
+header("Location: ../signup");
 exit();
 ?>

@@ -34,7 +34,7 @@
 
         <div class="container">
 
-          <a class="logo" href="index"><img src="images/pentolabel.png"></a>
+          <a class="logo" href="order"><img src="images/pentolabel.png"></a>
 
           <nav>
             <ul>
