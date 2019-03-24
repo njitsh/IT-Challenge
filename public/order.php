@@ -289,14 +289,14 @@ function fixStepIndicator(n) {
           </div>
 
           <div style="overflow:auto;">
-            <div style="float:right;bottom:144px;position:absolute;left:39%;">
+            <div style="float:right;bottom:104px;position:absolute;left:38%;">
               <button type="button" id="prevBtn" onclick="nextPrev(-1)" disabled>Vorige</button>
               <button type="button" id="nextBtn" onclick="nextPrev(1)" name="volgende" style="margin-right: 40px;">Volgende</button>
             </div>
           </div>
 
           <!-- Circles which indicates the steps of the form: -->
-          <div style="text-align:center;margin-top:40px;bottom:151px;position:absolute;left:29%;">
+          <div style="text-align:center;margin-top:40px;bottom:111px;position:absolute;left:27.5%;">
             <span class="step"></span>
             <span class="step"></span>
             <span class="step"></span>
