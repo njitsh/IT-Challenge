@@ -1,12 +1,12 @@
 CREATE TABLE tbl_klanten(
     klantnummer int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    voornaam varchar(255) NOT NULL,
-    achternaam varchar(255) NOT NULL,
-    bedrijf varchar(255),
-    adres varchar(255) NOT NULL,
-    wachtwoord varchar(255) NOT NULL,
-    email varchar(255) NOT NULL,
-    telefoonnummer varchar(255) NOT NULL
+    voornaam varchar(256) NOT NULL,
+    achternaam varchar(256) NOT NULL,
+    bedrijf varchar(256),
+    adres varchar(256) NOT NULL,
+    wachtwoord varchar(256) NOT NULL,
+    email varchar(256) NOT NULL,
+    telefoonnummer varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE tbl_orders(
@@ -17,33 +17,34 @@ CREATE TABLE tbl_orders(
     radius int(11) NOT NULL,
     tussenafstand float(11) NOT NULL,
     rolbreedte int(11) NOT NULL,
-    materiaal varchar(255) NOT NULL,
+    materiaal varchar(256) NOT NULL,
     bedrukking bit(1) NOT NULL,
+    afbeelding_path varchar(256) NULL,
     afwerking varchar(11) NOT NULL,
     wikkeling int(1) NOT NULL,
     oplage int(11) NOT NULL,
     datum_aangemaakt datetime NOT NULL,
     datum_laatst_bewerkt datetime NOT NULL,
-    status varchar(255) DEFAULT 'Aangevraagd' NOT NULL,
-    opmerking_klant varchar(255) NULL,
-    opmerking_admin varchar(255) NULL,
+    status varchar(256) DEFAULT 'Aangevraagd' NOT NULL,
+    opmerking_klant varchar(256) NULL,
+    opmerking_admin varchar(256) NULL,
     is_order bit(1) DEFAULT 0 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE tbl_materialen(
     materiaalnummer int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    materiaal varchar(255) NOT NULL
+    materiaal varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE tbl_belijming(
     belijmingnummer  int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    belijming varchar(255) NOT NULL
+    belijming varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE tbl_fabrikanten(
     fabrikantnummer int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    fabrikant varchar(255) NOT NULL,
-    contactpersoon varchar(255) NOT NULL,
+    fabrikant varchar(256) NOT NULL,
+    contactpersoon varchar(256) NOT NULL,
     telefoonnummer int(10) NOT NULL,
-    email varchar(255) NOT NULL
+    email varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

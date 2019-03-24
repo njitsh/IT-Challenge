@@ -50,7 +50,14 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 			} else {
 
 						//Order updaten
-						$sql = "UPDATE tbl_orders SET opmerking_admin='$opmerking_admin', status='$status', wikkeling='$wikkeling', oplage='$oplage', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', bedrukking='$bedrukking', afwerking='$afwerking', datum_laatst_bewerkt=CURRENT_TIMESTAMP WHERE ordernummer='$ordernummer'";
+						if (($status != "Aangevraagd") && ($status != "Probleem"))
+						{
+							$is_order = true;
+						}
+						if ($status == "Aangevraagd") {
+							$is_order = false;
+						}
+						$sql = "UPDATE tbl_orders SET opmerking_admin='$opmerking_admin', status='$status', wikkeling='$wikkeling', oplage='$oplage', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', bedrukking='$bedrukking', afwerking='$afwerking', datum_laatst_bewerkt=CURRENT_TIMESTAMP, is_order='$is_order' WHERE ordernummer='$ordernummer'";
 						mysqli_query($conn, $sql);
 						header("Location: ../order.php");
 						exit();
