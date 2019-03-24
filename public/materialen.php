@@ -34,12 +34,12 @@
 
         <div class="container">
 
-          <a class="logo" href="index"><img src="images/pentolabel.png"></a>
+          <a class="logo" href="order"><img src="images/pentolabel.png"></a>
 
           <nav>
             <ul>
               <?php
-                if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a><a href="klant"><li>Klanten</li></a><a href="materialen"><li>Materialen</li></a></a><a href="fabrikanten"><li>Fabrikanten</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
+                if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a><a href="klant"><li>Klanten</li></a><a href="fabrikanten"><li>Fabrikanten</li></a><a href="materialen"><li>Materialen</li></a><a href="afwerkingen"><li>Afwerkingen</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
               ?>
             </ul>
           </nav>
@@ -47,7 +47,7 @@
           <h4><strong>Een materiaal toevoegen</strong></h4>
 
             <form class="create_materiaal" action="includes/materialen.inc.php" method="POST" autocomplete="off" style="padding-top: 10px;">
-              <strong>Materiaal:</strong>
+              <strong>Materiaal</strong>
               <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in">
               <div style="display:grid; grid-template-columns: 1fr auto;"><div></div><input style="margin-top: 10px; margin-bottom: 5px;" id="submit" type="submit" name="submit" value="Toevoegen"></div>
             </form>
@@ -61,9 +61,9 @@
   		$resultCheck_materialen = mysqli_num_rows($result_materialen);
   		if ($resultCheck_materialen >= 1) {
 
-        foreach ($result_materialen as $materiaal) {
-          $materiaalnummer = $materiaal['materiaalnummer'];
-          $materiaal = $materiaal["materiaal"];
+        foreach ($result_materialen as $materialen) {
+          $materiaalnummer = $materialen['materiaalnummer'];
+          $materiaal = $materialen["materiaal"];
             ?>
             <div class="materiaal">
               <div class="balk" onclick="if ((document.getElementById('informatie<?php echo $materiaalnummer; ?>').style.display) != 'block') { getElementById('informatie<?php echo $materiaalnummer; ?>').style.display='block'; } else { getElementById('informatie<?php echo $materiaalnummer; ?>').style.display='none'; }">

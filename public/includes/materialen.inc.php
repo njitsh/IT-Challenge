@@ -3,7 +3,6 @@ session_start();
 if (isset($_POST['submit'])) {
 	include_once 'dbh.inc.php';
 	$materiaal = mysqli_real_escape_string($conn, $_POST['materiaal']);
-	$materiaalnummer = mysqli_real_escape_string($conn, $_POST['materiaalnummer']);
 
 	//Kijk of iets leeg is
 	if (empty($materiaal)) {
@@ -25,7 +24,7 @@ if (isset($_POST['submit'])) {
 				exit();
 			} else {
 
-				//Order aanmaken
+				//Materiaal aanmaken
 				$sql = "INSERT INTO tbl_materialen (materiaal) VALUES ('$materiaal');";
 				mysqli_query($conn, $sql);
 				header("Location: ../materialen");
