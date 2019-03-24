@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 					$_SESSION['u_email'] = $row['email'];//email
 					$_SESSION['u_tel'] = $row['telefoonnummer'];//tel
 					$_SESSION['u_com'] = $row['bedrijf'];//bedrijf
-					header("Location: ../index");
+					header("Location: ../order");
 					echo '<script language="javascript">';
 					echo 'alert("success")';
 					echo '</script>';
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 } else {
-	header("Location: ../index?login=error");
+	header("Location: ../signup?login=error");
 		echo '<script language="javascript">';
 		echo 'alert("not submit")';
 		echo '</script>';

@@ -141,21 +141,25 @@ function open_tab(info_div) {
 
     <div class="container">
 
-      <a class="logo" href="index"><img src="images/pentolabel.png"></a>
+      <a class="logo" href="order"><img src="images/pentolabel.png"></a>
 
-      <nav>
-        <ul>
-          <a href="index"><li>Home</li></a>
-          <?php
-            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a>'.'<a href="klant"><li>Klanten</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
-            else if (isset($_SESSION['u_id'])) { echo '<a href="order"><li>Mijn orders</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>'; }
-          ?>
-        </ul>
-      </nav>
 
-  <?php if (isset($_SESSION['u_id']))
+
+  <?php if (!isset($_SESSION['u_id']))
   {
+    ?><script>window.location.replace("signup")</script><?php
+  } else {
     include_once 'includes/dbh.inc.php';
+    ?>
+    <nav>
+      <ul>
+        <?php
+          if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a><a href="klant"><li>Klanten</li></a><a href="fabrikanten"><li>Fabrikanten</li></a><a href="materialen"><li>Materialen</li></a><a href="afwerkingen"><li>Afwerkingen</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
+          else if (isset($_SESSION['u_id'])) { echo '<a href="order"><li>Mijn orders</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>'; }
+        ?>
+      </ul>
+    </nav>
+    <?php
 
     // Is het de admin (met ID 1)?
     if ($_SESSION['u_id'] == "1")
@@ -624,13 +628,31 @@ function open_tab(info_div) {
           <div class="tab"><h5>Label specificaties:</h5>
             <img class="img_info" src="images/specificaties.png" id="imageInput">
             <strong>Label materiaal:</strong>
-            <p><input type="text" name="materiaal" placeholder="Het label materiaal" required title="Voer het materiaal in"></p>
+            <p><select name="materiaal" required title="Kies een materiaal">
+              <option value="" hidden disabled selected>Kies een materiaal</option>
+              <?php
+                $sql = "SELECT * FROM tbl_materialen;";
+            		$result_materialen = mysqli_query($conn, $sql);
+                foreach ($result_materialen as $materialen) {
+                  $materiaal = $materialen['materiaal'];
+                  echo '<option value="'.$materiaal.'" required>'.$materiaal.'</option>'; }
+                  ?>
+            </select></p>
             <strong>Bedrukking:</strong>
             <p><input type="checkbox" name="bedrukking" placeholder="De " title="Kies een bedrukking" value="Ja"></p>
             <strong>Afbeelding:</strong>
             <p><input type="file" name="afwerking_afbeelding" id="afwerking_afbeelding" required="false" title="Voeg een afbeelding toe" onchange="document.getElementById('imageInput').src = window.URL.createObjectURL(this.files[0])"></p>
             <strong>Afwerking:</strong>
-            <p><input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in"></p>
+            <p><select name="afwerking" required title="Kies een afwerking">
+              <option value="" hidden disabled selected>Kies een afwerking</option>
+              <?php
+                $sql = "SELECT * FROM tbl_afwerking;";
+            		$result_afwerkingen = mysqli_query($conn, $sql);
+                foreach ($result_afwerkingen as $afwerkingen) {
+                  $afwerking = $afwerkingen['afwerking'];
+                  echo '<option value="'.$afwerking.'" required>'.$afwerking.'</option>'; }
+                  ?>
+            </select></p>
           </div>
 
           <div class="tab"><h5>Details:</h5>
@@ -972,7 +994,7 @@ function open_tab(info_div) {
             }
           }
         }
-      } else header("Location: signup?order=notloggedin");?>
+      }?>
     </div>
 </body>
 

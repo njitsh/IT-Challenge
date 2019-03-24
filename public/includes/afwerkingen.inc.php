@@ -2,10 +2,10 @@
 session_start();
 if (isset($_POST['submit'])) {
 	include_once 'dbh.inc.php';
-	$materiaal = mysqli_real_escape_string($conn, $_POST['materiaal']);
+	$afwerking = mysqli_real_escape_string($conn, $_POST['afwerking']);
 
 	//Kijk of iets leeg is
-	if (empty($materiaal)) {
+	if (empty($afwerking)) {
 		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
 		echo '</script>';
 
 		exit();
-	} else if (!preg_match("/^[a-z A-Z]*$/", $materiaal)) {
+	} else if (!preg_match("/^[a-z A-Z]*$/", $afwerking)) {
 			//Kijk of alle karakters zijn toegestaan
 
 				//header("Location: ../signup?signup=invalid");
@@ -25,19 +25,19 @@ if (isset($_POST['submit'])) {
 			} else {
 
 				//Materiaal aanmaken
-				$sql = "INSERT INTO tbl_materialen (materiaal) VALUES ('$materiaal');";
+				$sql = "INSERT INTO tbl_afwerking (afwerking) VALUES ('$afwerking');";
 				mysqli_query($conn, $sql);
-				header("Location: ../materialen");
+				header("Location: ../afwerkingen");
 				exit();
 			}
 }
 else if (isset($_POST['delete'])) {
 	include_once 'dbh.inc.php';
-	$materiaalnummer = mysqli_real_escape_string($conn, $_POST['materiaalnummer']);
-	$sql = "DELETE FROM tbl_materialen WHERE materiaalnummer='$materiaalnummer';";
+	$afwerkingnummer = mysqli_real_escape_string($conn, $_POST['afwerkingnummer']);
+	$sql = "DELETE FROM tbl_afwerking WHERE afwerkingnummer='$afwerkingnummer';";
 	mysqli_query($conn, $sql);
 
-	header("Location: ../materialen");
+	header("Location: ../afwerkingen");
 	exit();
 }
 else {

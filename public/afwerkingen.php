@@ -44,36 +44,36 @@
             </ul>
           </nav>
 
-          <h4><strong>Een materiaal toevoegen</strong></h4>
+          <h4><strong>Een afwerking toevoegen</strong></h4>
 
-            <form class="create_materiaal" action="includes/materialen.inc.php" method="POST" autocomplete="off" style="padding-top: 10px;">
-              <strong>Materiaal</strong>
-              <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in">
+            <form class="create_afwerking" action="includes/afwerkingen.inc.php" method="POST" autocomplete="off" style="padding-top: 10px;">
+              <strong>Afwerking</strong>
+              <input type="text" name="afwerking" placeholder="Voer hier een afwerking in" required title="Voer de afwerking in">
               <div style="display:grid; grid-template-columns: 1fr auto;"><div></div><input style="margin-top: 10px; margin-bottom: 5px;" id="submit" type="submit" name="submit" value="Toevoegen"></div>
             </form>
 
         <?php
 
-      echo "<h4><strong>Alle materialen</strong></h4>";
+      echo "<h4><strong>Alle afwerkingen</strong></h4>";
       // Haalt alle orders op
-      $sql = "SELECT * FROM tbl_materialen";
-  		$result_materialen = mysqli_query($conn, $sql);
-  		$resultCheck_materialen = mysqli_num_rows($result_materialen);
-  		if ($resultCheck_materialen >= 1) {
+      $sql = "SELECT * FROM tbl_afwerking";
+  		$result_afwerkingen = mysqli_query($conn, $sql);
+  		$resultCheck_afwerkingen = mysqli_num_rows($result_afwerkingen);
+  		if ($resultCheck_afwerkingen >= 1) {
 
-        foreach ($result_materialen as $materialen) {
-          $materiaalnummer = $materialen['materiaalnummer'];
-          $materiaal = $materialen["materiaal"];
+        foreach ($result_afwerkingen as $afwerkingen) {
+          $afwerkingnummer = $afwerkingen['afwerkingnummer'];
+          $afwerking = $afwerkingen["afwerking"];
             ?>
             <div class="materiaal">
-              <div class="balk" onclick="if ((document.getElementById('informatie<?php echo $materiaalnummer; ?>').style.display) != 'block') { getElementById('informatie<?php echo $materiaalnummer; ?>').style.display='block'; } else { getElementById('informatie<?php echo $materiaalnummer; ?>').style.display='none'; }">
+              <div class="balk" onclick="if ((document.getElementById('informatie<?php echo $afwerkingnummer; ?>').style.display) != 'block') { getElementById('informatie<?php echo $afwerkingnummer; ?>').style.display='block'; } else { getElementById('informatie<?php echo $afwerkingnummer; ?>').style.display='none'; }">
 
-                <span><?php echo $materiaal ?></span></div>
+                <span><?php echo $afwerking ?></span></div>
 
-              <div class="informatie" id="informatie<?php echo $materiaalnummer; ?>">
+              <div class="informatie" id="informatie<?php echo $afwerkingnummer; ?>">
 
-                <form class="materiaal" action="includes/materialen.inc.php" method="POST" autocomplete="off">
-                  <input name="materiaalnummer" style="display: none;" value="<?php echo $materiaalnummer;?>">
+                <form class="afwerking" action="includes/afwerkingen.inc.php" method="POST" autocomplete="off">
+                  <input name="afwerkingnummer" style="display: none;" value="<?php echo $afwerkingnummer;?>">
                   <div style="display:grid; grid-template-columns: 1fr auto;"><div></div><input style="margin-top: 10px;" id="submit" type="submit" name="delete" value="Verwijderen"></div>
                 </form>
 
@@ -82,7 +82,7 @@
             <?php
           }
         }
-  } else header("Location: signup?materialen=notloggedin");?>
+  } else header("Location: signup?afwerkingen=notloggedin");?>
     </div>
 </body>
 

@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 							$_SESSION['u_email'] = $email;
 							$_SESSION['u_tel'] = $tel;
 							$_SESSION['u_com'] = $company;
-							header("Location: ../index");
+							header("Location: ../order");
 							exit();
 						} else {
 
