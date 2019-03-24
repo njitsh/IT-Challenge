@@ -61,7 +61,7 @@
         <ul>
           <a href="index"><li>Home</li></a>
           <?php
-            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a>'.'<a href="klant"><li>Klanten</li></a>'.'<a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
+            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a><a href="klant"><li>Klanten</li></a><a href="materialen"><li>Materialen</li></a></a><a href="fabrikanten"><li>Fabrikanten</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
           ?>
         </ul>
       </nav>
@@ -89,23 +89,27 @@
               <span><?php echo "#".$klantnummer." | ".$voornaam." ".$achternaam ?></span></div>
 
             <div class="informatie" id="informatie<?php echo $klant["klantnummer"]; ?>">
-
-              <form class="klant" action="" method="POST" autocomplete="off">
-                Klantnummer<br>
-                <input disabled name="klantnummer" type="number" value="<?php echo $klantnummer?>">
-                <br>Voornaam<br>
-                <input disabled type="text" name="voornaam" placeholder="Voornaam*" required autofocus title="Voornaam" value="<?php echo $klant["voornaam"]; ?>">
-                <br>Achternaam<br>
-                <input disabled type="text" name="achternaam" placeholder="Achternaam*" required pattern="[0-9]" title="Achternaam" value="<?php echo $klant["achternaam"]; ?>">
-                <br>Email<br>
-                <input disabled type="email" name="email" placeholder="Email*" required title="Email" value="<?php echo $klant["email"]; ?>">
-                <br>Telefoonnummer<br>
-                <input disabled type="tel" name="telefoonnummer" placeholder="Telefoonnummer*" required title="Telefoonnummer" value="<?php echo $klant["telefoonnummer"]; ?>">
-                <br>Bedrijf<br>
-                <input disabled type="text" name="bedrijf" placeholder="Bedrijf" title="Bedrijf" value="<?php echo $klant["bedrijf"]; ?>"><br><br>
-                <input disabled id="delete" type="submit" name="delete" value="delete">
-                <input disabled id="submit" type="submit" name="submit" value="submit">
-              </form>
+              <h6><strong>Systeem informatie</strong></h6>
+              <div class="order_details_list">
+                <div><strong>Klantnummer</strong><br>
+                <?php echo $klantnummer; ?></div>
+              </div>
+              <h6><strong>Naam</strong></h6>
+              <div class="order_details_list">
+                <div><strong>Voornaam</strong><br>
+                <?php echo $klant["voornaam"]; ?></div>
+                <div><strong>Achternaam</strong><br>
+                <?php echo $klant["achternaam"]; ?></div>
+              </div>
+              <h6><strong>Gegevens</strong></h6>
+              <div class="order_details_list">
+                <div><strong>E-Mail</strong><br>
+                <?php echo $klant["email"]; ?></div>
+                <div><strong>Telefoonnummer</strong><br>
+                <?php echo $klant["telefoonnummer"]; ?></div>
+                <div><strong>Bedrijf</strong><br>
+                <?php echo $klant["bedrijf"]; ?></div>
+              </div>
 
             </div>
           </div>
