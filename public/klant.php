@@ -59,7 +59,6 @@
 
       <nav>
         <ul>
-          <a href="index"><li>Home</li></a>
           <?php
             if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a><a href="klant"><li>Klanten</li></a><a href="materialen"><li>Materialen</li></a></a><a href="fabrikanten"><li>Fabrikanten</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
           ?>
