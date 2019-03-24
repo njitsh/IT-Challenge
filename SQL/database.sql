@@ -27,11 +27,11 @@ CREATE TABLE tbl_orders(
     status varchar(255) DEFAULT 'Aangevraagd' NOT NULL,
     opmerking_klant varchar(255) NULL,
     opmerking_admin varchar(255) NULL,
-    order bit(1) DEFAULT 0 NOT NULL
+    is_order bit(1) DEFAULT 0 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE tbl_materialen(
-    materiaalnummer  int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    materiaalnummer int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
     materiaal varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
