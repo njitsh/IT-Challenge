@@ -45,6 +45,6 @@ CREATE TABLE tbl_fabrikanten(
     fabrikantnummer int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
     fabrikant varchar(256) NOT NULL,
     contactpersoon varchar(256) NOT NULL,
-    telefoonnummer int(10) NOT NULL,
+    telefoonnummer varchar(256) NOT NULL,
     email varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
