@@ -103,9 +103,9 @@
               <h6><strong>Gegevens</strong></h6>
               <div class="order_details_list">
                 <div><strong>E-Mail</strong><br>
-                <?php echo $klant["email"]; ?></div>
+                <a href="mailto:<?php echo $klant["email"]; ?>"><?php echo $klant["email"]; ?></a></div>
                 <div><strong>Telefoonnummer</strong><br>
-                <?php echo $klant["telefoonnummer"]; ?></div>
+                <a href="tel:<?php echo $klant["telefoonnummer"];?>"><?php echo $klant["telefoonnummer"]; ?></a></div>
                 <div><strong>Bedrijf</strong><br>
                 <?php echo $klant["bedrijf"]; ?></div>
               </div>
