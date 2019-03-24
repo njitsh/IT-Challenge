@@ -41,8 +41,7 @@ date_default_timezone_set('Europe/Brussels');?>
       var order_nummer = getUrlParam('order','Empty');
       var order_name = String("informatie" + order_nummer);
       document.getElementById(order_name).style.display='block';
-      var elmnt = document.getElementById(order_nummer);
-      elmnt.scrollIntoView();
+      document.getElementById(order_nummer).scrollIntoView({behavior: "smooth"});
     }
 
 
@@ -123,6 +122,13 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
+function open_tab(info_div) {
+  info_div = "informatie" + info_div;
+  if ((document.getElementById(info_div).style.display) != 'block') {
+    document.getElementById(info_div).style.display='block';
+    document.getElementById(info_div).scrollIntoView({behavior: "smooth"});
+  } else { document.getElementById(info_div).style.display='none'; } }
+
     </script>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -173,7 +179,8 @@ function fixStepIndicator(n) {
           }
           ?>
           <div class="order" id="<?php echo $order["ordernummer"] ?>">
-            <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
+
+            <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
               <span><?php echo "Ordernummer: #".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
               <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
@@ -342,7 +349,8 @@ function fixStepIndicator(n) {
               $datum_bewerkt = strtotime($order["datum_laatst_bewerkt"]);
             ?>
               <div class="order" id="<?php echo $order["ordernummer"] ?>">
-                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
+
+                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
                   <span><?php echo "Ordernummer: #".$order["ordernummer"] ?></span>
                   <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
@@ -416,7 +424,8 @@ function fixStepIndicator(n) {
               $datum_bewerkt = strtotime($order["datum_laatst_bewerkt"]);
             ?>
               <div class="order" id="<?php echo $order["ordernummer"] ?>">
-                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
+
+                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
                   <span><?php echo "Ordernummer: #".$order["ordernummer"] ?></span>
                   <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
@@ -490,7 +499,8 @@ function fixStepIndicator(n) {
               $datum_bewerkt = strtotime($order["datum_laatst_bewerkt"]);
             ?>
               <div class="order" id="<?php echo $order["ordernummer"] ?>">
-                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
+
+                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
                   <span><?php echo "Nummer: #".$order["ordernummer"] ?></span>
                   <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
@@ -564,8 +574,9 @@ function fixStepIndicator(n) {
               $datum_bewerkt = strtotime($order["datum_laatst_bewerkt"]);
             ?>
               <div class="order" id="<?php echo $order["ordernummer"] ?>">
-                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
 
+
+                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
                   <span><?php echo "Ordernummer: #".$order["ordernummer"] ?></span>
                   <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
                   <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
