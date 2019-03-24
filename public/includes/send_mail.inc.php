@@ -54,7 +54,7 @@ $msg .= '</style> </head>';
 $msg .= '<body style="margin: 0px;" bgcolor=”#ffffff”><div class="announcement" bgcolor="#dc5626"><span class="announcement_row" style="padding: 8px 0px 8px 0px;">Pentolabel B.V., Mon Plaisir 89c, 4879 AM Etten-Leur</span></div>';
 $msg .= '<div class="container">';
 $msg .= '<a class="logo" href="https://pentolabel.nl/"><img src="https://pentolabel.nl/wp-content/uploads/2017/11/briefhoofd.png" height="88px"></a>';
-$msg .= '<table class="nav" style="margin: 0px 0px 10px 0px;"><tr height="100%"><td><a href="http://localhost:8080/IT-Challenge/public/">Home</a></td><td><a href="http://localhost:8080/IT-Challenge/public/order">Mijn orders</a></td></tr></table>';
+$msg .= '<table class="nav" style="margin: 0px 0px 10px 0px;"><tr height="100%"><td><a href="http://localhost:8080/IT-Challenge/public/order">Mijn orders</a></td></tr></table>';
 $msg .= '<h4><strong>Beste '.$voornaam.' '.$achternaam.',</strong></h4>';
 $msg .= 'Hartelijk dank voor je aanvraag bij Pentolabel. Je aanvraag is bij ons bekend onder nummer: <strong>'.$_SESSION['o_id'].'</strong>';
 $msg .= '<h4><strong>Overzicht van je aanvraag</strong></h4>';
