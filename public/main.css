@@ -160,6 +160,13 @@ textarea {
     font-size: 22px;
     margin-bottom: 10px;
   }
+    /* signup */
+  .inloggen{
+	  line-height: 30px;
+  }
+  .registreren{
+	  line-height: 30px;
+  }
 
 
 /* ==========================================================================
