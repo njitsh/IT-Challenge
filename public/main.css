@@ -161,6 +161,17 @@ textarea {
       margin-bottom: 10px;
     }
 
+    h5 {
+      color: #dc5626;
+      font-size: 18px;
+    }
+
+    h6 {
+      color: #dc5626;
+      font-size: 18px;
+      margin: 15px 0px 10px 0px;
+    }
+
    /* End General Styling */
 
    /* Start Order.php */
@@ -174,6 +185,7 @@ textarea {
      color: white;
      padding: 10px;
      cursor: pointer;
+     border-radius: 2px;
    }
 
    .balk:hover {
@@ -196,9 +208,13 @@ textarea {
 
    .informatie {
      display: none;
-     background-color: #666666;
-     color: white;
+     background-color: #f1f1f1;
      padding: 10px;
+   }
+
+   .order_details_list {
+     display: grid;
+     grid-template-columns: 1fr 1fr 1fr;
    }
 
    /* End Order.php */
