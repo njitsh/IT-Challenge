@@ -1,17 +1,20 @@
 <!doctype html>
-<?php session_start();?>
+<?php session_start();
+
+date_default_timezone_set('Europe/Brussels');?>
 
 <html class="no-js" lang="">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title></title>
+    <title>Pentolabel B.V.</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" href="//i2.wp.com/pentolabel.nl/wp-content/uploads/2017/11/Pentolabel-favicon.png?fit=32%2C32&amp;ssl=1" sizes="32x32">
+    <link rel="icon" href="//i2.wp.com/pentolabel.nl/wp-content/uploads/2017/11/Pentolabel-favicon.png?fit=82%2C82&amp;ssl=1" sizes="192x192">
+    <link rel="apple-touch-icon-precomposed" href="//i2.wp.com/pentolabel.nl/wp-content/uploads/2017/11/Pentolabel-favicon.png?fit=82%2C82&amp;ssl=1">
     <!-- Place favicon.ico in the root directory -->
 
     <link rel="stylesheet" href="normalize.css">
@@ -41,6 +44,84 @@
       var elmnt = document.getElementById(order_nummer);
       elmnt.scrollIntoView();
     }
+
+
+var currentTab = 0; // Current tab is set to be the first tab (0)
+showTab(currentTab); // Display the current tab
+
+function showTab(n) {
+  // This function will display the specified tab of the form...
+  var x = document.getElementsByClassName("tab");
+  x[n].style.display = "block";
+  //... and fix the Previous/Next buttons:
+  if (n == 0) {
+    document.getElementById("prevBtn").disabled = true;
+  } else {
+    document.getElementById("prevBtn").disabled = false;
+  }
+  if (n == (x.length - 1)) {
+    document.getElementById("nextBtn").innerHTML = "Submit";
+    document.getElementById("nextBtn").type = "submit";
+    document.getElementById("nextBtn").name = "submit";
+  } else {
+    document.getElementById("nextBtn").innerHTML = "Volgende";
+    document.getElementById("nextBtn").type = "button";
+    document.getElementById("nextBtn").name = "volgende";
+  }
+  //... and run a function that will display the correct step indicator:
+  fixStepIndicator(n)
+}
+
+function nextPrev(n) {
+  // This function will figure out which tab to display
+  var x = document.getElementsByClassName("tab");
+  // Exit the function if any field in the current tab is invalid:
+  if (n == 1 && !validateForm()) return false;
+  // Hide the current tab:
+  x[currentTab].style.display = "none";
+  // Increase or decrease the current tab by 1:
+  currentTab = currentTab + n;
+  // if you have reached the end of the form...
+  if (currentTab >= x.length) {
+    // ... the form gets submitted:
+    document.getElementById("regForm").submit();
+    return false;
+  }
+  // Otherwise, display the correct tab:
+  showTab(currentTab);
+}
+
+function validateForm() {
+  // This function deals with validation of the form fields
+  var x, y, i, valid = true;
+  x = document.getElementsByClassName("tab");
+  y = x[currentTab].getElementsByTagName("input");
+  // A loop that checks every input field in the current tab:
+  for (i = 0; i < y.length; i++) {
+    // If a field is empty...
+    if (y[i].value == "") {
+      // add an "invalid" class to the field:
+      y[i].className += " invalid";
+      // and set the current valid status to false
+      valid = false;
+    }
+  }
+  // If the valid status is true, mark the step as finished and valid:
+  if (valid) {
+    document.getElementsByClassName("step")[currentTab].className += " finish";
+  }
+  return valid; // return the valid status
+}
+
+function fixStepIndicator(n) {
+  // This function removes the "active" class of all steps...
+  var i, x = document.getElementsByClassName("step");
+  for (i = 0; i < x.length; i++) {
+    x[i].className = x[i].className.replace(" active", "");
+  }
+  //... and adds the "active" class on the current step:
+  x[n].className += " active";
+}
 
     </script>
 
@@ -79,6 +160,7 @@
   		$result_orders = mysqli_query($conn, $sql);
 
       foreach ($result_orders as $order) {
+        $datum_bewerkt = strtotime($order["datum_laatst_bewerkt"]);
         $klantnummer = $order['klantnummer'];
         // Zoekt een klant op in de klanten tabel, via het klantnummer van orders
         $sql = "SELECT * FROM tbl_klanten WHERE klantnummer=$klantnummer;";
@@ -93,9 +175,9 @@
           <div class="order" id="<?php echo $order["ordernummer"] ?>">
             <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
 
-              <span><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
+              <span><?php echo "Ordernummer: #".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
               <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
-              <span style="float:right; padding-right:20px;"><?php echo "Laatst bewerkt: ".$order["datum_laatst_bewerkt"]; ?></span></div>
+              <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
 
             <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
@@ -138,8 +220,7 @@
                 <?php echo $order["opmerking_klant"];?>
                 <br>Opmerking admin<br>
                 <textarea name="opmerking_admin"><?php echo $order["opmerking_admin"];?></textarea>
-                <br>
-                <input id="delete" type="submit" name="delete" value="delete">
+
                 <input id="submit" type="submit" name="submit" value="submit">
               </form>
 
@@ -150,16 +231,86 @@
       }
     } else { ?>
 
-      <h4><strong>Een order plaatsen</strong></h4>
-          <form class="order_form" action="includes/create_order.inc" method="POST" autocomplete="off">
+      <h4><strong>Een aanvraag plaatsen</strong></h4>
+        <form id="regForm" action="includes/create_order.inc" method="POST" autocomplete="off">
+
+          <!-- One "tab" for each step in the form: -->
+          <div class="tab" style="display:inline;"><h5>Afmetingen label:</h5>
+            <img class="img_info" src="images/afmetingen.png">
+            <strong>Breedte:</strong>
+            <p><input type="number" name="breedte" placeholder="De breedte van het label" required autofocus pattern="[0-9]" title="Breedte: Voer een getal in"><span style="margin-left:-40px;">mm</span></p>
+            <strong>Hoogte:</strong>
+            <p><input type="number" name="hoogte" placeholder="De hoogte van het label" required autofocus pattern="[0-9]" title="Hoogte: Voer een getal in"><span style="margin-left:-40px;">mm</span></p>
+            <strong>Radius:</strong>
+            <p><input type="number" name="radius" placeholder="De radius van de hoek van het label" required patern="[0-9]" title="Radius: Voer een getal in"><span style="margin-left:-40px;">mm</span></p>
+          </div>
+
+          <div class="tab"><h5>Afmetingen rol:</h5>
+            <img class="img_info" src="images/afmetingen_rol.png">
+            <strong>Tussenafstand:</strong>
+            <p><input type="number" name="tussenafstand" placeholder="De afstand tussen de labels" required pattern="[0-9]" title="Tussenafstand: Voer een getal in"><span style="margin-left:-40px;">mm</span></p>
+            <strong>Rolbreedte:</strong>
+            <p><input type="number" name="rolbreedte" placeholder="De rolbreedte van uw printer" required pattern="[0-9]" title="Voer een getal in"><span style="margin-left:-40px;">mm</span></p>
+            <strong>Wikkeling:</strong>
+            <img src="images/rolwikkeling.png" style="width: 48%; margin-top: 5px;">
+            <p>
+            <select name="wikkeling" required title="Zie afbeelding">
+              <option value="" hidden disabled selected>Kies een wikkeling</option>
+              <option value="1" required>1</option>
+              <option value="2" required>2</option>
+              <option value="3" required>3</option>
+              <option value="4" required>4</option>
+              <option value="5" required>5</option>
+              <option value="6" required>6</option>
+              <option value="7" required>7</option>
+              <option value="8" required>8</option>
+            </select></p>
+          </div>
+
+          <div class="tab"><h5>Label specificaties:</h5>
+            <img class="img_info" src="images/specificaties.png" id="imageInput">
+            <strong>Label materiaal:</strong>
+            <p><input type="text" name="materiaal" placeholder="Het label materiaal" required title="Voer het materiaal in"></p>
+            <strong>Bedrukking:</strong>
+            <p><input type="checkbox" name="bedrukking" placeholder="De " title="Kies een bedrukking" value="Ja"></p>
+            <strong>Afbeelding:</strong>
+            <p><input type="file" name="afwerking_afbeelding" required="false" title="Voeg een afbeelding toe" onchange="document.getElementById('imageInput').src = window.URL.createObjectURL(this.files[0])"></p>
+            <strong>Afwerking:</strong>
+            <p><input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in"></p>
+          </div>
+
+          <div class="tab"><h5>Aanvraag details:</h5>
+            <strong>Oplage:</strong>
+            <p><input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in"></p>
+            <p><input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in"></p>
+            <p><input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in"></p>
+            <strong>Opmerking:</strong>
+            <p><textarea name="opmerking_klant" placeholder="Voeg als het nodig is een opmerking toe." title="Voeg als het nodig is een opmerking toe."></textarea></p>
+          </div>
+
+          <div style="overflow:auto;">
+            <div style="float:right;bottom:104px;position:absolute;left:38%;">
+              <button type="button" id="prevBtn" onclick="nextPrev(-1)" disabled>Vorige</button>
+              <button type="button" id="nextBtn" onclick="nextPrev(1)" name="volgende" style="margin-right: 40px;">Volgende</button>
+            </div>
+          </div>
+
+          <!-- Circles which indicates the steps of the form: -->
+          <div style="text-align:center;margin-top:40px;bottom:111px;position:absolute;left:27.5%;">
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+          </div>
+
+        </form>
+
+          <!--form class="order_form" action="includes/create_order.inc" method="POST" autocomplete="off">
               <input type="number" name="breedte" placeholder="Voer hier de breedte van het label in mm in*" required autofocus pattern="[0-9]" title="Voer een getal in">
               <input type="number" name="hoogte" placeholder="Voer hier de hoogte van het label in mm in*" required pattern="[0-9]" title="Voer een getal in">
               <input type="number" name="radius" placeholder="Voer hier de radius van de hoek in mm in*" required patern="[0-9]" title="Voer een getal in">
-              <input type="number"  name="tussenafstand" placeholder="Voer hier de afstand tussen de labels in mm in*" required pattern="[0-9]" title="Voer een getal in">
+              <input type="number" name="tussenafstand" placeholder="Voer hier de afstand tussen de labels in mm in*" required pattern="[0-9]" title="Voer een getal in">
               <input type="number" name="rolbreedte" placeholder="Voer hier de rolbreedte van uw printer in" required pattern="[0-9]" title="Voer een getal in">
-              <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in">
-              <input type="checkbox" name="bedrukking" placeholder="Kies een bedrukking" title="Kies een bedrukking" value="Ja"> <!-- input voor een afbeelding -->
-              <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in">
               <select name="wikkeling" placeholder="Kies uw type wikkeling als in de afbeelding" required title="Zie de afbeelding">
                 <option value="" hidden disabled selected>Kies een wikkeling</option>
                 <option value="1" required>1</option>
@@ -171,62 +322,79 @@
                 <option value="7" required>7</option>
                 <option value="8" required>8</option>
               </select>
+              <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in">
+              <input type="checkbox" name="bedrukking" placeholder="Kies een bedrukking" title="Kies een bedrukking" value="Ja">
+              <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in">
               <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in">
               <br>Opmerking klant<br>
               <textarea name="opmerking_klant" placeholder="Voeg als het nodig is een opmerking toe." title="Voeg als het nodig is een opmerking toe."></textarea>
               <input id="submit" type="submit" name="submit" value="submit">
-          </form>
+          </form-->
 
           <?php
           $klantnummer = $_SESSION['u_id'];
-          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, CASE WHEN status = 'Probleem' THEN 1 ELSE 2 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND status = 'Probleem' ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, CASE WHEN status = 'Probleem' THEN 1 ELSE 2 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
       		$result_orders = mysqli_query($conn, $sql);
       		$resultCheck_orders = mysqli_num_rows($result_orders);
       		if ($resultCheck_orders >= 1) {
-            echo "<h4><strong>Jouw orders</strong></h4>";
+            echo "<h4><strong>Problemen</strong></h4>";
             foreach ($result_orders as $order) {
+              $datum_bewerkt = strtotime($order["datum_laatst_bewerkt"]);
             ?>
               <div class="order" id="<?php echo $order["ordernummer"] ?>">
                 <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
 
-                  <span><?php echo "#".$order["ordernummer"] ?></span>
+                  <span><?php echo "Ordernummer: #".$order["ordernummer"] ?></span>
                   <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
-                  <span style="float:right; padding-right:20px;"><?php echo "Laatst bewerkt: ".$order["datum_laatst_bewerkt"]; ?></span></div>
+                  <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
 
                 <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
 
                   <form class="order" action="includes/update_order.inc.php" method="POST" autocomplete="off">
                     <input name="ordernummer" style="display: none;" value="<?php echo $order['ordernummer']?>"></input>
-                    Breedte<br>
-                    <?php echo $order["breedte"]; ?>
-                    <br>Hoogte<br>
-                    <?php echo $order["hoogte"]; ?>
-                    <br>Radius<br>
-                    <?php echo $order["radius"]; ?>
-                    <br>Tussenafstand<br>
-                    <?php echo $order["tussenafstand"]; ?>
-                    <br>Rolbreedte<br>
-                    <?php echo $order["rolbreedte"]; ?>
-                    <br>Materiaal<br>
-                    <?php echo $order["materiaal"]; ?>
-                    <br>Bedrukking<br>
-                    <?php if ($order["bedrukking"] == 1) echo "Ja"; else echo "Nee"; ?> <!-- input voor een afbeelding -->
-                    <br>Afwerking<br>
-                    <?php echo $order["afwerking"]; ?>
-                    <br>Wikkeling<br>
-                    <?php echo $order["wikkeling"]; ?>
-                    <br>Oplage<br>
-                    <?php echo $order["oplage"]; ?>
-                    <br>Status<br>
-                    <?php echo $order["status"]; ?>
-                    <br>Opmerking klant<br>
-                    <textarea name="opmerking_klant"><?php echo $order["opmerking_klant"];?></textarea>
-                    <?php if ($order["opmerking_admin"] != "") {
-                      echo "<br>Opmerking admin<br>";
-                      echo $order["opmerking_admin"];
-                    }?>
-                    <br>
-                    <input id="delete" type="submit" name="delete" value="delete">
+                    <h6><strong>Afmetingen label</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Breedte</strong><br>
+                      <?php echo $order["breedte"]; ?> mm</div>
+                      <div><strong>Hoogte</strong><br>
+                      <?php echo $order["hoogte"]; ?> mm</div>
+                      <div><strong>Radius</strong><br>
+                      <?php echo $order["radius"]; ?> mm</div>
+                    </div>
+                    <h6><strong>Afmetingen rol</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Tussenafstand</strong><br>
+                      <?php echo $order["tussenafstand"]; ?> mm</div>
+                      <div><strong>Rolbreedte</strong><br>
+                      <?php echo $order["rolbreedte"]; ?> mm</div>
+                      <div><strong>Wikkeling</strong><br>
+                      <?php echo $order["wikkeling"]; ?></div>
+                    </div>
+                    <h6><strong>Label specificaties</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Materiaal</strong><br>
+                      <?php echo $order["materiaal"]; ?></div>
+                      <div><strong>Bedrukking</strong><br>
+                      <?php if ($order["bedrukking"] == 1) echo "Ja"; else echo "Nee"; ?></div> <!-- input voor een afbeelding -->
+                      <div><strong>Afwerking</strong><br>
+                      <?php echo $order["afwerking"]; ?></div>
+                    </div>
+                    <h6><strong>Aanvraag details</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Oplage</strong><br>
+                      <?php echo $order["oplage"]; ?></div>
+                      <div><strong>Status</strong><br>
+                      <?php echo $order["status"]; ?></div>
+                    </div>
+                    <h6><strong>Opmerkingen</strong></h6>
+                    <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
+                      <div><strong>Opmerking klant</strong><br>
+                      <textarea name="opmerking_klant" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
+                      <?php if ($order["opmerking_admin"] != "") {
+                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled cols="66">'.$order["opmerking_admin"].'</textarea></div>';
+                      }?>
+                    </div>
+
                     <input id="submit" type="submit" name="submit" value="submit">
                   </form>
 
@@ -236,7 +404,229 @@
 
             <?php
             }
-          } else echo "No orders yet!";
+          }
+
+          $klantnummer = $_SESSION['u_id'];
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND is_order = 1 ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, CASE WHEN status = 'Probleem' THEN 1 ELSE 2 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+      		$result_orders = mysqli_query($conn, $sql);
+      		$resultCheck_orders = mysqli_num_rows($result_orders);
+      		if ($resultCheck_orders >= 1) {
+            echo "<h4><strong>Orders</strong></h4>";
+            foreach ($result_orders as $order) {
+              $datum_bewerkt = strtotime($order["datum_laatst_bewerkt"]);
+            ?>
+              <div class="order" id="<?php echo $order["ordernummer"] ?>">
+                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
+
+                  <span><?php echo "Ordernummer: #".$order["ordernummer"] ?></span>
+                  <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
+                  <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+
+                <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
+
+                  <form class="order" action="includes/update_order.inc.php" method="POST" autocomplete="off">
+                    <input name="ordernummer" style="display: none;" value="<?php echo $order['ordernummer']?>"></input>
+                    <h6><strong>Afmetingen label</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Breedte</strong><br>
+                      <?php echo $order["breedte"]; ?> mm</div>
+                      <div><strong>Hoogte</strong><br>
+                      <?php echo $order["hoogte"]; ?> mm</div>
+                      <div><strong>Radius</strong><br>
+                      <?php echo $order["radius"]; ?> mm</div>
+                    </div>
+                    <h6><strong>Afmetingen rol</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Tussenafstand</strong><br>
+                      <?php echo $order["tussenafstand"]; ?> mm</div>
+                      <div><strong>Rolbreedte</strong><br>
+                      <?php echo $order["rolbreedte"]; ?> mm</div>
+                      <div><strong>Wikkeling</strong><br>
+                      <?php echo $order["wikkeling"]; ?></div>
+                    </div>
+                    <h6><strong>Label specificaties</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Materiaal</strong><br>
+                      <?php echo $order["materiaal"]; ?></div>
+                      <div><strong>Bedrukking</strong><br>
+                      <?php if ($order["bedrukking"] == 1) echo "Ja"; else echo "Nee"; ?></div> <!-- input voor een afbeelding -->
+                      <div><strong>Afwerking</strong><br>
+                      <?php echo $order["afwerking"]; ?></div>
+                    </div>
+                    <h6><strong>Aanvraag details</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Oplage</strong><br>
+                      <?php echo $order["oplage"]; ?></div>
+                      <div><strong>Status</strong><br>
+                      <?php echo $order["status"]; ?></div>
+                    </div>
+                    <h6><strong>Opmerkingen</strong></h6>
+                    <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
+                      <div><strong>Opmerking klant</strong><br>
+                      <textarea name="opmerking_klant" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
+                      <?php if ($order["opmerking_admin"] != "") {
+                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled cols="66">'.$order["opmerking_admin"].'</textarea></div>';
+                      }?>
+                    </div>
+
+                    <input id="submit" type="submit" name="submit" value="submit">
+                  </form>
+
+                </div>
+              </div>
+
+
+            <?php
+            }
+          }
+
+          $klantnummer = $_SESSION['u_id'];
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND is_order = 0 AND NOT status = 'Klaar' AND NOT status = 'Probleem' ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, CASE WHEN status = 'Probleem' THEN 1 ELSE 2 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+      		$result_orders = mysqli_query($conn, $sql);
+      		$resultCheck_orders = mysqli_num_rows($result_orders);
+      		if ($resultCheck_orders >= 1) {
+            echo "<h4><strong>Aanvragen</strong></h4>";
+            foreach ($result_orders as $order) {
+              $datum_bewerkt = strtotime($order["datum_laatst_bewerkt"]);
+            ?>
+              <div class="order" id="<?php echo $order["ordernummer"] ?>">
+                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
+
+                  <span><?php echo "Nummer: #".$order["ordernummer"] ?></span>
+                  <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
+                  <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+
+                <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
+
+                  <form class="order" action="includes/update_order.inc.php" method="POST" autocomplete="off">
+                    <input name="ordernummer" style="display: none;" value="<?php echo $order['ordernummer']?>"></input>
+                    <h6><strong>Afmetingen label</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Breedte</strong><br>
+                      <?php echo $order["breedte"]; ?> mm</div>
+                      <div><strong>Hoogte</strong><br>
+                      <?php echo $order["hoogte"]; ?> mm</div>
+                      <div><strong>Radius</strong><br>
+                      <?php echo $order["radius"]; ?> mm</div>
+                    </div>
+                    <h6><strong>Afmetingen rol</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Tussenafstand</strong><br>
+                      <?php echo $order["tussenafstand"]; ?> mm</div>
+                      <div><strong>Rolbreedte</strong><br>
+                      <?php echo $order["rolbreedte"]; ?> mm</div>
+                      <div><strong>Wikkeling</strong><br>
+                      <?php echo $order["wikkeling"]; ?></div>
+                    </div>
+                    <h6><strong>Label specificaties</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Materiaal</strong><br>
+                      <?php echo $order["materiaal"]; ?></div>
+                      <div><strong>Bedrukking</strong><br>
+                      <?php if ($order["bedrukking"] == 1) echo "Ja"; else echo "Nee"; ?></div> <!-- input voor een afbeelding -->
+                      <div><strong>Afwerking</strong><br>
+                      <?php echo $order["afwerking"]; ?></div>
+                    </div>
+                    <h6><strong>Aanvraag details</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Oplage</strong><br>
+                      <?php echo $order["oplage"]; ?></div>
+                      <div><strong>Status</strong><br>
+                      <?php echo $order["status"]; ?></div>
+                    </div>
+                    <h6><strong>Opmerkingen</strong></h6>
+                    <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
+                      <div><strong>Opmerking klant</strong><br>
+                      <textarea name="opmerking_klant" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
+                      <?php if ($order["opmerking_admin"] != "") {
+                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled cols="66">'.$order["opmerking_admin"].'</textarea></div>';
+                      }?>
+                    </div>
+
+                    <input id="submit" type="submit" name="submit" value="submit">
+                  </form>
+
+                </div>
+              </div>
+
+
+            <?php
+            }
+          }
+
+          $klantnummer = $_SESSION['u_id'];
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND status = 'Klaar' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+          $result_orders = mysqli_query($conn, $sql);
+      		$resultCheck_orders = mysqli_num_rows($result_orders);
+      		if ($resultCheck_orders >= 1) {
+            echo "<h4><strong>Afgeronde orders</strong></h4>";
+            foreach ($result_orders as $order) {
+              $datum_bewerkt = strtotime($order["datum_laatst_bewerkt"]);
+            ?>
+              <div class="order" id="<?php echo $order["ordernummer"] ?>">
+                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="if ((document.getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display) != 'block') { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='block'; } else { getElementById('informatie<?php echo $order["ordernummer"]; ?>').style.display='none'; }">
+
+                  <span><?php echo "Ordernummer: #".$order["ordernummer"] ?></span>
+                  <span style="float:right;"><?php echo "Status: ".$order["status"]; ?></span>
+                  <span style="float:right; padding-right:20px;"><?php echo "Bewerkingsdatum: ".date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>
+
+                <div class="informatie" id="informatie<?php echo $order["ordernummer"]; ?>">
+
+                  <form class="order" action="includes/update_order.inc.php" method="POST" autocomplete="off">
+                    <input name="ordernummer" style="display: none;" value="<?php echo $order['ordernummer']?>"></input>
+                    <h6><strong>Afmetingen label</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Breedte</strong><br>
+                      <?php echo $order["breedte"]; ?> mm</div>
+                      <div><strong>Hoogte</strong><br>
+                      <?php echo $order["hoogte"]; ?> mm</div>
+                      <div><strong>Radius</strong><br>
+                      <?php echo $order["radius"]; ?> mm</div>
+                    </div>
+                    <h6><strong>Afmetingen rol</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Tussenafstand</strong><br>
+                      <?php echo $order["tussenafstand"]; ?> mm</div>
+                      <div><strong>Rolbreedte</strong><br>
+                      <?php echo $order["rolbreedte"]; ?> mm</div>
+                      <div><strong>Wikkeling</strong><br>
+                      <?php echo $order["wikkeling"]; ?></div>
+                    </div>
+                    <h6><strong>Label specificaties</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Materiaal</strong><br>
+                      <?php echo $order["materiaal"]; ?></div>
+                      <div><strong>Bedrukking</strong><br>
+                      <?php if ($order["bedrukking"] == 1) echo "Ja"; else echo "Nee"; ?></div> <!-- input voor een afbeelding -->
+                      <div><strong>Afwerking</strong><br>
+                      <?php echo $order["afwerking"]; ?></div>
+                    </div>
+                    <h6><strong>Aanvraag details</strong></h6>
+                    <div class="order_details_list">
+                      <div><strong>Oplage</strong><br>
+                      <?php echo $order["oplage"]; ?></div>
+                      <div><strong>Status</strong><br>
+                      <?php echo $order["status"]; ?></div>
+                    </div>
+                    <h6><strong>Opmerkingen</strong></h6>
+                    <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
+                      <div><strong>Opmerking klant</strong><br>
+                      <textarea name="opmerking_klant" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
+                      <?php if ($order["opmerking_admin"] != "") {
+                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled cols="66">'.$order["opmerking_admin"].'</textarea></div>';
+                      }?>
+                    </div>
+
+                    <input id="submit" type="submit" name="submit" value="submit">
+                  </form>
+
+                </div>
+              </div>
+
+
+            <?php
+            }
+          }
         }
       } else header("Location: signup?order=notloggedin");?>
     </div>
