@@ -9,14 +9,10 @@ if (isset($_POST['submit'])) {
 	$tussenafstand = mysqli_real_escape_string($conn, $_POST['tussenafstand']);
 	$rolbreedte = mysqli_real_escape_string($conn, $_POST['rolbreedte']);
 	$materiaal = mysqli_real_escape_string($conn, $_POST['materiaal']);
-	if (isset($_POST['bedrukking']) && $_POST['bedrukking'] == 'Ja') {
-		$bedrukking = 1;
-	} else {
-		$bedrukking = 2;
-	}
 	$afwerking = mysqli_real_escape_string($conn, $_POST['afwerking']);
 	$wikkeling = mysqli_real_escape_string($conn, $_POST['wikkeling']);
-	$oplage = mysqli_real_escape_string($conn, $_POST['oplage']);
+	$oplage1 = mysqli_real_escape_string($conn, $_POST['oplage1']);
+	$oplage2 = mysqli_real_escape_string($conn, $_POST['oplage2']);
 	$opmerking_klant = mysqli_real_escape_string($conn, $_POST['opmerking_klant']);
 
 	//Upload afbeelding
@@ -60,7 +56,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	//Kijk of iets leeg is
-	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($bedrukking) || empty($afwerking) || empty($wikkeling) || empty($oplage)) {
+	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($afwerking) || empty($wikkeling) || empty($oplage1)) {
 		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
@@ -70,17 +66,8 @@ if (isset($_POST['submit'])) {
 		exit();
 	} else {
 
-			if ($bedrukking == 1) $bedrukking = true;
-			else if ($bedrukking == 2) $bedrukking = false;
-			else {
-				echo '<script language="javascript">';
-				echo 'alert("not true/false bedrukking")';
-				echo '</script>';
-				exit();
-			}
-
 			//Kijk of alle karakters zijn toegestaan
-			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]{0,9}$/", $oplage))) {
+			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling))) {
 				//header("Location: ../signup?signup=invalid");
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
@@ -90,7 +77,7 @@ if (isset($_POST['submit'])) {
 			} else {
 
 						//Order aanmaken
-						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, bedrukking, afwerking, wikkeling, oplage, datum_aangemaakt, datum_laatst_bewerkt, opmerking_klant, afbeelding_path) VALUES ('$user_id', '$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$bedrukking', '$afwerking', '$wikkeling', '$oplage', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$opmerking_klant', '$afbeelding_naam');";
+						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, afwerking, wikkeling, oplage1, oplage2, datum_aangemaakt, datum_laatst_bewerkt, opmerking_klant, afbeelding_path) VALUES ('$user_id', '$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$afwerking', '$wikkeling', '$oplage1', '$oplage2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$opmerking_klant', '$afbeelding_naam');";
 						mysqli_query($conn, $sql);
 						$_SESSION['o_id'] = $conn->insert_id;
 						header("Location: send_mail.inc.php");

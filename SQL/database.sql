@@ -18,11 +18,11 @@ CREATE TABLE tbl_orders(
     tussenafstand float(11) NOT NULL,
     rolbreedte int(11) NOT NULL,
     materiaal varchar(256) NOT NULL,
-    bedrukking bit(1) NOT NULL,
     afbeelding_path varchar(256) NULL,
     afwerking varchar(11) NOT NULL,
     wikkeling int(1) NOT NULL,
-    oplage int(11) NOT NULL,
+    oplage1 int(11) NOT NULL,
+    oplage2 int(11) NOT NULL,
     datum_aangemaakt datetime NOT NULL,
     datum_laatst_bewerkt datetime NOT NULL,
     status varchar(256) DEFAULT 'Aangevraagd' NOT NULL,
@@ -45,6 +45,6 @@ CREATE TABLE tbl_fabrikanten(
     fabrikantnummer int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
     fabrikant varchar(256) NOT NULL,
     contactpersoon varchar(256) NOT NULL,
-    telefoonnummer int(10) NOT NULL,
+    telefoonnummer varchar(256) NOT NULL,
     email varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
