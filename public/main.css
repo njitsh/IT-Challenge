@@ -254,12 +254,21 @@ textarea {
      padding: 10px;
      width: 48%;
      font-size: 17px;
-     font-family: Raleway;
      border: 1px solid #aaaaaa;
      border-radius: 2px;
    }
 
    textarea {
+     border-radius: 2px;
+   }
+
+   .order input:not(#submit),
+   .order select,
+   .order textarea {
+     width: 98%;
+     padding: 10px;
+     font-size: 17px;
+     border: 1px solid #aaaaaa;
      border-radius: 2px;
    }
 
