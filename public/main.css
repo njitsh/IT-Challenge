@@ -288,6 +288,22 @@ textarea {
      border-radius: 2px;
    }
 
+   .create_fabrikant {
+     background-color: #f1f1f1;
+     padding: 5px 10px;
+     width: 100%;
+     min-width: 300px;
+     border-radius: 5px;
+   }
+
+   .create_fabrikant input:not(#submit) {
+     width: 100%;
+     padding: 10px;
+     font-size: 17px;
+     border: 1px solid #aaaaaa;
+     border-radius: 2px;
+   }
+
    input[type=number]::-webkit-inner-spin-button,
    input[type=number]::-webkit-outer-spin-button {
      -webkit-appearance: none;
