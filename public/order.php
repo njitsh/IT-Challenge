@@ -141,20 +141,25 @@ function open_tab(info_div) {
 
     <div class="container">
 
-      <a class="logo" href="index"><img src="images/pentolabel.png"></a>
+      <a class="logo" href="order"><img src="images/pentolabel.png"></a>
 
-      <nav>
-        <ul>
-          <?php
-            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a><a href="klant"><li>Klanten</li></a><a href="materialen"><li>Materialen</li></a></a><a href="fabrikanten"><li>Fabrikanten</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
-            else if (isset($_SESSION['u_id'])) { echo '<a href="order"><li>Mijn orders</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>'; }
-          ?>
-        </ul>
-      </nav>
 
-  <?php if (isset($_SESSION['u_id']))
+
+  <?php if (!isset($_SESSION['u_id']))
   {
+    ?><script>window.location.replace("signup")</script><?php
+  } else {
     include_once 'includes/dbh.inc.php';
+    ?>
+    <nav>
+      <ul>
+        <?php
+          if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a><a href="klant"><li>Klanten</li></a><a href="materialen"><li>Materialen</li></a></a><a href="fabrikanten"><li>Fabrikanten</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
+          else if (isset($_SESSION['u_id'])) { echo '<a href="order"><li>Mijn orders</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>'; }
+        ?>
+      </ul>
+    </nav>
+    <?php
 
     // Is het de admin (met ID 1)?
     if ($_SESSION['u_id'] == "1")
@@ -971,7 +976,7 @@ function open_tab(info_div) {
             }
           }
         }
-      } else header("Location: signup?order=notloggedin");?>
+      }?>
     </div>
 </body>
 
