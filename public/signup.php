@@ -31,7 +31,6 @@
 
     <nav>
       <ul>
-        <a href="index"><li>Home</li></a>
         <a href="signup"><li>Inloggen</li></a>
       </ul>
     </nav>
