@@ -166,6 +166,12 @@ textarea {
       font-size: 18px;
     }
 
+    h6 {
+      color: #dc5626;
+      font-size: 18px;
+      margin: 10px 0px;
+    }
+
    /* End General Styling */
 
    /* Start Order.php */
@@ -193,7 +199,7 @@ textarea {
    }
 
    .balk_probleem {
-     background-color: #b60404;
+     background-color: #a70101;
      color: white;
      padding: 10px;
      cursor: pointer;
@@ -201,9 +207,13 @@ textarea {
 
    .informatie {
      display: none;
-     background-color: #666666;
-     color: white;
+     background-color: #f1f1f1;
      padding: 10px;
+   }
+
+   .order_details_list {
+     display: grid;
+     grid-template-columns: 1fr 1fr 1fr;
    }
 
    /* Style the form */
@@ -214,7 +224,6 @@ textarea {
 
    #regForm {
      background-color: #f1f1f1;
-     font-family: Raleway;
      padding: 5px 40px;
      width: 100%;
      height: 600px;
