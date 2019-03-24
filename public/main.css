@@ -371,6 +371,22 @@ textarea {
 
    /* End Klant.php */
 
+   /* Start Materialen.php */
+
+   .materiaal {
+     margin-bottom: 10px;
+   }
+
+   /* End Materialen.php */
+
+   /* Start Fabrikanten.php */
+
+   .fabrikant {
+     margin-bottom: 10px;
+   }
+
+   /* End Materialen.php */
+
    /* Start Signup.php */
 
    /* End Signup.php */
