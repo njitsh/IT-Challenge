@@ -36,9 +36,9 @@ CREATE TABLE tbl_materialen(
     materiaal varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE tbl_belijming(
-    belijmingnummer  int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    belijming varchar(256) NOT NULL
+CREATE TABLE tbl_afwerking(
+    afwerkingnummer  int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    afwerking varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE tbl_fabrikanten(
