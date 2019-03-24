@@ -146,7 +146,7 @@ function open_tab(info_div) {
       <nav>
         <ul>
           <?php
-            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a><a href="klant"><li>Klanten</li></a><a href="materialen"><li>Materialen</li></a></a><a href="belijmingen"><li>Belijmingen</li></a><a href="fabrikanten"><li>Fabrikanten</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
+            if ((isset($_SESSION['u_id'])) && ($_SESSION['u_id'] == 1)) echo '<a href="order"><li>Alle orders</li></a><a href="klant"><li>Klanten</li></a><a href="materialen"><li>Materialen</li></a></a><a href="fabrikanten"><li>Fabrikanten</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>';
             else if (isset($_SESSION['u_id'])) { echo '<a href="order"><li>Mijn orders</li></a><a href="includes/logout.inc.php"><li>Uitloggen</li></a>'; }
           ?>
         </ul>
