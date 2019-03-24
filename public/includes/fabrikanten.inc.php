@@ -2,11 +2,13 @@
 session_start();
 if (isset($_POST['submit'])) {
 	include_once 'dbh.inc.php';
-	$materiaal = mysqli_real_escape_string($conn, $_POST['materiaal']);
-	$materiaalnummer = mysqli_real_escape_string($conn, $_POST['materiaalnummer']);
+	$fabrikant_naam = mysqli_real_escape_string($conn, $_POST['fabrikant_naam']);
+	$fabrikant_contactpersoon = mysqli_real_escape_string($conn, $_POST['fabrikant_contactpersoon']);
+	$fabrikant_telefoonnummer = mysqli_real_escape_string($conn, $_POST['fabrikant_telefoonnummer']);
+	$fabrikant_email = mysqli_real_escape_string($conn, $_POST['fabrikant_email']);
 
 	//Kijk of iets leeg is
-	if (empty($materiaal)) {
+	if ((empty($fabrikant_naam)) || (empty($fabrikant_contactpersoon)) || (empty($fabrikant_telefoonnummer)) || (empty($fabrikant_email))) {
 		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
@@ -14,31 +16,22 @@ if (isset($_POST['submit'])) {
 		echo '</script>';
 
 		exit();
-	} else if (!preg_match("/^[a-z A-Z]*$/", $materiaal)) {
-			//Kijk of alle karakters zijn toegestaan
+	} else {
 
-				//header("Location: ../signup?signup=invalid");
-				echo '<script language="javascript">';
-				echo 'alert("character fail")';
-				echo '</script>';
-
-				exit();
-			} else {
-
-				//Order aanmaken
-				$sql = "INSERT INTO tbl_materialen (materiaal) VALUES ('$materiaal');";
+				//Fabrikant aanmaken
+				$sql = "INSERT INTO tbl_fabrikanten (fabrikant, contactpersoon, telefoonnummer, email) VALUES ('$fabrikant_naam', '$fabrikant_contactpersoon', '$fabrikant_telefoonnummer', '$fabrikant_email');";
 				mysqli_query($conn, $sql);
-				header("Location: ../materialen");
+				header("Location: ../fabrikanten");
 				exit();
 			}
 }
 else if (isset($_POST['delete'])) {
 	include_once 'dbh.inc.php';
-	$materiaalnummer = mysqli_real_escape_string($conn, $_POST['materiaalnummer']);
-	$sql = "DELETE FROM tbl_materialen WHERE materiaalnummer='$materiaalnummer';";
+	$fabrikantnummer = mysqli_real_escape_string($conn, $_POST['fabrikantnummer']);
+	$sql = "DELETE FROM tbl_fabrikanten WHERE fabrikantnummer='$fabrikantnummer';";
 	mysqli_query($conn, $sql);
 
-	header("Location: ../materialen");
+	header("Location: ../fabrikanten");
 	exit();
 }
 else {
