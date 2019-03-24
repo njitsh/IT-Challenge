@@ -221,7 +221,7 @@ function fixStepIndicator(n) {
                 <br>Opmerking admin<br>
                 <textarea name="opmerking_admin"><?php echo $order["opmerking_admin"];?></textarea>
 
-                <input id="submit" type="submit" name="submit" value="submit">
+                <input id="submit" type="submit" name="submit" value="Updaten">
               </form>
 
             </div>
@@ -328,7 +328,7 @@ function fixStepIndicator(n) {
               <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in">
               <br>Opmerking klant<br>
               <textarea name="opmerking_klant" placeholder="Voeg als het nodig is een opmerking toe." title="Voeg als het nodig is een opmerking toe."></textarea>
-              <input id="submit" type="submit" name="submit" value="submit">
+              <input id="submit" type="submit" name="submit" value="Updaten">
           </form-->
 
           <?php
@@ -389,13 +389,13 @@ function fixStepIndicator(n) {
                     <h6><strong>Opmerkingen</strong></h6>
                     <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
                       <div><strong>Opmerking klant</strong><br>
-                      <textarea name="opmerking_klant" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
+                      <textarea name="opmerking_klant" rows="5" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
                       <?php if ($order["opmerking_admin"] != "") {
-                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled cols="66">'.$order["opmerking_admin"].'</textarea></div>';
+                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled rows="5" cols="66">'.$order["opmerking_admin"].'</textarea></div>';
                       }?>
                     </div>
 
-                    <input id="submit" type="submit" name="submit" value="submit">
+                    <input id="submit" type="submit" name="submit" value="Updaten">
                   </form>
 
                 </div>
@@ -463,13 +463,13 @@ function fixStepIndicator(n) {
                     <h6><strong>Opmerkingen</strong></h6>
                     <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
                       <div><strong>Opmerking klant</strong><br>
-                      <textarea name="opmerking_klant" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
+                      <textarea name="opmerking_klant" rows="5" rows="5" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
                       <?php if ($order["opmerking_admin"] != "") {
-                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled cols="66">'.$order["opmerking_admin"].'</textarea></div>';
+                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled rows="5" cols="66">'.$order["opmerking_admin"].'</textarea></div>';
                       }?>
                     </div>
 
-                    <input id="submit" type="submit" name="submit" value="submit">
+                    <input id="submit" type="submit" name="submit" value="Order informatie updaten">
                   </form>
 
                 </div>
@@ -537,13 +537,13 @@ function fixStepIndicator(n) {
                     <h6><strong>Opmerkingen</strong></h6>
                     <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
                       <div><strong>Opmerking klant</strong><br>
-                      <textarea name="opmerking_klant" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
+                      <textarea name="opmerking_klant" rows="5" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
                       <?php if ($order["opmerking_admin"] != "") {
-                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled cols="66">'.$order["opmerking_admin"].'</textarea></div>';
+                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled rows="5" cols="66">'.$order["opmerking_admin"].'</textarea></div>';
                       }?>
                     </div>
 
-                    <input id="submit" type="submit" name="submit" value="submit">
+                    <input id="submit" type="submit" name="submit" value="Updaten">
                   </form>
 
                 </div>
@@ -611,13 +611,13 @@ function fixStepIndicator(n) {
                     <h6><strong>Opmerkingen</strong></h6>
                     <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
                       <div><strong>Opmerking klant</strong><br>
-                      <textarea name="opmerking_klant" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
+                      <textarea name="opmerking_klant" rows="5" cols="65"><?php echo $order["opmerking_klant"];?></textarea></div>
                       <?php if ($order["opmerking_admin"] != "") {
-                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled cols="66">'.$order["opmerking_admin"].'</textarea></div>';
+                        echo '<div><strong>Opmerking admin</strong><br><textarea disabled rows="5" cols="66">'.$order["opmerking_admin"].'</textarea></div>';
                       }?>
                     </div>
 
-                    <input id="submit" type="submit" name="submit" value="submit">
+                    <input id="submit" type="submit" name="submit" value="Updaten">
                   </form>
 
                 </div>

@@ -169,7 +169,7 @@ textarea {
     h6 {
       color: #dc5626;
       font-size: 18px;
-      margin: 10px 0px;
+      margin: 15px 0px 10px 0px;
     }
 
    /* End General Styling */
@@ -208,7 +208,7 @@ textarea {
    .informatie {
      display: none;
      background-color: #f1f1f1;
-     padding: 10px;
+     padding: 1px 10px 1px 10px;
    }
 
    .order_details_list {
@@ -264,7 +264,8 @@ textarea {
      display: none;
    }
 
-   #regForm button {
+   #regForm button,
+   #submit {
      background-color: #4CAF50;
      color: #ffffff;
      border: none;
