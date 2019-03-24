@@ -154,7 +154,7 @@ textarea {
       color: white;
       text-decoration: none;
     }
-    
+
     h4 {
       color: #dc5626;
       font-size: 22px;
@@ -236,6 +236,7 @@ textarea {
      font-size: 17px;
      font-family: Raleway;
      border: 1px solid #aaaaaa;
+     border-radius: 2px;
    }
 
    input[type=number]::-webkit-inner-spin-button,
