@@ -239,18 +239,18 @@ function open_tab(info_div) {
                   <div class="order_details_list">
                     <div><strong>Materiaal</strong><br>
                     <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in" value="<?php echo $order["materiaal"]; ?>"></div>
-                    <div><strong>Bedrukking</strong><br>
-                    <input type="checkbox" name="bedrukking" placeholder="Kies een bedrukking" title="Kies een bedrukking" value="Ja" <?php if ($order["bedrukking"] == 1) { echo "checked"; } ?>></div> <!-- input voor een afbeelding -->
+                      <?php if ($order["afbeelding_path"] != "") {
+                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
+                      }?>
                     <div><strong>Afwerking</strong><br>
                     <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in" value="<?php echo $order["afwerking"]; ?>"></div>
                   </div>
                   <h6><strong>Details</strong></h6>
                   <div class="order_details_list">
-                    <?php if ($order["afbeelding_path"] != "") {
-                      echo '<div style="padding: 0px 6px 0px 0px;"><strong>Afbeelding</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
-                    }?>
-                    <div><strong>Oplage</strong><br>
-                    <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage"]; ?>"></div>
+                    <div><strong>Minimale oplage</strong><br>
+                    <input type="number" name="oplage1" placeholder="Kies hoeveel labels u minimaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage1"]; ?>"></div>
+                    <?php if ($order["oplage2"] != "") { ?> <div><strong>Maximale oplage</strong><br>
+                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
 
                   </div>
                   <h6><strong>Opmerkingen</strong></h6>
@@ -345,18 +345,18 @@ function open_tab(info_div) {
                   <div class="order_details_list">
                     <div><strong>Materiaal</strong><br>
                     <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in" value="<?php echo $order["materiaal"]; ?>"></div>
-                    <div><strong>Bedrukking</strong><br>
-                    <input type="checkbox" name="bedrukking" placeholder="Kies een bedrukking" title="Kies een bedrukking" value="Ja" <?php if ($order["bedrukking"] == 1) { echo "checked"; } ?>></div> <!-- input voor een afbeelding -->
+                      <?php if ($order["afbeelding_path"] != "") {
+                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
+                      }?>
                     <div><strong>Afwerking</strong><br>
                     <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in" value="<?php echo $order["afwerking"]; ?>"></div>
                   </div>
                   <h6><strong>Details</strong></h6>
                   <div class="order_details_list">
-                    <?php if ($order["afbeelding_path"] != "") {
-                      echo '<div style="padding: 0px 6px 0px 0px;"><strong>Afbeelding</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
-                    }?>
-                    <div><strong>Oplage</strong><br>
-                    <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage"]; ?>"></div>
+                    <div><strong>Minimale oplage</strong><br>
+                    <input type="number" name="oplage1" placeholder="Kies hoeveel labels u minimaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage1"]; ?>"></div>
+                    <?php if ($order["oplage2"] != "") { ?> <div><strong>Maximale oplage</strong><br>
+                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
 
                   </div>
                   <h6><strong>Opmerkingen</strong></h6>
@@ -451,20 +451,20 @@ function open_tab(info_div) {
                   <div class="order_details_list">
                     <div><strong>Materiaal</strong><br>
                     <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in" value="<?php echo $order["materiaal"]; ?>"></div>
-                    <div><strong>Bedrukking</strong><br>
-                    <input type="checkbox" name="bedrukking" placeholder="Kies een bedrukking" title="Kies een bedrukking" value="Ja" <?php if ($order["bedrukking"] == 1) { echo "checked"; } ?>></div> <!-- input voor een afbeelding -->
+                      <?php if ($order["afbeelding_path"] != "") {
+                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
+                      }?>
                     <div><strong>Afwerking</strong><br>
                     <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in" value="<?php echo $order["afwerking"]; ?>"></div>
                   </div>
                   <h6><strong>Details</strong></h6>
                   <div class="order_details_list">
-                    <?php if ($order["afbeelding_path"] != "") {
-                      echo '<div style="padding: 0px 6px 0px 0px;"><strong>Afbeelding</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
-                    }?>
-                    <div><strong>Oplage</strong><br>
-                    <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage"]; ?>"></div>
-
+                    <div><strong>Minimale oplage</strong><br>
+                    <input type="number" name="oplage1" placeholder="Kies hoeveel labels u minimaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage1"]; ?>"></div>
+                    <?php if ($order["oplage2"] != "") { ?> <div><strong>Maximale oplage</strong><br>
+                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
                   </div>
+
                   <h6><strong>Opmerkingen</strong></h6>
                   <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
                     <div><strong>Opmerking klant</strong><br>
@@ -475,6 +475,18 @@ function open_tab(info_div) {
 
                   <input id="submit" type="submit" name="delete" value="Verwijderen">
                   <input id="submit" type="submit" name="submit" value="Order informatie updaten">
+                  <h6><strong>Fabrikanten</strong></h6>
+                  <div class="order_details_list" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+                    <?php
+                      $sql = "SELECT * FROM tbl_fabrikanten;";
+                  		$result_fabrikanten = mysqli_query($conn, $sql);
+                      foreach ($result_fabrikanten as $fabrikanten) {
+                        $fabrikant_naam = $fabrikanten['fabrikant'];
+                        echo '<label class="checkbox_container">'.$fabrikant_naam.'<input type="checkbox" name="'.$fabrikant_naam.'" value="Ja"><span class="checkmark"></span></label>'; }
+                    ?>
+                  </div>
+
+                  <input id="submit" type="submit" name="versturen" value="Doorsturen naar fabrikanten">
                 </form>
 
               </div>
@@ -557,18 +569,18 @@ function open_tab(info_div) {
                   <div class="order_details_list">
                     <div><strong>Materiaal</strong><br>
                     <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in" value="<?php echo $order["materiaal"]; ?>"></div>
-                    <div><strong>Bedrukking</strong><br>
-                    <input type="checkbox" name="bedrukking" placeholder="Kies een bedrukking" title="Kies een bedrukking" value="Ja" <?php if ($order["bedrukking"] == 1) { echo "checked"; } ?>></div> <!-- input voor een afbeelding -->
+                      <?php if ($order["afbeelding_path"] != "") {
+                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
+                      }?>
                     <div><strong>Afwerking</strong><br>
                     <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in" value="<?php echo $order["afwerking"]; ?>"></div>
                   </div>
                   <h6><strong>Details</strong></h6>
                   <div class="order_details_list">
-                    <?php if ($order["afbeelding_path"] != "") {
-                      echo '<div style="padding: 0px 6px 0px 0px;"><strong>Afbeelding</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
-                    }?>
-                    <div><strong>Oplage</strong><br>
-                    <input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage"]; ?>"></div>
+                    <div><strong>Minimale oplage</strong><br>
+                    <input type="number" name="oplage1" placeholder="Kies hoeveel labels u minimaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage1"]; ?>"></div>
+                    <?php if ($order["oplage2"] != "") { ?> <div><strong>Maximale oplage</strong><br>
+                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
                   </div>
                   <h6><strong>Opmerkingen</strong></h6>
                   <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
@@ -638,8 +650,6 @@ function open_tab(info_div) {
                   echo '<option value="'.$materiaal.'" required>'.$materiaal.'</option>'; }
                   ?>
             </select></p>
-            <strong>Bedrukking:</strong>
-            <p><input type="checkbox" name="bedrukking" placeholder="De " title="Kies een bedrukking" value="Ja"></p>
             <strong>Afbeelding:</strong>
             <p><input type="file" name="afwerking_afbeelding" id="afwerking_afbeelding" required="false" title="Voeg een afbeelding toe" onchange="document.getElementById('imageInput').src = window.URL.createObjectURL(this.files[0])"></p>
             <strong>Afwerking:</strong>
@@ -657,9 +667,8 @@ function open_tab(info_div) {
 
           <div class="tab"><h5>Details:</h5>
             <strong>Oplage:</strong>
-            <p><input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in"></p>
-            <p><input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in"></p>
-            <p><input type="oplage" name="oplage" placeholder="Kies hoeveel labels u wilt bestellen" required title="Voer een getal in"></p>
+            <p><input type="oplage" name="oplage1" placeholder="Vul in hoeveel labels u minimaal wilt bestellen" required title="Voer een getal in"><span style="margin-left:-50px;">stuks</span></p>
+            <p><input type="oplage" name="oplage2" placeholder="Vul in hoeveel labels u maximaal wilt bestellen" required title="Voer een getal in"><span style="margin-left:-50px;">stuks</span></p>
             <strong>Opmerking:</strong>
             <p><textarea name="opmerking_klant" placeholder="Voeg als het nodig is een opmerking toe." title="Voeg als het nodig is een opmerking toe."></textarea></p>
           </div>
@@ -725,20 +734,22 @@ function open_tab(info_div) {
                     <div class="order_details_list">
                       <div><strong>Materiaal</strong><br>
                       <?php echo $order["materiaal"]; ?></div>
-                      <div><strong>Bedrukking</strong><br>
-                      <?php if ($order["bedrukking"] == 1) echo "Ja"; else echo "Nee"; ?></div> <!-- input voor een afbeelding -->
                       <div><strong>Afwerking</strong><br>
                       <?php echo $order["afwerking"]; ?></div>
+                      <?php if ($order["afbeelding_path"] != "") {
+                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
+                      }?>
                     </div>
                     <h6><strong>Details</strong></h6>
                     <div class="order_details_list">
-                      <?php if ($order["afbeelding_path"] != "") {
-                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Afbeelding</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
-                      }?>
-                      <div><strong>Oplage</strong><br>
-                      <?php echo $order["oplage"]; ?></div>
                       <div><strong>Status</strong><br>
                       <?php echo $order["status"]; ?></div>
+                      <div><strong>Minimale oplage</strong><br>
+                      <?php echo $order["oplage1"]; ?></div>
+                      <?php if ($order["oplage2"] != "") { ?>
+                        <div><strong>Maximale oplage</strong><br>
+                        <?php echo $order["oplage2"]; ?></div>
+                      <?php } ?>
                     </div>
                     <h6><strong>Opmerkingen</strong></h6>
                     <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
@@ -803,20 +814,22 @@ function open_tab(info_div) {
                     <div class="order_details_list">
                       <div><strong>Materiaal</strong><br>
                       <?php echo $order["materiaal"]; ?></div>
-                      <div><strong>Bedrukking</strong><br>
-                      <?php if ($order["bedrukking"] == 1) echo "Ja"; else echo "Nee"; ?></div> <!-- input voor een afbeelding -->
                       <div><strong>Afwerking</strong><br>
                       <?php echo $order["afwerking"]; ?></div>
+                      <?php if ($order["afbeelding_path"] != "") {
+                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
+                      }?>
                     </div>
                     <h6><strong>Details</strong></h6>
                     <div class="order_details_list">
-                      <?php if ($order["afbeelding_path"] != "") {
-                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Afbeelding</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
-                      }?>
-                      <div><strong>Oplage</strong><br>
-                      <?php echo $order["oplage"]; ?></div>
                       <div><strong>Status</strong><br>
                       <?php echo $order["status"]; ?></div>
+                      <div><strong>Minimale oplage</strong><br>
+                      <?php echo $order["oplage1"]; ?></div>
+                      <?php if ($order["oplage2"] != "") { ?>
+                        <div><strong>Maximale oplage</strong><br>
+                        <?php echo $order["oplage2"]; ?></div>
+                      <?php } ?>
                     </div>
                     <h6><strong>Opmerkingen</strong></h6>
                     <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
@@ -881,20 +894,22 @@ function open_tab(info_div) {
                     <div class="order_details_list">
                       <div><strong>Materiaal</strong><br>
                       <?php echo $order["materiaal"]; ?></div>
-                      <div><strong>Bedrukking</strong><br>
-                      <?php if ($order["bedrukking"] == 1) echo "Ja"; else echo "Nee"; ?></div> <!-- input voor een afbeelding -->
                       <div><strong>Afwerking</strong><br>
                       <?php echo $order["afwerking"]; ?></div>
+                      <?php if ($order["afbeelding_path"] != "") {
+                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
+                      }?>
                     </div>
                     <h6><strong>Details</strong></h6>
                     <div class="order_details_list">
-                      <?php if ($order["afbeelding_path"] != "") {
-                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Afbeelding</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
-                      }?>
-                      <div><strong>Oplage</strong><br>
-                      <?php echo $order["oplage"]; ?></div>
                       <div><strong>Status</strong><br>
                       <?php echo $order["status"]; ?></div>
+                      <div><strong>Minimale oplage</strong><br>
+                      <?php echo $order["oplage1"]; ?></div>
+                      <?php if ($order["oplage2"] != "") { ?>
+                        <div><strong>Maximale oplage</strong><br>
+                        <?php echo $order["oplage2"]; ?></div>
+                      <?php } ?>
                     </div>
                     <h6><strong>Opmerkingen</strong></h6>
                     <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
@@ -959,20 +974,22 @@ function open_tab(info_div) {
                     <div class="order_details_list">
                       <div><strong>Materiaal</strong><br>
                       <?php echo $order["materiaal"]; ?></div>
-                      <div><strong>Bedrukking</strong><br>
-                      <?php if ($order["bedrukking"] == 1) echo "Ja"; else echo "Nee"; ?></div> <!-- input voor een afbeelding -->
                       <div><strong>Afwerking</strong><br>
                       <?php echo $order["afwerking"]; ?></div>
+                      <?php if ($order["afbeelding_path"] != "") {
+                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
+                      }?>
                     </div>
                     <h6><strong>Details</strong></h6>
                     <div class="order_details_list">
-                      <?php if ($order["afbeelding_path"] != "") {
-                        echo '<div style="padding: 0px 6px 0px 0px;"><strong>Afbeelding</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
-                      }?>
-                      <div><strong>Oplage</strong><br>
-                      <?php echo $order["oplage"]; ?></div>
                       <div><strong>Status</strong><br>
                       <?php echo $order["status"]; ?></div>
+                      <div><strong>Minimale oplage</strong><br>
+                      <?php echo $order["oplage1"]; ?></div>
+                      <?php if ($order["oplage2"] != "") { ?>
+                        <div><strong>Maximale oplage</strong><br>
+                        <?php echo $order["oplage2"]; ?></div>
+                      <?php } ?>
                     </div>
                     <h6><strong>Opmerkingen</strong></h6>
                     <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">

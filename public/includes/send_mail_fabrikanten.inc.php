@@ -28,14 +28,13 @@ foreach ($result_orders as $result_orders_sql) {
   $materiaal = $result_orders_sql['materiaal'];
   $bedrukking = $result_orders_sql['bedrukking'];
   $wikkeling = $result_orders_sql['wikkeling'];
-  $oplage1 = $result_orders_sql['oplage1'];
-  $oplage2 = $result_orders_sql['oplage2'];
+  $oplage = $result_orders_sql['oplage'];
   $status = $result_orders_sql['status'];
   $opmerking_klant = $result_orders_sql['opmerking_klant'];
 }
 
 // subject
-$subject = "Je hebt een order geplaatst: #".$_SESSION['o_id'];
+$subject = "Pentolavel B.V. Aanvraag: #".$_SESSION['o_id'];
 
 // the message
 
@@ -69,9 +68,8 @@ $msg .= '<td>Materiaal: '.$materiaal.'</td></tr>';
 if ($bedrukking == 0) $msg .= '<tr><td>Bedrukking: Nee</td>';
 else if ($bedrukking == 1) $msg .= '<tr><td>Bedrukking: Ja</td>';
 $msg .= '<td>Wikkeling: '.$wikkeling.'</td></tr>';
-$msg .= '<tr><td>Minimale oplage: '.$oplage1.' stuks</td>';
-$msg .= '<td>Maximale oplage: '.$oplage2.' stuks</td></tr>';
-$msg .= '<tr><td>Status: '.$status.'</td></tr>';
+$msg .= '<tr><td>Oplage: '.$oplage.' stuks</td>';
+$msg .= '<td>Status: '.$status.'</td></tr>';
 if ($opmerking_klant != "") $msg .= '<tr><td>Opmerking klant: '.$opmerking_klant.'</td></tr>';
 $msg .= '</table>';
 $msg .= '<a style="text-decoration: none;" href="http://localhost:8080/IT-Challenge/public/order?order='.$_SESSION['o_id'].'"><table style="padding: 10px; width: 100%; background-color: #dc5626; color: white;" border="0"><tr><td align="center">Mijn aanvraag bekijken</td></tr></table></a>';
