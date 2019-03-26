@@ -3,7 +3,7 @@
 
 date_default_timezone_set('Europe/Brussels');?>
 
-<html class="no-js" lang="">
+<html class="no-js" lang="nl">
 
 <head>
     <meta charset="utf-8">
@@ -186,7 +186,7 @@ function open_tab(info_div) {
             ?>
             <div class="order" id="<?php echo $order["ordernummer"] ?>">
 
-              <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
+              <div class="balk<?php if ($order["status"] == "Afgerond") { echo "_Afgerond"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
                 <span><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
                 <span style="float:right;"><?php echo $order["status"]; ?></span>
@@ -205,10 +205,12 @@ function open_tab(info_div) {
                     <div>
                       <h6><strong>Status</strong></h6>
                       <select name="status" placeholder="Status van de bestelling" required title="Status van de bestelling">
-                        <option value="Aangevraagd" required <?php if ($order["status"] == "Aangevraagd") { echo "selected"; } ?>>Aangevraagd</option>
-                        <option value="Wordt verwerkt" required <?php if ($order["status"] == "Wordt verwerkt") { echo "selected"; } ?>>Wordt verwerkt</option>
-                        <option value="Verzonden" required <?php if ($order["status"] == "Verzonden") { echo "selected"; } ?>>Verzonden</option>
-                        <option value="Klaar" required <?php if ($order["status"] == "Klaar") { echo "selected"; } ?>>Klaar</option>
+                        <option value="Aanvraag" required <?php if ($order["status"] == "Aanvraag") { echo "selected"; } ?>>Aanvraag</option>
+                        <option value="Bij leverancier" required <?php if ($order["status"] == "Bij leverancier") { echo "selected"; } ?>>Bij leverancier</option>
+                        <option value="Offerte naar klant" required <?php if ($order["status"] == "Offerte naar klant") { echo "selected"; } ?>>Offerte naar klant</option>
+                        <option value="Offerte akkoord" required <?php if ($order["status"] == "Offerte akkoord") { echo "selected"; } ?>>Offerte akkoord</option>
+                        <option value="Offerte geannuleerd" required <?php if ($order["status"] == "Offerte geannuleerd") { echo "selected"; } ?>>Offerte geannuleerd</option>
+                        <option value="Afgerond" required <?php if ($order["status"] == "Afgerond") { echo "selected"; } ?>>Afgerond</option>
                         <option value="Probleem" required <?php if ($order["status"] == "Probleem") { echo "selected"; } ?>>Probleem</option>
                       </select>
                     </div>
@@ -237,20 +239,38 @@ function open_tab(info_div) {
                   </div>
                   <h6><strong>Label specificaties</strong></h6>
                   <div class="order_details_list">
-                    <div><strong>Materiaal</strong><br>
-                    <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in" value="<?php echo $order["materiaal"]; ?>"></div>
+                    <div><strong>Materiaal</strong>
+                      <select name="materiaal" required title="Kies een materiaal">
+                        <?php
+                          $sql = "SELECT * FROM tbl_materialen;";
+                      		$result_materialen = mysqli_query($conn, $sql);
+                          foreach ($result_materialen as $materialen) {
+                            $materiaal = $materialen['materiaal'];
+                            if ($materiaal == $order["materiaal"]) echo '<option value="'.$materiaal.'" required selected>'.$materiaal.'</option>';
+                            else echo '<option value="'.$materiaal.'" required>'.$materiaal.'</option>'; }
+                            ?>
+                      </select></div>
                       <?php if ($order["afbeelding_path"] != "") {
                         echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
                       }?>
-                    <div><strong>Afwerking</strong><br>
-                    <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in" value="<?php echo $order["afwerking"]; ?>"></div>
+                    <div><strong>Afwerking</strong>
+                      <select name="afwerking" required title="Kies een afwerking">
+                        <?php
+                          $sql = "SELECT * FROM tbl_afwerking;";
+                      		$result_afwerkingen = mysqli_query($conn, $sql);
+                          foreach ($result_afwerkingen as $afwerkingen) {
+                            $afwerking = $afwerkingen['afwerking'];
+                            if ($afwerking == $order["afwerking"]) echo '<option value="'.$afwerking.'" required selected>'.$afwerking.'</option>';
+                            else echo '<option value="'.$afwerking.'" required>'.$afwerking.'</option>'; }
+                            ?>
+                      </select></div>
                   </div>
                   <h6><strong>Details</strong></h6>
                   <div class="order_details_list">
                     <div><strong>Minimale oplage</strong><br>
                     <input type="number" name="oplage1" placeholder="Kies hoeveel labels u minimaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage1"]; ?>"></div>
                     <?php if ($order["oplage2"] != "") { ?> <div><strong>Maximale oplage</strong><br>
-                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
+                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
 
                   </div>
                   <h6><strong>Opmerkingen</strong></h6>
@@ -271,7 +291,7 @@ function open_tab(info_div) {
           }
         }
       }
-      $sql = "SELECT * FROM tbl_orders WHERE NOT Status='Probleem' AND NOT Status='Klaar' AND is_order='1' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+      $sql = "SELECT * FROM tbl_orders WHERE NOT Status='Probleem' AND NOT Status='Afgerond' AND is_order='1' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
   		$result_orders = mysqli_query($conn, $sql);
   		$resultCheck_orders = mysqli_num_rows($result_orders);
   		if ($resultCheck_orders >= 1) {
@@ -292,7 +312,7 @@ function open_tab(info_div) {
             ?>
             <div class="order" id="<?php echo $order["ordernummer"] ?>">
 
-              <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
+              <div class="balk<?php if ($order["status"] == "Afgerond") { echo "_Afgerond"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
                 <span><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
                 <span style="float:right;"><?php echo $order["status"]; ?></span>
@@ -311,10 +331,12 @@ function open_tab(info_div) {
                     <div>
                       <h6><strong>Status</strong></h6>
                       <select name="status" placeholder="Status van de bestelling" required title="Status van de bestelling">
-                        <option value="Aangevraagd" required <?php if ($order["status"] == "Aangevraagd") { echo "selected"; } ?>>Aangevraagd</option>
-                        <option value="Wordt verwerkt" required <?php if ($order["status"] == "Wordt verwerkt") { echo "selected"; } ?>>Wordt verwerkt</option>
-                        <option value="Verzonden" required <?php if ($order["status"] == "Verzonden") { echo "selected"; } ?>>Verzonden</option>
-                        <option value="Klaar" required <?php if ($order["status"] == "Klaar") { echo "selected"; } ?>>Klaar</option>
+                        <option value="Aanvraag" required <?php if ($order["status"] == "Aanvraag") { echo "selected"; } ?>>Aanvraag</option>
+                        <option value="Bij leverancier" required <?php if ($order["status"] == "Bij leverancier") { echo "selected"; } ?>>Bij leverancier</option>
+                        <option value="Offerte naar klant" required <?php if ($order["status"] == "Offerte naar klant") { echo "selected"; } ?>>Offerte naar klant</option>
+                        <option value="Offerte akkoord" required <?php if ($order["status"] == "Offerte akkoord") { echo "selected"; } ?>>Offerte akkoord</option>
+                        <option value="Offerte geannuleerd" required <?php if ($order["status"] == "Offerte geannuleerd") { echo "selected"; } ?>>Offerte geannuleerd</option>
+                        <option value="Afgerond" required <?php if ($order["status"] == "Afgerond") { echo "selected"; } ?>>Afgerond</option>
                         <option value="Probleem" required <?php if ($order["status"] == "Probleem") { echo "selected"; } ?>>Probleem</option>
                       </select>
                     </div>
@@ -343,22 +365,48 @@ function open_tab(info_div) {
                   </div>
                   <h6><strong>Label specificaties</strong></h6>
                   <div class="order_details_list">
-                    <div><strong>Materiaal</strong><br>
-                    <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in" value="<?php echo $order["materiaal"]; ?>"></div>
+                    <div><strong>Materiaal</strong>
+                      <select name="materiaal" required title="Kies een materiaal">
+                        <?php
+                          $sql = "SELECT * FROM tbl_materialen;";
+                      		$result_materialen = mysqli_query($conn, $sql);
+                          foreach ($result_materialen as $materialen) {
+                            $materiaal = $materialen['materiaal'];
+                            if ($materiaal == $order["materiaal"]) echo '<option value="'.$materiaal.'" required selected>'.$materiaal.'</option>';
+                            else echo '<option value="'.$materiaal.'" required>'.$materiaal.'</option>'; }
+                            ?>
+                      </select></div>
                       <?php if ($order["afbeelding_path"] != "") {
                         echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
                       }?>
-                    <div><strong>Afwerking</strong><br>
-                    <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in" value="<?php echo $order["afwerking"]; ?>"></div>
+                    <div><strong>Afwerking</strong>
+                      <select name="afwerking" required title="Kies een afwerking">
+                        <?php
+                          $sql = "SELECT * FROM tbl_afwerking;";
+                      		$result_afwerkingen = mysqli_query($conn, $sql);
+                          foreach ($result_afwerkingen as $afwerkingen) {
+                            $afwerking = $afwerkingen['afwerking'];
+                            if ($afwerking == $order["afwerking"]) echo '<option value="'.$afwerking.'" required selected>'.$afwerking.'</option>';
+                            else echo '<option value="'.$afwerking.'" required>'.$afwerking.'</option>'; }
+                            ?>
+                      </select></div>
                   </div>
                   <h6><strong>Details</strong></h6>
                   <div class="order_details_list">
                     <div><strong>Minimale oplage</strong><br>
                     <input type="number" name="oplage1" placeholder="Kies hoeveel labels u minimaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage1"]; ?>"></div>
-                    <?php if ($order["oplage2"] != "") { ?> <div><strong>Maximale oplage</strong><br>
-                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
-
+                    <?php if (($order["oplage2"] != "") && ($order["oplage2"] != "0")) { ?> <div><strong>Maximale oplage</strong><br>
+                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
                   </div>
+
+                  <h6><strong>Prijzen</strong></h6>
+                  <div class="order_details_list">
+                    <div><strong>Prijs bij minimale oplage (per 1000)</strong><br>
+                    <input type="number" name="prijs1" step="0.01" min=0 placeholder="Vul de prijs voor de minimale hoeveelheid labels in" required title="Voer een getal in" value="<?php echo $order["prijs1"]; ?>"></div>
+                    <?php if (($order["oplage2"] != "") && ($order["oplage2"] != "0")) { ?> <div><strong>Prijs bij maximale oplage (per 1000)</strong><br>
+                    <input type="number" name="prijs2" step="0.01" min=0 placeholder="Vul de prijs voor de maximale hoeveelheid labels in" title="Voer een getal in" value="<?php echo $order["prijs2"]; ?>"></div> <?php } ?>
+                  </div>
+
                   <h6><strong>Opmerkingen</strong></h6>
                   <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
                     <div><strong>Opmerking klant</strong><br>
@@ -369,6 +417,7 @@ function open_tab(info_div) {
 
                   <input id="submit" type="submit" name="delete" value="Verwijderen">
                   <input id="submit" type="submit" name="submit" value="Order informatie updaten">
+                  <input id="submit" type="submit" name="offerte_klant" value="Offerte naar klant versturen">
                 </form>
 
               </div>
@@ -377,7 +426,7 @@ function open_tab(info_div) {
           }
         }
       }
-      $sql = "SELECT * FROM tbl_orders WHERE is_order='0' AND NOT Status='Probleem' AND NOT Status='Klaar' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+      $sql = "SELECT * FROM tbl_orders WHERE is_order='0' AND NOT Status='Probleem' AND NOT Status='Afgerond' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
   		$result_orders = mysqli_query($conn, $sql);
   		$resultCheck_orders = mysqli_num_rows($result_orders);
   		if ($resultCheck_orders >= 1) {
@@ -398,7 +447,7 @@ function open_tab(info_div) {
             ?>
             <div class="order" id="<?php echo $order["ordernummer"] ?>">
 
-              <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
+              <div class="balk<?php if ($order["status"] == "Afgerond") { echo "_Afgerond"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
                 <span><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
                 <span style="float:right;"><?php echo $order["status"]; ?></span>
@@ -417,10 +466,12 @@ function open_tab(info_div) {
                     <div>
                       <h6><strong>Status</strong></h6>
                       <select name="status" placeholder="Status van de bestelling" required title="Status van de bestelling">
-                        <option value="Aangevraagd" required <?php if ($order["status"] == "Aangevraagd") { echo "selected"; } ?>>Aangevraagd</option>
-                        <option value="Wordt verwerkt" required <?php if ($order["status"] == "Wordt verwerkt") { echo "selected"; } ?>>Wordt verwerkt</option>
-                        <option value="Verzonden" required <?php if ($order["status"] == "Verzonden") { echo "selected"; } ?>>Verzonden</option>
-                        <option value="Klaar" required <?php if ($order["status"] == "Klaar") { echo "selected"; } ?>>Klaar</option>
+                        <option value="Aanvraag" required <?php if ($order["status"] == "Aanvraag") { echo "selected"; } ?>>Aanvraag</option>
+                        <option value="Bij leverancier" required <?php if ($order["status"] == "Bij leverancier") { echo "selected"; } ?>>Bij leverancier</option>
+                        <option value="Offerte naar klant" required <?php if ($order["status"] == "Offerte naar klant") { echo "selected"; } ?>>Offerte naar klant</option>
+                        <option value="Offerte akkoord" required <?php if ($order["status"] == "Offerte akkoord") { echo "selected"; } ?>>Offerte akkoord</option>
+                        <option value="Offerte geannuleerd" required <?php if ($order["status"] == "Offerte geannuleerd") { echo "selected"; } ?>>Offerte geannuleerd</option>
+                        <option value="Afgerond" required <?php if ($order["status"] == "Afgerond") { echo "selected"; } ?>>Afgerond</option>
                         <option value="Probleem" required <?php if ($order["status"] == "Probleem") { echo "selected"; } ?>>Probleem</option>
                       </select>
                     </div>
@@ -449,20 +500,39 @@ function open_tab(info_div) {
                   </div>
                   <h6><strong>Label specificaties</strong></h6>
                   <div class="order_details_list">
-                    <div><strong>Materiaal</strong><br>
-                    <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in" value="<?php echo $order["materiaal"]; ?>"></div>
+                    <div><strong>Materiaal</strong>
+                      <select name="materiaal" required title="Kies een materiaal">
+                        <?php
+                          $sql = "SELECT * FROM tbl_materialen;";
+                      		$result_materialen = mysqli_query($conn, $sql);
+                          foreach ($result_materialen as $materialen) {
+                            $materiaal = $materialen['materiaal'];
+                            if ($materiaal == $order["materiaal"]) echo '<option value="'.$materiaal.'" required selected>'.$materiaal.'</option>';
+                            else echo '<option value="'.$materiaal.'" required>'.$materiaal.'</option>'; }
+                            ?>
+                      </select></div>
                       <?php if ($order["afbeelding_path"] != "") {
                         echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
                       }?>
-                    <div><strong>Afwerking</strong><br>
-                    <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in" value="<?php echo $order["afwerking"]; ?>"></div>
+                    <div><strong>Afwerking</strong>
+                      <select name="afwerking" required title="Kies een afwerking">
+                        <?php
+                          $sql = "SELECT * FROM tbl_afwerking;";
+                      		$result_afwerkingen = mysqli_query($conn, $sql);
+                          foreach ($result_afwerkingen as $afwerkingen) {
+                            $afwerking = $afwerkingen['afwerking'];
+                            if ($afwerking == $order["afwerking"]) echo '<option value="'.$afwerking.'" required selected>'.$afwerking.'</option>';
+                            else echo '<option value="'.$afwerking.'" required>'.$afwerking.'</option>'; }
+                            ?>
+                      </select></div>
                   </div>
+
                   <h6><strong>Details</strong></h6>
                   <div class="order_details_list">
                     <div><strong>Minimale oplage</strong><br>
                     <input type="number" name="oplage1" placeholder="Kies hoeveel labels u minimaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage1"]; ?>"></div>
                     <?php if ($order["oplage2"] != "") { ?> <div><strong>Maximale oplage</strong><br>
-                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
+                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
                   </div>
 
                   <h6><strong>Opmerkingen</strong></h6>
@@ -495,7 +565,7 @@ function open_tab(info_div) {
           }
         }
       }
-      $sql = "SELECT * FROM tbl_orders WHERE Status='Klaar' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+      $sql = "SELECT * FROM tbl_orders WHERE Status='Afgerond' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
   		$result_orders = mysqli_query($conn, $sql);
   		$resultCheck_orders = mysqli_num_rows($result_orders);
   		if ($resultCheck_orders >= 1) {
@@ -516,7 +586,7 @@ function open_tab(info_div) {
             ?>
             <div class="order" id="<?php echo $order["ordernummer"] ?>">
 
-              <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
+              <div class="balk<?php if ($order["status"] == "Afgerond") { echo "_Afgerond"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
                 <span><?php echo "#".$order["ordernummer"]." | ".$voornaam." ".$achternaam ?></span>
                 <span style="float:right;"><?php echo $order["status"]; ?></span>
@@ -535,10 +605,12 @@ function open_tab(info_div) {
                     <div>
                       <h6><strong>Status</strong></h6>
                       <select name="status" placeholder="Status van de bestelling" required title="Status van de bestelling">
-                        <option value="Aangevraagd" required <?php if ($order["status"] == "Aangevraagd") { echo "selected"; } ?>>Aangevraagd</option>
-                        <option value="Wordt verwerkt" required <?php if ($order["status"] == "Wordt verwerkt") { echo "selected"; } ?>>Wordt verwerkt</option>
-                        <option value="Verzonden" required <?php if ($order["status"] == "Verzonden") { echo "selected"; } ?>>Verzonden</option>
-                        <option value="Klaar" required <?php if ($order["status"] == "Klaar") { echo "selected"; } ?>>Klaar</option>
+                        <option value="Aanvraag" required <?php if ($order["status"] == "Aanvraag") { echo "selected"; } ?>>Aanvraag</option>
+                        <option value="Bij leverancier" required <?php if ($order["status"] == "Bij leverancier") { echo "selected"; } ?>>Bij leverancier</option>
+                        <option value="Offerte naar klant" required <?php if ($order["status"] == "Offerte naar klant") { echo "selected"; } ?>>Offerte naar klant</option>
+                        <option value="Offerte akkoord" required <?php if ($order["status"] == "Offerte akkoord") { echo "selected"; } ?>>Offerte akkoord</option>
+                        <option value="Offerte geannuleerd" required <?php if ($order["status"] == "Offerte geannuleerd") { echo "selected"; } ?>>Offerte geannuleerd</option>
+                        <option value="Afgerond" required <?php if ($order["status"] == "Afgerond") { echo "selected"; } ?>>Afgerond</option>
                         <option value="Probleem" required <?php if ($order["status"] == "Probleem") { echo "selected"; } ?>>Probleem</option>
                       </select>
                     </div>
@@ -567,20 +639,38 @@ function open_tab(info_div) {
                   </div>
                   <h6><strong>Label specificaties</strong></h6>
                   <div class="order_details_list">
-                    <div><strong>Materiaal</strong><br>
-                    <input type="text" name="materiaal" placeholder="Voer hier het labelmateriaal in" required title="Voer het materiaal in" value="<?php echo $order["materiaal"]; ?>"></div>
+                    <div><strong>Materiaal</strong>
+                      <select name="materiaal" required title="Kies een materiaal">
+                        <?php
+                          $sql = "SELECT * FROM tbl_materialen;";
+                      		$result_materialen = mysqli_query($conn, $sql);
+                          foreach ($result_materialen as $materialen) {
+                            $materiaal = $materialen['materiaal'];
+                            if ($materiaal == $order["materiaal"]) echo '<option value="'.$materiaal.'" required selected>'.$materiaal.'</option>';
+                            else echo '<option value="'.$materiaal.'" required>'.$materiaal.'</option>'; }
+                            ?>
+                      </select></div>
                       <?php if ($order["afbeelding_path"] != "") {
                         echo '<div style="padding: 0px 6px 0px 0px;"><strong>Bedrukking</strong><br><div style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="includes/uploads/'.$order["afbeelding_path"].'" target="_blank">'.$order["afbeelding_path"].'</a></div></div>';
                       }?>
-                    <div><strong>Afwerking</strong><br>
-                    <input type="text" name="afwerking" placeholder="Voer hier de afwerkingsmethode in" required title="Voer hier de afwerkingsmethode in" value="<?php echo $order["afwerking"]; ?>"></div>
+                    <div><strong>Afwerking</strong>
+                      <select name="afwerking" required title="Kies een afwerking">
+                        <?php
+                          $sql = "SELECT * FROM tbl_afwerking;";
+                      		$result_afwerkingen = mysqli_query($conn, $sql);
+                          foreach ($result_afwerkingen as $afwerkingen) {
+                            $afwerking = $afwerkingen['afwerking'];
+                            if ($afwerking == $order["afwerking"]) echo '<option value="'.$afwerking.'" required selected>'.$afwerking.'</option>';
+                            else echo '<option value="'.$afwerking.'" required>'.$afwerking.'</option>'; }
+                            ?>
+                      </select></div>
                   </div>
                   <h6><strong>Details</strong></h6>
                   <div class="order_details_list">
                     <div><strong>Minimale oplage</strong><br>
                     <input type="number" name="oplage1" placeholder="Kies hoeveel labels u minimaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage1"]; ?>"></div>
                     <?php if ($order["oplage2"] != "") { ?> <div><strong>Maximale oplage</strong><br>
-                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" required title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
+                    <input type="number" name="oplage2" placeholder="Kies hoeveel labels u maximaal wilt bestellen" title="Voer een getal in" value="<?php echo $order["oplage2"]; ?>"></div> <?php } ?>
                   </div>
                   <h6><strong>Opmerkingen</strong></h6>
                   <div class="order_details_list" style="grid-template-columns: 1fr 1fr;">
@@ -668,7 +758,7 @@ function open_tab(info_div) {
           <div class="tab"><h5>Details:</h5>
             <strong>Oplage:</strong>
             <p><input type="oplage" name="oplage1" placeholder="Vul in hoeveel labels u minimaal wilt bestellen" required title="Voer een getal in"><span style="margin-left:-50px;">stuks</span></p>
-            <p><input type="oplage" name="oplage2" placeholder="Vul in hoeveel labels u maximaal wilt bestellen" required title="Voer een getal in"><span style="margin-left:-50px;">stuks</span></p>
+            <p><input type="oplage" name="oplage2" placeholder="Vul in hoeveel labels u maximaal wilt bestellen" title="Voer een getal in"><span style="margin-left:-50px;">stuks</span></p>
             <strong>Opmerking:</strong>
             <p><textarea name="opmerking_klant" placeholder="Voeg als het nodig is een opmerking toe." title="Voeg als het nodig is een opmerking toe."></textarea></p>
           </div>
@@ -692,7 +782,7 @@ function open_tab(info_div) {
 
           <?php
           $klantnummer = $_SESSION['u_id'];
-          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND status = 'Probleem' ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, CASE WHEN status = 'Probleem' THEN 1 ELSE 2 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND status = 'Probleem' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
       		$result_orders = mysqli_query($conn, $sql);
       		$resultCheck_orders = mysqli_num_rows($result_orders);
       		if ($resultCheck_orders >= 1) {
@@ -702,7 +792,7 @@ function open_tab(info_div) {
             ?>
               <div class="order" id="<?php echo $order["ordernummer"] ?>">
 
-                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
+                <div class="balk<?php if ($order["status"] == "Afgerond") { echo "_Afgerond"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
                   <span><?php echo "#".$order["ordernummer"] ?></span>
                   <span style="float:right;"><?php echo $order["status"]; ?></span>
@@ -772,7 +862,7 @@ function open_tab(info_div) {
           }
 
           $klantnummer = $_SESSION['u_id'];
-          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND is_order = 1 AND NOT status='Klaar' AND NOT status='Probleem' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND is_order = 1 AND NOT status='Afgerond' AND NOT status='Probleem' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
       		$result_orders = mysqli_query($conn, $sql);
       		$resultCheck_orders = mysqli_num_rows($result_orders);
       		if ($resultCheck_orders >= 1) {
@@ -782,7 +872,7 @@ function open_tab(info_div) {
             ?>
               <div class="order" id="<?php echo $order["ordernummer"] ?>">
 
-                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
+                <div class="balk<?php if ($order["status"] == "Afgerond") { echo "_Afgerond"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
                   <span><?php echo "#".$order["ordernummer"] ?></span>
                   <span style="float:right;"><?php echo $order["status"]; ?></span>
@@ -852,7 +942,7 @@ function open_tab(info_div) {
           }
 
           $klantnummer = $_SESSION['u_id'];
-          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND is_order = 0 AND NOT status = 'Klaar' AND NOT status = 'Probleem' ORDER BY CASE WHEN status = 'Klaar' THEN 2 ELSE 1 END, CASE WHEN status = 'Probleem' THEN 1 ELSE 2 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND is_order = 0 AND NOT status = 'Afgerond' AND NOT status = 'Probleem' ORDER BY CASE WHEN status = 'Afgerond' THEN 2 ELSE 1 END, CASE WHEN status = 'Probleem' THEN 1 ELSE 2 END, datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
       		$result_orders = mysqli_query($conn, $sql);
       		$resultCheck_orders = mysqli_num_rows($result_orders);
       		if ($resultCheck_orders >= 1) {
@@ -862,7 +952,7 @@ function open_tab(info_div) {
             ?>
               <div class="order" id="<?php echo $order["ordernummer"] ?>">
 
-                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
+                <div class="balk<?php if ($order["status"] == "Afgerond") { echo "_Afgerond"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
 
                   <span><?php echo "#".$order["ordernummer"] ?></span>
                   <span style="float:right;"><?php echo $order["status"]; ?></span>
@@ -932,7 +1022,7 @@ function open_tab(info_div) {
           }
 
           $klantnummer = $_SESSION['u_id'];
-          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND status = 'Klaar' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
+          $sql = "SELECT * FROM tbl_orders WHERE klantnummer=$klantnummer AND status = 'Afgerond' ORDER BY datum_laatst_bewerkt DESC, datum_aangemaakt DESC, ordernummer DESC;";
           $result_orders = mysqli_query($conn, $sql);
       		$resultCheck_orders = mysqli_num_rows($result_orders);
       		if ($resultCheck_orders >= 1) {
@@ -943,7 +1033,7 @@ function open_tab(info_div) {
               <div class="order" id="<?php echo $order["ordernummer"] ?>">
 
 
-                <div class="balk<?php if ($order["status"] == "Klaar") { echo "_klaar"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
+                <div class="balk<?php if ($order["status"] == "Afgerond") { echo "_Afgerond"; } else if ($order["status"] == "Probleem") { echo "_probleem"; } ?>" onclick="open_tab('<?php echo $order["ordernummer"]; ?>')">
                   <span><?php echo "#".$order["ordernummer"] ?></span>
                   <span style="float:right;"><?php echo $order["status"]; ?></span>
                   <span style="float:right; padding-right:20px;"><?php echo date('H:i \o\p d-m-Y ', $datum_bewerkt); ?></span></div>

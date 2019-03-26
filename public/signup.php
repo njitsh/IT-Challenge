@@ -1,7 +1,7 @@
 <!doctype html>
 <?php session_start(); ?>
 
-<html class="no-js" lang="">
+<html class="no-js" lang="nl">
 
 <head>
     <meta charset="utf-8">
@@ -61,7 +61,7 @@
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; margin-bottom: 10px;">
           <div><strong>Bedrijf</strong><input type="text" name="bedrijf_registreren" placeholder="Voer hier de naam van uw bedrijf in" title="Voer hier de naam van uw bedrijf in"><br></div>
-          <div><strong>Adres*</strong><input type="text" name="adres_registreren" placeholder="Voer hier uw adres in" title="Voer hier uw adres in"><br></div>
+          <div><strong>Adres*</strong><input type="text" name="adres_registreren" placeholder="Voer hier uw adres in*" title="Voer hier uw adres in"><br></div>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px; margin-bottom: 10px;">
           <div><strong>Wachtwoord*</strong><input type="password" name="wachtwoord_registreren" placeholder="Voer hier uw wachtwoord in*" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Moet minimaal een nummer, een hoofdletter en kleine letter bevatten en uit minimaal 8 tekens bestaan"><br></div>

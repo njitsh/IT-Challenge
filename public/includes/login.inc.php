@@ -21,10 +21,6 @@ if (isset($_POST['submit'])) {
 		//Check of het account bestaat
 		if ($resultCheck < 1) {
 			header("../signup?Error");
-			echo 'Error';
-				echo '<script language="javascript">';
-				echo 'alert("account not found")';
-				echo '</script>';
 			exit();
 		} else {
 			if ($row = mysqli_fetch_assoc($result)) {
@@ -33,11 +29,7 @@ if (isset($_POST['submit'])) {
 				$hashedPwdCheck = password_verify($pwd, $row['wachtwoord']);
 
 				if ($hashedPwdCheck == false) {
-					header("");
-					echo 'Wrong password';
-						echo '<script language="javascript">';
-						echo 'alert("password fail")';
-						echo '</script>';
+					header("../signup?Error");
 					exit();
 				} elseif ($hashedPwdCheck == true) {
 					//Inloggen

@@ -11,11 +11,14 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 	$materiaal = mysqli_real_escape_string($conn, $_POST['materiaal']);
 	$afwerking = mysqli_real_escape_string($conn, $_POST['afwerking']);
 	$wikkeling = mysqli_real_escape_string($conn, $_POST['wikkeling']);
-	$oplage = mysqli_real_escape_string($conn, $_POST['oplage']);
+	$oplage1 = mysqli_real_escape_string($conn, $_POST['oplage1']);
+	$oplage2 = mysqli_real_escape_string($conn, $_POST['oplage2']);
+	$prijs1 = mysqli_real_escape_string($conn, $_POST['prijs1']);
+	$prijs2 = mysqli_real_escape_string($conn, $_POST['prijs2']);
 	$status = mysqli_real_escape_string($conn, $_POST['status']);
 	$opmerking_admin = mysqli_real_escape_string($conn, $_POST['opmerking_admin']);
 	//Kijk of iets leeg is
-	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($afwerking) || empty($wikkeling) || empty($oplage)) {
+	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($afwerking) || empty($wikkeling) || empty($oplage1)) {
 		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
@@ -26,7 +29,7 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 	} else {
 
 			//Kijk of alle karakters zijn toegestaan
-			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]{0,9}$/", $oplage))) {
+			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]{0,9}$/", $oplage1))) {
 				//header("Location: ../signup?signup=invalid");
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
@@ -36,14 +39,14 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 			} else {
 
 						//Order updaten
-						if (($status != "Aangevraagd") && ($status != "Probleem"))
+						if (($status != "Aanvraag") && ($status != "Probleem"))
 						{
 							$is_order = true;
 						}
-						if ($status == "Aangevraagd") {
+						if ($status == "Aanvraag") {
 							$is_order = false;
 						}
-						$sql = "UPDATE tbl_orders SET opmerking_admin='$opmerking_admin', status='$status', wikkeling='$wikkeling', oplage='$oplage', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', afwerking='$afwerking', datum_laatst_bewerkt=CURRENT_TIMESTAMP, is_order='$is_order' WHERE ordernummer='$ordernummer'";
+						$sql = "UPDATE tbl_orders SET opmerking_admin='$opmerking_admin', status='$status', wikkeling='$wikkeling', oplage1='$oplage1', oplage2='$oplage2', prijs1='$prijs1', prijs2='$prijs2', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', afwerking='$afwerking', datum_laatst_bewerkt=CURRENT_TIMESTAMP, is_order='$is_order' WHERE ordernummer='$ordernummer'";
 						mysqli_query($conn, $sql);
 						header("Location: ../order.php");
 						exit();
@@ -103,11 +106,11 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 	$materiaal = mysqli_real_escape_string($conn, $_POST['materiaal']);
 	$afwerking = mysqli_real_escape_string($conn, $_POST['afwerking']);
 	$wikkeling = mysqli_real_escape_string($conn, $_POST['wikkeling']);
-	$oplage = mysqli_real_escape_string($conn, $_POST['oplage']);
-	$opmerking_admin = mysqli_real_escape_string($conn, $_POST['opmerking_admin']);
+	$oplage1 = mysqli_real_escape_string($conn, $_POST['oplage1']);
+	$oplage2 = mysqli_real_escape_string($conn, $_POST['oplage2']);
 
 	//Kijk of iets leeg is
-	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($afwerking) || empty($wikkeling) || empty($oplage)) {
+	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($afwerking) || empty($wikkeling) || empty($oplage1)) {
 		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
@@ -118,7 +121,7 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 	} else {
 
 			//Kijk of alle karakters zijn toegestaan
-			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]{0,9}$/", $oplage))) {
+			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]{0,9}$/", $oplage1))) {
 				//header("Location: ../signup?signup=invalid");
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
@@ -128,7 +131,7 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 			} else {
 
 				$status='Bij leverancier';
-				$is_order='Bij leverancier';
+				$is_order=true;
 				$_SESSION['o_id'] = $ordernummer;
 				$sql = "SELECT * FROM tbl_fabrikanten;";
 				$result_fabrikanten = mysqli_query($conn, $sql);
@@ -139,9 +142,57 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 						//header("Location: send_mail_fabrikanten.inc.php");
 					}
 				}
-				$sql = "UPDATE tbl_orders SET opmerking_admin='$opmerking_admin', status='$status', wikkeling='$wikkeling', oplage='$oplage', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', afwerking='$afwerking', datum_laatst_bewerkt=CURRENT_TIMESTAMP, is_order='$is_order' WHERE ordernummer='$ordernummer'";
+				$sql = "UPDATE tbl_orders SET opmerking_admin='$opmerking_admin', status='$status', wikkeling='$wikkeling', oplage1='$oplage1', oplage2='$oplage2', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', afwerking='$afwerking', datum_laatst_bewerkt=CURRENT_TIMESTAMP, is_order='$is_order' WHERE ordernummer='$ordernummer'";
 				mysqli_query($conn, $sql);
 				header("Location: ../order.php");
+				exit();
+			}
+
+
+
+	}
+} else if ((isset($_POST['offerte_klant'])) && ($_SESSION['u_id'] == 1)) {
+	include_once 'dbh.inc.php';
+	$ordernummer = mysqli_real_escape_string($conn, $_POST['ordernummer']);
+	$breedte = mysqli_real_escape_string($conn, $_POST['breedte']);
+	$hoogte = mysqli_real_escape_string($conn, $_POST['hoogte']);
+	$radius = mysqli_real_escape_string($conn, $_POST['radius']);
+	$tussenafstand = mysqli_real_escape_string($conn, $_POST['tussenafstand']);
+	$rolbreedte = mysqli_real_escape_string($conn, $_POST['rolbreedte']);
+	$materiaal = mysqli_real_escape_string($conn, $_POST['materiaal']);
+	$afwerking = mysqli_real_escape_string($conn, $_POST['afwerking']);
+	$wikkeling = mysqli_real_escape_string($conn, $_POST['wikkeling']);
+	$oplage1 = mysqli_real_escape_string($conn, $_POST['oplage1']);
+	$oplage2 = mysqli_real_escape_string($conn, $_POST['oplage2']);
+	$prijs1 = mysqli_real_escape_string($conn, $_POST['prijs1']);
+	$prijs2 = mysqli_real_escape_string($conn, $_POST['prijs2']);
+
+	//Kijk of iets leeg is
+	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($afwerking) || empty($wikkeling) || empty($oplage1) || empty($prijs1)) {
+		//header("Location: ../signup?signup=empty");
+
+		echo '<script language="javascript">';
+		echo 'alert("empty")';
+		echo '</script>';
+
+		exit();
+	} else {
+
+			//Kijk of alle karakters zijn toegestaan
+			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling)) || (!preg_match("/^[1-9][0-9]{0,9}$/", $oplage1))) {
+				//header("Location: ../signup?signup=invalid");
+				echo '<script language="javascript">';
+				echo 'alert("character fail")';
+				echo '</script>';
+
+				exit();
+			} else {
+
+				$status='Offerte naar klant';
+				$_SESSION['o_id'] = $ordernummer;
+				$sql = "UPDATE tbl_orders SET opmerking_admin='$opmerking_admin', status='$status', wikkeling='$wikkeling', oplage1='$oplage1', oplage2='$oplage2', prijs1='$prijs1', prijs2='$prijs2', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', afwerking='$afwerking', datum_laatst_bewerkt=CURRENT_TIMESTAMP WHERE ordernummer='$ordernummer'";
+				mysqli_query($conn, $sql);
+				header("Location: send_mail_offerte.inc.php");
 				exit();
 			}
 
