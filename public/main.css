@@ -192,7 +192,7 @@ textarea {
      background-color: #363636;
    }
 
-   .balk_klaar {
+   .balk_Afgerond {
      background-color: #2d492b;
      color: white;
      padding: 10px;
@@ -200,7 +200,7 @@ textarea {
      border-radius: 2px;
    }
 
-   .balk_klaar:hover {
+   .balk_Afgerond:hover {
      background-color: #345431;
    }
 
@@ -468,7 +468,16 @@ textarea {
      margin-bottom: 10px;
    }
 
-   /* End Materialen.php */
+   /* End Fabrikanten.php */
+
+
+   /* Start Afwerkingen.php */
+
+   .afwerking {
+     margin-bottom: 10px;
+   }
+
+   /* End Afwerkingen.php */
 
    /* Start Signup.php */
 

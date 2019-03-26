@@ -1,7 +1,7 @@
 <!doctype html>
 <?php session_start();?>
 
-<html class="no-js" lang="">
+<html class="no-js" lang="nl">
 
 <head>
     <meta charset="utf-8">

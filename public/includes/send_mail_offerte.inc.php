@@ -4,21 +4,12 @@ include_once 'dbh.inc.php';
 date_default_timezone_set('Europe/Brussels');
 
 //get email address
-$user_id = $_SESSION['u_id'];
 $order_id = $_SESSION['o_id'];
-$sql = "SELECT * FROM tbl_klanten WHERE klantnummer='$user_id'";
-$result = mysqli_query($conn, $sql);
-foreach ($result as $result_sql) {
-  $email = $result_sql["email"];
-  $voornaam = $result_sql["voornaam"];
-  $achternaam = $result_sql["achternaam"];
-  $telefoonnummer = $result_sql["telefoonnummer"];
-  $bedrijf = $result_sql["bedrijf"];
-}
 
 $sql = "SELECT * FROM tbl_orders WHERE ordernummer=$order_id";
 $result_orders = mysqli_query($conn, $sql);
 foreach ($result_orders as $result_orders_sql) {
+  $klantnummer = $result_orders_sql['klantnummer'];
   $datum_aangemaakt = strtotime($result_orders_sql['datum_aangemaakt']);
   $breedte = $result_orders_sql['breedte'];
   $hoogte = $result_orders_sql['hoogte'];
@@ -30,12 +21,24 @@ foreach ($result_orders as $result_orders_sql) {
   $wikkeling = $result_orders_sql['wikkeling'];
   $oplage1 = $result_orders_sql['oplage1'];
   $oplage2 = $result_orders_sql['oplage2'];
+  $prijs1 = $result_orders_sql['prijs1'];
+  $prijs2 = $result_orders_sql['prijs2'];
   $status = $result_orders_sql['status'];
   $opmerking_klant = $result_orders_sql['opmerking_klant'];
 }
 
+$sql = "SELECT * FROM tbl_klanten WHERE klantnummer='$klantnummer'";
+$result = mysqli_query($conn, $sql);
+foreach ($result as $result_sql) {
+  $email = $result_sql["email"];
+  $voornaam = $result_sql["voornaam"];
+  $achternaam = $result_sql["achternaam"];
+  $telefoonnummer = $result_sql["telefoonnummer"];
+  $bedrijf = $result_sql["bedrijf"];
+}
+
 // subject
-$subject = "U heeft een aanvraag aangemaakt: #".$_SESSION['o_id'];
+$subject = "De offerte voor uw aanvraag: #".$_SESSION['o_id'];
 
 // the message
 
@@ -57,9 +60,10 @@ $msg .= '<div class="container">';
 $msg .= '<a class="logo" href="https://pentolabel.nl/"><img src="https://pentolabel.nl/wp-content/uploads/2017/11/briefhoofd.png" height="88px"></a>';
 $msg .= '<table class="nav" style="margin: 0px 0px 10px 0px;"><tr height="100%"><td><a href="http://localhost:8080/IT-Challenge/public/order">Mijn orders</a></td></tr></table>';
 $msg .= '<h4><strong>Beste '.$voornaam.' '.$achternaam.',</strong></h4>';
-$msg .= 'Hartelijk dank voor uw aanvraag bij Pentolabel. Uw aanvraag is bij ons bekend onder nummer: <strong>'.$_SESSION['o_id'].'</strong>';
-$msg .= '<h4><strong>Overzicht van uw aanvraag</strong></h4>';
-$msg .= 'Datum van uw aanvraag: '.date('d-m-Y', $datum_aangemaakt).'<br><br>';
+$msg .= 'Hartelijk dank voor uw aanvraag bij Pentolabel. Dit is de offerte voor uw aanvraag. Deze is bij ons bekend onder nummer: <strong>'.$_SESSION['o_id'].'</strong>';
+$msg .= '<h4><strong>Overzicht van de offerte</strong></h4>';
+$msg .= 'Datum van de offerte: '.date('d-m-Y').'<br>';
+$msg .= 'Datum van je aanvraag: '.date('d-m-Y', $datum_aangemaakt).'<br><br>';
 $msg .= '<table class="overzicht" style="width:100%; table-layout: fixed; border: 0; margin-bottom: 10px;"><tr><td>Breedte: '.$breedte.' mm</td>';
 $msg .= '<td>Hoogte: '.$hoogte.' mm</td></tr>';
 $msg .= '<tr><td>Radius: '.$radius.' mm</td>';
@@ -71,12 +75,14 @@ if ($afbeelding != "") $msg .= '<td style="background-color: #dc5626; color: #ff
 else $msg .= '</tr>';
 $msg .= '<tr><td>Minimale oplage: '.$oplage1.' stuks</td>';
 $msg .= '<td>Maximale oplage: '.$oplage2.' stuks</td></tr>';
-$msg .= '<tr><td>Status: '.$status.'</td></tr>';
+$msg .= '<tr><td>Prijs minimale oplage: €'.$prijs1.' per 1000 stuks</td>';
+$msg .= '<td>Prijs maximale oplage: €'.$prijs2.' per 1000 stuks</td></tr>';
+$msg .= '<tr><td>Status: Wachten op confirmatie klant</td></tr>';
 if ($opmerking_klant != "") $msg .= '<tr><td>Opmerking klant: '.$opmerking_klant.'</td></tr>';
 else $msg .= '</tr>';
 $msg .= '</table>';
-$msg .= '<a style="text-decoration: none;" href="http://localhost:8080/IT-Challenge/public/order?order='.$_SESSION['o_id'].'"><table style="padding: 10px; width: 100%; background-color: #dc5626; color: white;" border="0"><tr><td align="center">Mijn aanvraag bekijken</td></tr></table></a>';
-$msg .= '<h4><strong>Uw gegevens</strong></h4>';
+$msg .= '<table style="width:100%; table-layout : fixed; border: 0px"><tr><td><a style="text-decoration: none;" href="http://localhost:8080/IT-Challenge/public/order?order='.$_SESSION['o_id'].'"><table style="padding: 10px; width: 100%; background-color: #27abdd; color: white;" border="0"><tr><td align="center">De offerte goedkeuren</td></tr></table></a></td><td><a style="text-decoration: none;" href="http://localhost:8080/IT-Challenge/public/order?order='.$_SESSION['o_id'].'"><table style="padding: 10px; width: 100%; background-color: #dd2727; color: white;" border="0"><tr><td align="center">De offerte afkeuren</td></tr></table></a></td></tr></table>';
+$msg .= '<h4><strong>Jouw gegevens</strong></h4>';
 $msg .= '<table class="overzicht" style="width:100%; table-layout : fixed; border: 0px"><tr><td>Naam: '.$voornaam.' '.$achternaam.'</td>';
 $msg .= '<td>Email: '.$email.'</td></tr>';
 $msg .= '<tr><td>Telefoonnummer: '.$telefoonnummer.'</td>';
@@ -92,5 +98,5 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 $headers .= 'From: Pentolabel <info@label.nl>' . "\r\n";
 
 // send email
-mail($email,$subject,$msg,$headers);
+//mail($email,$subject,$msg,$headers);
 ?>
