@@ -552,7 +552,8 @@ function open_tab(info_div) {
                   		$result_fabrikanten = mysqli_query($conn, $sql);
                       foreach ($result_fabrikanten as $fabrikanten) {
                         $fabrikant_naam = $fabrikanten['fabrikant'];
-                        echo '<label class="checkbox_container">'.$fabrikant_naam.'<input type="checkbox" name="'.$fabrikant_naam.'" value="Ja"><span class="checkmark"></span></label>'; }
+                        $fabrikant_id = $fabrikanten['fabrikantnummer'];
+                        echo '<label class="checkbox_container">'.$fabrikant_naam.'<input type="checkbox" name="f_'.$fabrikant_id.'" value="Ja"><span class="checkmark"></span></label>'; }
                     ?>
                   </div>
 

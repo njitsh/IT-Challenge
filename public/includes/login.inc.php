@@ -7,11 +7,7 @@ if (isset($_POST['submit'])) {
 	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_login']);
  // wachtwoord
 	if (empty($name) || empty($pwd)) {
-		header("../signup?Error=Emtpy");
-		echo 'Please fill in both fields.';
-			echo '<script language="javascript">';
-			echo 'alert("not all fields were filled in")';
-			echo '</script>';
+		header("Location: ../signup?Error=Emtpy");
 		exit();
 	} else {
 		//Lees database
@@ -20,7 +16,7 @@ if (isset($_POST['submit'])) {
 		$resultCheck = mysqli_num_rows($result);
 		//Check of het account bestaat
 		if ($resultCheck < 1) {
-			header("../signup?Error");
+			header("Location: ../signup?Error");
 			exit();
 		} else {
 			if ($row = mysqli_fetch_assoc($result)) {
@@ -29,7 +25,7 @@ if (isset($_POST['submit'])) {
 				$hashedPwdCheck = password_verify($pwd, $row['wachtwoord']);
 
 				if ($hashedPwdCheck == false) {
-					header("../signup?Error");
+					header("Location: ../signup?Error=PwdNoMatch");
 					exit();
 				} elseif ($hashedPwdCheck == true) {
 					//Inloggen
@@ -43,9 +39,6 @@ if (isset($_POST['submit'])) {
 					$_SESSION['u_tel'] = $row['telefoonnummer'];//tel
 					$_SESSION['u_com'] = $row['bedrijf'];//bedrijf
 					header("Location: ../order");
-					echo '<script language="javascript">';
-					echo 'alert("success")';
-					echo '</script>';
 					exit();
 				}
 			}
@@ -53,8 +46,5 @@ if (isset($_POST['submit'])) {
 	}
 } else {
 	header("Location: ../signup?login=error");
-		echo '<script language="javascript">';
-		echo 'alert("not submit")';
-		echo '</script>';
 	exit();
 }

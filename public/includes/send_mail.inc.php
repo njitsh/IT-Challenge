@@ -71,7 +71,6 @@ if ($afbeelding != "") $msg .= '<td style="background-color: #dc5626; color: #ff
 else $msg .= '</tr>';
 $msg .= '<tr><td>Minimale oplage: '.$oplage1.' stuks</td>';
 $msg .= '<td>Maximale oplage: '.$oplage2.' stuks</td></tr>';
-$msg .= '<tr><td>Status: '.$status.'</td></tr>';
 if ($opmerking_klant != "") $msg .= '<tr><td>Opmerking klant: '.$opmerking_klant.'</td></tr>';
 else $msg .= '</tr>';
 $msg .= '</table>';

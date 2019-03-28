@@ -108,6 +108,7 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 	$wikkeling = mysqli_real_escape_string($conn, $_POST['wikkeling']);
 	$oplage1 = mysqli_real_escape_string($conn, $_POST['oplage1']);
 	$oplage2 = mysqli_real_escape_string($conn, $_POST['oplage2']);
+	$opmerking_admin = mysqli_real_escape_string($conn, $_POST['oplage2']);
 
 	//Kijk of iets leeg is
 	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($afwerking) || empty($wikkeling) || empty($oplage1)) {
@@ -136,12 +137,15 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 				$sql = "SELECT * FROM tbl_fabrikanten;";
 				$result_fabrikanten = mysqli_query($conn, $sql);
 				foreach ($result_fabrikanten as $fabrikanten) {
-					$fabrikant_naam = $fabrikanten['fabrikant'];
-					$fabrikant_naam = $fabrikanten['fabrikant'];
-					if (mysqli_real_escape_string($conn, $_POST[$fabrikant_naam]) == "Ja") {
-						//header("Location: send_mail_fabrikanten.inc.php");
+					$fabrikant_checked = "Nee";
+					$fabrikant_nummer = 'f_'.$fabrikanten['fabrikantnummer'];
+					if (isset($_POST[$fabrikant_nummer])) $fabrikant_checked = mysqli_real_escape_string($conn, $_POST[$fabrikant_nummer]);
+					if ($fabrikant_checked == "Ja") {
+						$_SESSION['f_id'] = $fabrikanten['fabrikantnummer'];
+						header("Location: send_mail_fabrikanten.inc.php");
 					}
 				}
+				$_SESSION['f_id'] = NULL;
 				$sql = "UPDATE tbl_orders SET opmerking_admin='$opmerking_admin', status='$status', wikkeling='$wikkeling', oplage1='$oplage1', oplage2='$oplage2', breedte='$breedte', hoogte='$hoogte', radius='$radius', tussenafstand='$tussenafstand', rolbreedte='$rolbreedte', materiaal='$materiaal', afwerking='$afwerking', datum_laatst_bewerkt=CURRENT_TIMESTAMP, is_order='$is_order' WHERE ordernummer='$ordernummer'";
 				mysqli_query($conn, $sql);
 				header("Location: ../order.php");
@@ -163,9 +167,9 @@ if ((isset($_POST['submit'])) && ($_SESSION['u_id'] == 1)) {
 	$afwerking = mysqli_real_escape_string($conn, $_POST['afwerking']);
 	$wikkeling = mysqli_real_escape_string($conn, $_POST['wikkeling']);
 	$oplage1 = mysqli_real_escape_string($conn, $_POST['oplage1']);
-	$oplage2 = mysqli_real_escape_string($conn, $_POST['oplage2']);
+	if (isset($_POST['oplage2'])) $oplage2 = mysqli_real_escape_string($conn, $_POST['oplage2']);
 	$prijs1 = mysqli_real_escape_string($conn, $_POST['prijs1']);
-	$prijs2 = mysqli_real_escape_string($conn, $_POST['prijs2']);
+	if (isset($_POST['prijs2'])) $prijs2 = mysqli_real_escape_string($conn, $_POST['prijs2']);
 
 	//Kijk of iets leeg is
 	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($afwerking) || empty($wikkeling) || empty($oplage1) || empty($prijs1)) {

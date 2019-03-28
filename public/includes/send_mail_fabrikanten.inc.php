@@ -3,16 +3,14 @@ session_start();
 include_once 'dbh.inc.php';
 date_default_timezone_set('Europe/Brussels');
 $order_id = $_SESSION['o_id']; //haal order id op uit sessie
+$fabrikant_id = $_SESSION['f_id']; //haal fabrikant id op uit sessie
 
 //haal fabrikant emailadres op
-$sql = "SELECT * FROM tbl_fabrikanten WHERE klantnummer='$user_id'";
+$sql = "SELECT * FROM tbl_fabrikanten WHERE fabrikantnummer='$fabrikant_id'";
 $result = mysqli_query($conn, $sql);
 foreach ($result as $result_sql) {
-  $email = $result_sql["email"];
-  $voornaam = $result_sql["voornaam"];
-  $achternaam = $result_sql["achternaam"];
-  $telefoonnummer = $result_sql["telefoonnummer"];
-  $bedrijf = $result_sql["bedrijf"];
+  $f_contactpersoon = $result_sql['contactpersoon'];
+  $email = $result_sql['email'];
 }
 
 $sql = "SELECT * FROM tbl_orders WHERE ordernummer=$order_id";
@@ -25,15 +23,14 @@ foreach ($result_orders as $result_orders_sql) {
   $tussenafstand = $result_orders_sql['tussenafstand'];
   $rolbreedte = $result_orders_sql['rolbreedte'];
   $materiaal = $result_orders_sql['materiaal'];
-  $bedrukking = $result_orders_sql['bedrukking'];
+  $afbeelding = $result_orders_sql['afbeelding_path'];
   $wikkeling = $result_orders_sql['wikkeling'];
-  $oplage = $result_orders_sql['oplage'];
-  $status = $result_orders_sql['status'];
-  $opmerking_klant = $result_orders_sql['opmerking_klant'];
+  $oplage1 = $result_orders_sql['oplage1'];
+  $oplage2 = $result_orders_sql['oplage2'];
 }
 
 // subject
-$subject = "Pentolavel B.V. Aanvraag: #".$_SESSION['o_id'];
+$subject = "Pentolavel B.V. Aanvraag: #".$order_id;
 
 // the message
 
@@ -54,31 +51,25 @@ $msg .= '<body style="margin: 0px;" bgcolor=”#ffffff”><div class="announceme
 $msg .= '<div class="container">';
 $msg .= '<a class="logo" href="https://pentolabel.nl/"><img src="https://pentolabel.nl/wp-content/uploads/2017/11/briefhoofd.png" height="88px"></a>';
 $msg .= '<table class="nav" style="margin: 0px 0px 10px 0px;"><tr height="100%"><td><a href="http://localhost:8080/IT-Challenge/public/order">Mijn orders</a></td></tr></table>';
-$msg .= '<h4><strong>Beste '.$voornaam.' '.$achternaam.',</strong></h4>';
-$msg .= 'Hartelijk dank voor je aanvraag bij Pentolabel. Je aanvraag is bij ons bekend onder nummer: <strong>'.$_SESSION['o_id'].'</strong>';
-$msg .= '<h4><strong>Overzicht van je aanvraag</strong></h4>';
-$msg .= 'Datum van je aanvraag: '.date('d-m-Y', $datum_aangemaakt).'<br><br>';
+$msg .= '<h4><strong>Beste '.$f_contactpersoon.',</strong></h4>';
+$msg .= 'Graag zou ik een aanvraag doen, met nummer '.$order_id.'.';
+$msg .= '<h4><strong>Overzicht van de aanvraag</strong></h4>';
+$msg .= 'Datum van de aanvraag: '.date('d-m-Y', $datum_aangemaakt).'<br><br>';
 $msg .= '<table class="overzicht" style="width:100%; table-layout: fixed; border: 0; margin-bottom: 10px;"><tr><td>Breedte: '.$breedte.' mm</td>';
 $msg .= '<td>Hoogte: '.$hoogte.' mm</td></tr>';
 $msg .= '<tr><td>Radius: '.$radius.' mm</td>';
 $msg .= '<td>Tussenafstand: '.$tussenafstand.' mm</td></tr>';
 $msg .= '<tr><td>Rolbreedte: '.$rolbreedte.' mm</td>';
 $msg .= '<td>Materiaal: '.$materiaal.'</td></tr>';
-if ($bedrukking == 0) $msg .= '<tr><td>Bedrukking: Nee</td>';
-else if ($bedrukking == 1) $msg .= '<tr><td>Bedrukking: Ja</td>';
-$msg .= '<td>Wikkeling: '.$wikkeling.'</td></tr>';
-$msg .= '<tr><td>Oplage: '.$oplage.' stuks</td>';
-$msg .= '<td>Status: '.$status.'</td></tr>';
-if ($opmerking_klant != "") $msg .= '<tr><td>Opmerking klant: '.$opmerking_klant.'</td></tr>';
+$msg .= '<tr><td>Wikkeling: '.$wikkeling.'</td>';
+if ($afbeelding != "") $msg .= '<td style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="uploads/'.$afbeelding.'" target="_blank">'.$afbeelding.'</a></td></tr>';
+else $msg .= '</tr>';
+$msg .= '<tr><td>Minimale oplage: '.$oplage1.' stuks</td>';
+if ($oplage2 != "0") $msg .= '<td>Maximale oplage: '.$oplage2.' stuks</td></tr>';
+else $msg .= '</tr>';
 $msg .= '</table>';
-$msg .= '<a style="text-decoration: none;" href="http://localhost:8080/IT-Challenge/public/order?order='.$_SESSION['o_id'].'"><table style="padding: 10px; width: 100%; background-color: #dc5626; color: white;" border="0"><tr><td align="center">Mijn aanvraag bekijken</td></tr></table></a>';
-$msg .= '<h4><strong>Jouw gegevens</strong></h4>';
-$msg .= '<table class="overzicht" style="width:100%; table-layout : fixed; border: 0px"><tr><td>Naam: '.$voornaam.' '.$achternaam.'</td>';
-$msg .= '<td>Email: '.$email.'</td></tr>';
-$msg .= '<tr><td>Telefoonnummer: '.$telefoonnummer.'</td>';
-$msg .= '<td>Bedrijf: '.$bedrijf.'</td></tr></table>';
-$msg .= '</div>';
-$msg .= '</body> </html>';
+$msg .= '<br><hr><br><br>Met vriendelijke groet,<br><br><br>Tom Mermans<br>info@pentolabel.nl';
+$msg .= '</body></html>';
 
 echo $msg;
 
