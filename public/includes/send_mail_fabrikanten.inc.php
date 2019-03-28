@@ -2,11 +2,10 @@
 session_start();
 include_once 'dbh.inc.php';
 date_default_timezone_set('Europe/Brussels');
+$order_id = $_SESSION['o_id']; //haal order id op uit sessie
 
-//get email address
-$user_id = $_SESSION['u_id'];
-$order_id = $_SESSION['o_id'];
-$sql = "SELECT * FROM tbl_klanten WHERE klantnummer='$user_id'";
+//haal fabrikant emailadres op
+$sql = "SELECT * FROM tbl_fabrikanten WHERE klantnummer='$user_id'";
 $result = mysqli_query($conn, $sql);
 foreach ($result as $result_sql) {
   $email = $result_sql["email"];

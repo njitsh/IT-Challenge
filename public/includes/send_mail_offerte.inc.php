@@ -4,7 +4,7 @@ include_once 'dbh.inc.php';
 date_default_timezone_set('Europe/Brussels');
 
 //get email address
-$order_id = $_SESSION['o_id'];
+$order_id = $_SESSION['o_id']; //haal order id op uit sessie
 
 $sql = "SELECT * FROM tbl_orders WHERE ordernummer=$order_id";
 $result_orders = mysqli_query($conn, $sql);

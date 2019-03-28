@@ -5,7 +5,7 @@ date_default_timezone_set('Europe/Brussels');
 
 //get email address
 $user_id = $_SESSION['u_id'];
-$order_id = $_SESSION['o_id'];
+$order_id = $_SESSION['o_id']; //haal order id op uit sessie
 $sql = "SELECT * FROM tbl_klanten WHERE klantnummer='$user_id'";
 $result = mysqli_query($conn, $sql);
 foreach ($result as $result_sql) {
