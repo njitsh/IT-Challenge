@@ -5,7 +5,7 @@ date_default_timezone_set('Europe/Brussels');
 
 //get email address
 $user_id = $_SESSION['u_id'];
-$order_id = $_SESSION['o_id'];
+$order_id = $_SESSION['o_id']; //haal order id op uit sessie
 $sql = "SELECT * FROM tbl_klanten WHERE klantnummer='$user_id'";
 $result = mysqli_query($conn, $sql);
 foreach ($result as $result_sql) {
@@ -71,7 +71,6 @@ if ($afbeelding != "") $msg .= '<td style="background-color: #dc5626; color: #ff
 else $msg .= '</tr>';
 $msg .= '<tr><td>Minimale oplage: '.$oplage1.' stuks</td>';
 $msg .= '<td>Maximale oplage: '.$oplage2.' stuks</td></tr>';
-$msg .= '<tr><td>Status: '.$status.'</td></tr>';
 if ($opmerking_klant != "") $msg .= '<tr><td>Opmerking klant: '.$opmerking_klant.'</td></tr>';
 else $msg .= '</tr>';
 $msg .= '</table>';

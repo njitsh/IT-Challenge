@@ -4,7 +4,7 @@ include_once 'dbh.inc.php';
 date_default_timezone_set('Europe/Brussels');
 
 //get email address
-$order_id = $_SESSION['o_id'];
+$order_id = $_SESSION['o_id']; //haal order id op uit sessie
 
 $sql = "SELECT * FROM tbl_orders WHERE ordernummer=$order_id";
 $result_orders = mysqli_query($conn, $sql);
@@ -25,6 +25,7 @@ foreach ($result_orders as $result_orders_sql) {
   $prijs2 = $result_orders_sql['prijs2'];
   $status = $result_orders_sql['status'];
   $opmerking_klant = $result_orders_sql['opmerking_klant'];
+  $opmerking_admin = $result_orders_sql['opmerking_admin'];
 }
 
 $sql = "SELECT * FROM tbl_klanten WHERE klantnummer='$klantnummer'";
@@ -45,7 +46,7 @@ $subject = "De offerte voor uw aanvraag: #".$_SESSION['o_id'];
 // the message
 $msg = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 $msg .= '<html xmlns="http://www.w3.org/1999/xhtml">';
-$msg .= '<head> <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Pentolabel Aanvraag</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/>';
+$msg .= '<head> <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Pentolabel Offerte</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/>';
 $msg .= '<style> body { font-family: Roboto; padding 0px; background-color: white; }';
 $msg .= '.container { width: 1120px; margin-left: auto; margin-right: auto; background-color: white; }';
 $msg .= '.announcement { width: 100%; background-color: #dc5626; grid-row-gap: 1fr; }';
@@ -74,12 +75,15 @@ $msg .= '<tr><td>Wikkeling: '.$wikkeling.'</td>';
 if ($afbeelding != "") $msg .= '<td style="background-color: #dc5626; color: #ffffff; border: none; padding: 10px 18px; font-size: 16px; cursor: pointer; border-radius: 2px;"><a style="color: white; text-decoration: none;" href="uploads/'.$afbeelding.'" target="_blank">'.$afbeelding.'</a></td></tr>';
 else $msg .= '</tr>';
 $msg .= '<tr><td>Minimale oplage: '.$oplage1.' stuks</td>';
-$msg .= '<td>Maximale oplage: '.$oplage2.' stuks</td></tr>';
-$msg .= '<tr><td>Prijs minimale oplage: €'.$prijs1.' per 1000 stuks</td>';
-$msg .= '<td>Prijs maximale oplage: €'.$prijs2.' per 1000 stuks</td></tr>';
-$msg .= '<tr><td>Status: Wachten op confirmatie klant</td></tr>';
-if ($opmerking_klant != "") $msg .= '<tr><td>Opmerking klant: '.$opmerking_klant.'</td></tr>';
+if ($prijs2 != "0") $msg .= '<td>Maximale oplage: '.$oplage2.' stuks</td></tr>';
 else $msg .= '</tr>';
+$msg .= '<tr><td>Prijs minimale oplage: €'.$prijs1.' per 1000 stuks</td>';
+if ($prijs2 != "0") $msg .= '<td>Prijs maximale oplage: €'.$prijs2.' per 1000 stuks</td></tr>';
+else $msg .= '</tr>';
+$msg .= '<tr><td>Status: Wachten op confirmatie klant</td></tr>';
+if (($opmerking_klant != NULL) && ($opmerking_admin == NULL)) $msg .= '<tr><td>Opmerking klant: '.$opmerking_klant.'</td></tr>';
+else if (($opmerking_klant != NULL) && ($opmerking_admin != NULL)) $msg .= '<tr><td>Opmerking klant: '.$opmerking_klant.'</td><td>Opmerking admin: '.$opmerking_admin.'</td></tr>';
+else if (($opmerking_klant == NULL) && ($opmerking_admin != NULL)) $msg .= '<tr><td>Opmerking admin: '.$opmerking_admin.'</td></tr>';
 $msg .= '</table>';
 $msg .= '<table style="width:100%; table-layout : fixed; border: 0px"><tr><td><a style="text-decoration: none;" href="http://localhost:8080/IT-Challenge/public/order?order='.$_SESSION['o_id'].'"><table style="padding: 10px; width: 100%; background-color: #27abdd; color: white;" border="0"><tr><td align="center">De offerte goedkeuren</td></tr></table></a></td><td><a style="text-decoration: none;" href="http://localhost:8080/IT-Challenge/public/order?order='.$_SESSION['o_id'].'"><table style="padding: 10px; width: 100%; background-color: #dd2727; color: white;" border="0"><tr><td align="center">De offerte afkeuren</td></tr></table></a></td></tr></table>';
 $msg .= '<h4><strong>Jouw gegevens</strong></h4>';
@@ -98,5 +102,5 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 $headers .= 'From: Pentolabel <info@label.nl>' . "\r\n";
 
 // send email
-//mail($email,$subject,$msg,$headers);
+mail($email,$subject,$msg,$headers);
 ?>
