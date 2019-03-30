@@ -1,7 +1,8 @@
 <?php
 session_start();
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {// Checken of submit ingedrukt is
 	include_once 'dbh.inc.php';
+	//Ophalen van variabelen
 	$user_id = $_SESSION['u_id'];
 	$breedte = mysqli_real_escape_string($conn, $_POST['breedte']);
 	$hoogte = mysqli_real_escape_string($conn, $_POST['hoogte']);
@@ -21,7 +22,7 @@ if (isset($_POST['submit'])) {
 	$afbeelding_naam = basename($_FILES["afwerking_afbeelding"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-	// Check if image file is a actual image or fake image
+	// Check of het een echte afbeelding is
 	if(isset($_POST["submit"])) {
 	    $check = getimagesize($_FILES["afwerking_afbeelding"]["tmp_name"]);
 	    if($check !== false) {
@@ -32,21 +33,20 @@ if (isset($_POST['submit'])) {
 	        $uploadOk = 0;
 	    }
 	}
-	// Check file size
+	// Check bestandsgrootte
 	if ($_FILES["afwerking_afbeelding"]["size"] > 500000) {
 	    echo "Sorry, your file is too large.";
 	    $uploadOk = 0;
 	}
-	// Allow certain file formats
+	// Check bestandstype
 	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 	&& $imageFileType != "gif" ) {
 	    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
 	    $uploadOk = 0;
 	}
-	// Check if $uploadOk is set to 0 by an error
 	if ($uploadOk == 0) {
 	    echo "Sorry, your file was not uploaded.";
-	// if everything is ok, try to upload file
+	// Als alles goed is, bestand uploaden
 	} else {
 	    if (move_uploaded_file($_FILES["afwerking_afbeelding"]["tmp_name"], $target_file)) {
 	        echo "The file ". basename( $_FILES["afwerking_afbeelding"]["name"]). " has been uploaded.";
@@ -57,7 +57,6 @@ if (isset($_POST['submit'])) {
 
 	//Kijk of iets leeg is
 	if (empty($breedte) || empty($hoogte) || empty($radius) || empty($tussenafstand) || empty($rolbreedte) || empty($materiaal) || empty($afwerking) || empty($wikkeling) || empty($oplage1)) {
-		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
 		echo 'alert("empty")';
@@ -68,7 +67,7 @@ if (isset($_POST['submit'])) {
 
 			//Kijk of alle karakters zijn toegestaan
 			if ((!preg_match("/^[1-9][0-9]{0,2}$/", $breedte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $hoogte)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $radius)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $tussenafstand)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $rolbreedte)) || (!preg_match("/^[a-z A-Z]*$/", $materiaal)) || (!preg_match("/^[a-z A-Z]*$/", $afwerking)) || (!preg_match("/^[1-9][0-9]{0,2}$/", $wikkeling))) {
-				//header("Location: ../signup?signup=invalid");
+
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
 				echo '</script>';
@@ -80,7 +79,7 @@ if (isset($_POST['submit'])) {
 						$sql = "INSERT INTO tbl_orders (klantnummer, breedte, hoogte, radius, tussenafstand, rolbreedte, materiaal, afwerking, wikkeling, oplage1, oplage2, datum_aangemaakt, datum_laatst_bewerkt, opmerking_klant, afbeelding_path) VALUES ('$user_id', '$breedte', '$hoogte', '$radius', '$tussenafstand', '$rolbreedte', '$materiaal', '$afwerking', '$wikkeling', '$oplage1', '$oplage2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$opmerking_klant', '$afbeelding_naam');";
 						mysqli_query($conn, $sql);
 						$_SESSION['o_id'] = $conn->insert_id;
-						header("Location: send_mail.inc.php");
+						header("Location: send_mail.inc.php"); // Mail versturen
 						}
 
 
@@ -89,7 +88,6 @@ if (isset($_POST['submit'])) {
 
 }
 else {
-	//header("Location: ../signup");
 
 	echo '<script language="javascript">';
 	echo 'alert("fail")';

@@ -36,6 +36,8 @@
 
           <a class="logo" href="order"><img src="images/pentolabel.png"></a>
 
+          <!-- Navigatie -->
+          
           <nav>
             <ul>
               <?php
@@ -44,6 +46,7 @@
             </ul>
           </nav>
 
+          <!-- Form afwerking toevoegen -->
           <h4><strong>Een afwerking toevoegen</strong></h4>
 
             <form class="create_afwerking" action="includes/afwerkingen.inc.php" method="POST" autocomplete="off" style="padding-top: 10px;">
@@ -55,7 +58,7 @@
         <?php
 
       echo "<h4><strong>Alle afwerkingen</strong></h4>";
-      // Haalt alle orders op
+      // Haalt alle afwerkingen op
       $sql = "SELECT * FROM tbl_afwerking";
   		$result_afwerkingen = mysqli_query($conn, $sql);
   		$resultCheck_afwerkingen = mysqli_num_rows($result_afwerkingen);

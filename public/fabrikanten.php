@@ -36,6 +36,7 @@
 
           <a class="logo" href="order"><img src="images/pentolabel.png"></a>
 
+          <!-- Navigatie -->
           <nav>
             <ul>
               <?php
@@ -61,7 +62,7 @@
         <?php
 
       echo "<h4><strong>Alle fabrikanten</strong></h4>";
-      // Haalt alle orders op
+      // Haalt alle fabrikanten op
       $sql = "SELECT * FROM tbl_fabrikanten";
   		$result_fabrikanten = mysqli_query($conn, $sql);
   		$resultCheck_fabrikanten = mysqli_num_rows($result_fabrikanten);

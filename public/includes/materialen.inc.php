@@ -1,12 +1,11 @@
 <?php
 session_start();
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) { // Submit checken
 	include_once 'dbh.inc.php';
 	$materiaal = mysqli_real_escape_string($conn, $_POST['materiaal']);
 
 	//Kijk of iets leeg is
 	if (empty($materiaal)) {
-		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
 		echo 'alert("empty")';
@@ -16,7 +15,6 @@ if (isset($_POST['submit'])) {
 	} else if (!preg_match("/^[a-z A-Z]*$/", $materiaal)) {
 			//Kijk of alle karakters zijn toegestaan
 
-				//header("Location: ../signup?signup=invalid");
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
 				echo '</script>';
@@ -31,7 +29,7 @@ if (isset($_POST['submit'])) {
 				exit();
 			}
 }
-else if (isset($_POST['delete'])) {
+else if (isset($_POST['delete'])) { // Delete checken
 	include_once 'dbh.inc.php';
 	$materiaalnummer = mysqli_real_escape_string($conn, $_POST['materiaalnummer']);
 	$sql = "DELETE FROM tbl_materialen WHERE materiaalnummer='$materiaalnummer';";
@@ -41,7 +39,6 @@ else if (isset($_POST['delete'])) {
 	exit();
 }
 else {
-	//header("Location: ../signup");
 
 	echo '<script language="javascript">';
 	echo 'alert("fail")';

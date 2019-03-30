@@ -36,6 +36,7 @@
 
           <a class="logo" href="order"><img src="images/pentolabel.png"></a>
 
+          <!-- Navigatie -->
           <nav>
             <ul>
               <?php
@@ -55,7 +56,7 @@
         <?php
 
       echo "<h4><strong>Alle materialen</strong></h4>";
-      // Haalt alle orders op
+      // Haalt alle materialen op
       $sql = "SELECT * FROM tbl_materialen";
   		$result_materialen = mysqli_query($conn, $sql);
   		$resultCheck_materialen = mysqli_num_rows($result_materialen);

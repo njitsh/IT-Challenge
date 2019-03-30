@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) { // Checken of submit ingedrukt is
 	include_once 'dbh.inc.php';
 	$fabrikant_naam = mysqli_real_escape_string($conn, $_POST['fabrikant_naam']);
 	$fabrikant_contactpersoon = mysqli_real_escape_string($conn, $_POST['fabrikant_contactpersoon']);
@@ -9,7 +9,6 @@ if (isset($_POST['submit'])) {
 
 	//Kijk of iets leeg is
 	if ((empty($fabrikant_naam)) || (empty($fabrikant_contactpersoon)) || (empty($fabrikant_telefoonnummer)) || (empty($fabrikant_email))) {
-		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
 		echo 'alert("empty")';
@@ -25,7 +24,7 @@ if (isset($_POST['submit'])) {
 				exit();
 			}
 }
-else if (isset($_POST['delete'])) {
+else if (isset($_POST['delete'])) { // Checken of delete ingedrukt is
 	include_once 'dbh.inc.php';
 	$fabrikantnummer = mysqli_real_escape_string($conn, $_POST['fabrikantnummer']);
 	$sql = "DELETE FROM tbl_fabrikanten WHERE fabrikantnummer='$fabrikantnummer';";
@@ -34,8 +33,7 @@ else if (isset($_POST['delete'])) {
 	header("Location: ../fabrikanten");
 	exit();
 }
-else {
-	//header("Location: ../signup");
+else { // Anders foutmelding geven
 
 	echo '<script language="javascript">';
 	echo 'alert("fail")';

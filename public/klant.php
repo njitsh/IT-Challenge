@@ -57,6 +57,7 @@
 
       <a class="logo" href="order"><img src="images/pentolabel.png"></a>
 
+      <!-- Navigatie -->
       <nav>
         <ul>
           <?php

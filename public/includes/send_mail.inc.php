@@ -3,7 +3,7 @@ session_start();
 include_once 'dbh.inc.php';
 date_default_timezone_set('Europe/Brussels');
 
-//get email address
+//haal klantinfo op
 $user_id = $_SESSION['u_id'];
 $order_id = $_SESSION['o_id']; //haal order id op uit sessie
 $sql = "SELECT * FROM tbl_klanten WHERE klantnummer='$user_id'";
@@ -16,6 +16,7 @@ foreach ($result as $result_sql) {
   $bedrijf = $result_sql["bedrijf"];
 }
 
+// haal orderinfo op
 $sql = "SELECT * FROM tbl_orders WHERE ordernummer=$order_id";
 $result_orders = mysqli_query($conn, $sql);
 foreach ($result_orders as $result_orders_sql) {
@@ -34,12 +35,10 @@ foreach ($result_orders as $result_orders_sql) {
   $opmerking_klant = $result_orders_sql['opmerking_klant'];
 }
 
-// subject
+// onderwerp
 $subject = "U heeft een aanvraag aangemaakt: #".$_SESSION['o_id'];
 
-// the message
-
-// the message
+// het bericht
 $msg = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 $msg .= '<html xmlns="http://www.w3.org/1999/xhtml">';
 $msg .= '<head> <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Pentolabel Aanvraag</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/>';
@@ -84,12 +83,13 @@ else $msg .= '</tr></table>';
 $msg .= '</div>';
 $msg .= '</body> </html>';
 
-echo $msg;
+echo $msg; // tijdelijk voor testen email laten zien
 
+// belangrijke info
 $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 $headers .= 'From: Pentolabel <info@label.nl>' . "\r\n";
 
-// send email
+// email versturen
 mail($email,$subject,$msg,$headers);
 ?>

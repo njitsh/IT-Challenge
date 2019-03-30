@@ -1,11 +1,11 @@
 <?php
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) { // Check submit
 
 	include 'dbh.inc.php';
 	include_once 'password.php';
 	$name = mysqli_real_escape_string($conn, $_POST['email_login']); // email
 	$pwd = mysqli_real_escape_string($conn, $_POST['wachtwoord_login']);
- // wachtwoord
+ // Check of leeg
 	if (empty($name) || empty($pwd)) {
 		header("Location: ../signup?Error=Emtpy");
 		exit();
@@ -29,7 +29,6 @@ if (isset($_POST['submit'])) {
 					exit();
 				} elseif ($hashedPwdCheck == true) {
 					//Inloggen
-
 
 					session_start();
 					$_SESSION['u_id'] = $row['klantnummer'];//user ID

@@ -1,11 +1,11 @@
 <?php
 session_start();
 include_once 'dbh.inc.php';
-date_default_timezone_set('Europe/Brussels');
+date_default_timezone_set('Europe/Brussels'); // zet timezone
 $order_id = $_SESSION['o_id']; //haal order id op uit sessie
 $fabrikant_id = $_SESSION['f_id']; //haal fabrikant id op uit sessie
 
-//haal fabrikant emailadres op
+//haal fabrikant informatie op
 $sql = "SELECT * FROM tbl_fabrikanten WHERE fabrikantnummer='$fabrikant_id'";
 $result = mysqli_query($conn, $sql);
 foreach ($result as $result_sql) {
@@ -13,6 +13,7 @@ foreach ($result as $result_sql) {
   $email = $result_sql['email'];
 }
 
+// haal order informatie op
 $sql = "SELECT * FROM tbl_orders WHERE ordernummer=$order_id";
 $result_orders = mysqli_query($conn, $sql);
 foreach ($result_orders as $result_orders_sql) {
@@ -29,12 +30,10 @@ foreach ($result_orders as $result_orders_sql) {
   $oplage2 = $result_orders_sql['oplage2'];
 }
 
-// subject
+// onderwerp
 $subject = "Pentolavel B.V. Aanvraag: #".$order_id;
 
-// the message
-
-// the message
+// het bericht
 $msg = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 $msg .= '<html xmlns="http://www.w3.org/1999/xhtml">';
 $msg .= '<head> <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Pentolabel Aanvraag</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/>';
@@ -71,12 +70,13 @@ $msg .= '</table>';
 $msg .= '<br><hr><br><br>Met vriendelijke groet,<br><br><br>Tom Mermans<br>info@pentolabel.nl';
 $msg .= '</body></html>';
 
-echo $msg;
+echo $msg; // tijdelijk om het bericht te laten zien (voor presentaties)
 
+//Belangrijke informatie voor de mail
 $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-$headers .= 'From: Pentolabel <info@label.nl>' . "\r\n";
+$headers .= 'From: Pentolabel <info@pentolabel.nl>' . "\r\n";
 
-// send email
+// versturen van email
 mail($email,$subject,$msg,$headers);
 ?>

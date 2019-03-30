@@ -29,6 +29,7 @@
 
     <a class="logo" href="signup"><img src="images/pentolabel.png"></a>
 
+    <!-- Navigatie -->
     <nav>
       <ul>
         <a href="signup"><li>Inloggen</li></a>

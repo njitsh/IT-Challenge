@@ -1,9 +1,8 @@
 <?php
-
-
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) { // check submit
 	include_once 'dbh.inc.php';
 	include_once 'password.php';
+	// info ophalen en in variabelen zetten
 	$first = mysqli_real_escape_string($conn, $_POST['voornaam_registreren']);
 	$last = mysqli_real_escape_string($conn, $_POST['achternaam_registreren']);
 	$email = mysqli_real_escape_string($conn, $_POST['email_registreren']);
@@ -15,7 +14,6 @@ if (isset($_POST['submit'])) {
 
 	//Kijk of iets leeg is
 	if (empty($first) || empty($last) || empty($email) || empty($tel) || empty($pwd) || empty($pwd2) || empty($pwd2)) {
-		//header("Location: ../signup?signup=empty");
 
 		echo '<script language="javascript">';
 		echo 'alert("empty")';
@@ -33,7 +31,6 @@ if (isset($_POST['submit'])) {
 		else {
 			//Kijk of alle karakters zijn toegestaan
 			if (!preg_match("/^[a-zA-Z]*$/", $first) || !preg_match("/^[a-z A-Z]*$/", $last)) {
-				//header("Location: ../signup?signup=invalid");
 				echo '<script language="javascript">';
 				echo 'alert("character fail")';
 				echo '</script>';
@@ -42,7 +39,6 @@ if (isset($_POST['submit'])) {
 			} else {
 				//Kijk of email bestaat
 				if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-					//header("Location: ../signup?signup=email");
 
 					echo '<script language="javascript">';
 					echo 'alert("email fail")';
@@ -56,7 +52,6 @@ if (isset($_POST['submit'])) {
 					$resultCheck = mysqli_num_rows($result);
 
 					if ($resultCheck > 0) {
-					//header("Location: ../signup?signup=alreadyexists");
 
 						echo '<script language="javascript">';
 						echo 'alert("user already exists")';
@@ -72,7 +67,7 @@ if (isset($_POST['submit'])) {
 						$sql = "INSERT INTO tbl_klanten (voornaam, achternaam, email, telefoonnummer, wachtwoord, bedrijf) VALUES ('$first', '$last', '$email', '$tel', '$hashedPwd', '$company');";
 						mysqli_query($conn, $sql);
 
-						// Login
+						// Meteen inloggen na registreren
 						$sql = "SELECT * FROM tbl_klanten WHERE email='$email'";
 						$result = mysqli_query($conn, $sql);
 						$row = mysqli_fetch_assoc($result);
@@ -100,7 +95,7 @@ if (isset($_POST['submit'])) {
 
 }
 else {
-	//header("Location: ../signup");
+	header("Location: ../signup");
 
 	echo '<script language="javascript">';
 	echo 'alert("fail")';
